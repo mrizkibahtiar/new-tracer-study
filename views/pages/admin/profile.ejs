@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Admin - Profile</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description">
+    <meta content="coderthemes" name="author">
+
+    <!-- App favicon -->
+    <link href="../assets/images/smk-bp.png" rel="icon" type="image/png">
+
+    <!-- App css -->
+    <link href="../assets/css/app.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Icons css -->
+    <link href="../assets/css/icons.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Theme Config Js -->
+    <script src="../assets/js/config.js"></script>
+
+</head>
+
+<body>
+
+    <div class="flex wrapper">
+        <%- include('../../components/sidebar_admin') %>
+
+            <div class="page-content">
+                <%- include ('../../components/topbar_admin') %>
+
+                    <main class="flex-grow p-6">
+                        <div class="fixed top-0 right-0 left-0 z-50 flex items-center justify-center">
+                            <% if (success_msg && success_msg.length> 0) { %>
+                                <div class="alert alert-success fixed bg-green-500 text-sm text-white rounded-md p-4 z-50 2xl:w-1/4 lg:w-1/3 w-3/4 mb-9 top-7"
+                                    role="alert">
+                                    <p>
+                                        <%= success_msg %>
+                                    </p>
+                                </div>
+                                <% } %>
+                                    <% if (error_msg && error_msg.length> 0) { %>
+                                        <div class="alert alert-error fixed bg-red-500 text-sm text-white rounded-md z-50 p-4 2xl:w-1/4 lg:w-1/3 w-3/4 mb-9 top-7"
+                                            role="alert">
+                                            <p>
+                                                <%= error_msg %>
+                                            </p>
+                                        </div>
+                                        <% } %>
+                        </div>
+
+                        <!-- Page Title Start -->
+                        <div class="flex items-center">
+                            <!-- button back -->
+                            <a href="/admin" class="btn btn-ghost">
+                                <i
+                                    class="mgc_arrow_left_circle_line text-3xl text-slate-700 rtl:rotate-180 dark:text-slate-200"></i>
+                            </a>
+                            <h4 class="text-slate-700 dark:text-slate-200 text-lg font-medium">
+                                Profile
+                            </h4>
+                        </div>
+                        <!-- Page Title End -->
+
+                        <!-- Page Content Start -->
+                        <div class="grid grid-cols-1 gap-6 mt-3">
+                            <div class="col-span-12">
+                                <div class="card">
+                                    <div class="card-body p-6">
+                                        <div class="grid grid-cols-1 md:grid-cols-2  gap-6 mb-3 mt-3">
+                                            <div>
+                                                <p
+                                                    class="text-gray-800 text-sm font-medium inline-block mb-2 dark:text-slate-400">
+                                                    Nama</p>
+                                                <h2 class="dark:text-white">
+                                                    <%= admin.nama %>
+                                                </h2>
+                                            </div>
+
+                                            <div>
+                                                <p
+                                                    class="text-gray-800 text-sm font-medium inline-block mb-2 dark:text-slate-400">
+                                                    Email</p>
+                                                <h2 class="dark:text-white">
+                                                    <%= admin.email || 'Kosong' %>
+                                                </h2>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="mt-6 flex gap-3 w-full">
+                                            <button
+                                                class="btn bg-primary/25 text-primary hover:bg-primary hover:text-white"
+                                                data-fc-target="modal-edit" data-fc-type="modal" type="button">
+                                                Edit
+                                            </button>
+                                            <!-- modal edit -->
+                                            <div id="modal-edit"
+                                                class="w-full h-full mt-5 fixed top-0 left-0 z-50 transition-all duration-500 fc-modal hidden">
+                                                <div
+                                                    class="fc-modal-open:opacity-100 duration-500 opacity-0 ease-out transition-all sm:max-w-lg sm:w-full m-3 sm:mx-auto flex flex-col bg-white border shadow-sm rounded-md dark:bg-slate-800 dark:border-gray-700">
+                                                    <div
+                                                        class="flex justify-between items-center py-2.5 px-4 border-b dark:border-gray-700">
+                                                        <h3 class="font-medium text-gray-800 dark:text-white text-lg">
+                                                            Edit
+                                                        </h3>
+                                                        <button
+                                                            class="inline-flex flex-shrink-0 justify-center items-center h-8 w-8 dark:text-gray-200"
+                                                            data-fc-dismiss type="button">
+                                                            <span class="material-symbols-rounded">close</span>
+                                                        </button>
+                                                    </div>
+                                                    <form method="POST"
+                                                        action="/admin/profile-edit/<%= admin._id %>/?_method=PUT">
+                                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-3 px-4">
+                                                            <div class="md:col-span-2">
+                                                                <label for="nama"
+                                                                    class="text-gray-800 text-sm font-medium inline-block mb-2">Nama
+                                                                    <span class="text-red-500">*</span></label>
+                                                                <input type="text"
+                                                                    class="form-input text-black dark:text-white"
+                                                                    id="nama" placeholder="Masukkan Nama Baru " required
+                                                                    name="nama" value="<%= admin.nama %>">
+                                                            </div>
+                                                            <div class="md:col-span-2">
+                                                                <label for="email"
+                                                                    class="text-gray-800 text-sm font-medium inline-block mb-2">Email
+                                                                    <span class="text-red-500">*</span></label>
+                                                                <input type="text"
+                                                                    class="form-input text-black dark:text-white"
+                                                                    id="email" placeholder="Masukkan Email Baru"
+                                                                    required name="email" value="<%= admin.email %>">
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div class="flex gap-3 mt-2">
+                                                            <div
+                                                                class="flex justify-end items-center gap-4 p-4 dark:border-slate-700">
+                                                                <button
+                                                                    class="btn dark:text-gray-200 border border-slate-200 dark:border-slate-700 hover:bg-slate-100 hover:dark:bg-slate-700 transition-all"
+                                                                    data-fc-dismiss type="button">Close</button>
+                                                                <button type="submit"
+                                                                    class="btn bg-success text-white">Save</button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+
+                                            <!-- button ganti password -->
+                                            <button
+                                                class="btn bg-success/25 text-success hover:bg-success hover:text-white"
+                                                data-fc-target="ganti-password" data-fc-type="modal" type="button">
+                                                Ganti Password
+                                            </button>
+                                            <!-- modal ganti password -->
+                                            <div id="ganti-password"
+                                                class="w-full h-full mt-5 fixed top-0 left-0 z-50 transition-all duration-500 fc-modal hidden">
+                                                <div
+                                                    class="fc-modal-open:opacity-100 duration-500 opacity-0 ease-out transition-all sm:max-w-lg sm:w-full m-3 sm:mx-auto flex flex-col bg-white border shadow-sm rounded-md dark:bg-slate-800 dark:border-gray-700">
+                                                    <div
+                                                        class="flex justify-between items-center py-2.5 px-4 border-b dark:border-gray-700">
+                                                        <h3 class="font-medium text-gray-800 dark:text-white text-lg">
+                                                            Ganti Password
+                                                        </h3>
+                                                        <button
+                                                            class="inline-flex flex-shrink-0 justify-center items-center h-8 w-8 dark:text-gray-200"
+                                                            data-fc-dismiss type="button">
+                                                            <span class="material-symbols-rounded">close</span>
+                                                        </button>
+                                                    </div>
+                                                    <form method="POST"
+                                                        action="/admin/profile-edit/password/<%= admin._id %>/?_method=PUT">
+                                                        <div class="grid grid-cols-1 md:grid-cols-2 my-3 px-4">
+                                                            <div class="md:col-span-2">
+                                                                <label for="passwordLama"
+                                                                    class="text-gray-800 text-sm font-medium inline-block mb-2">
+                                                                    Password Lama <span class="text-red-500">*</span>
+                                                                </label>
+                                                                <input type="password"
+                                                                    class="form-input text-black dark:text-white"
+                                                                    id="passwordLama"
+                                                                    placeholder="Masukkan Password Lama" required
+                                                                    name="passwordLama">
+                                                            </div>
+                                                            <div class="form-check my-2">
+                                                                <input type="checkbox"
+                                                                    class="form-checkbox rounded text-primary"
+                                                                    id="show-password">
+                                                                <label class="ms-1.5 text-sm" for="show-password">Lihat
+                                                                    Password</label>
+                                                            </div>
+                                                            <div class="md:col-span-2">
+                                                                <label for="passwordBaru"
+                                                                    class="text-gray-800 text-sm font-medium inline-block mb-2">
+                                                                    Password Baru <span class="text-red-500">*</span>
+                                                                </label>
+                                                                <input type="password"
+                                                                    class="form-input text-black dark:text-white"
+                                                                    id="passwordBaru"
+                                                                    placeholder="Masukkan Password Baru" required
+                                                                    name="passwordBaru">
+                                                            </div>
+                                                            <div class="md:col-span-2 mt-2">
+                                                                <label for="confirmPassword"
+                                                                    class="text-gray-800 text-sm font-medium inline-block mb-2">
+                                                                    Konfirmasi Password <span
+                                                                        class="text-red-500">*</span>
+                                                                </label>
+                                                                <input type="password"
+                                                                    class="form-input text-black dark:text-white"
+                                                                    id="confirmPassword"
+                                                                    placeholder="Masukkan Konfirmasi Password" required
+                                                                    name="confirmPassword">
+                                                            </div>
+                                                            <div class="form-check my-2">
+                                                                <input type="checkbox"
+                                                                    class="form-checkbox rounded text-primary"
+                                                                    id="show-password2">
+                                                                <label class="ms-1.5 text-sm" for="show-password2">Lihat
+                                                                    Password</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="flex gap-3 mt-2">
+                                                            <div
+                                                                class="flex justify-end items-center gap-4 p-4 dark:border-slate-700">
+                                                                <button
+                                                                    class="btn dark:text-gray-200 border border-slate-200 dark:border-slate-700 hover:bg-slate-100 hover:dark:bg-slate-700 transition-all"
+                                                                    data-fc-dismiss type="button">Close</button>
+                                                                <button type="submit"
+                                                                    class="btn bg-success text-white">Save</button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </main>
+
+                    <%- include('../../components/footer') %>
+            </div>
+
+    </div>
+
+    <!-- Back to Top Button -->
+    <button data-toggle="back-to-top"
+        class="fixed hidden h-10 w-10 items-center justify-center rounded-full z-10 bottom-20 translate-x-52 end-14 p-2.5 bg-primary cursor-pointer shadow-lg text-white">
+        <i class="mgc_arrow_up_line text-lg"></i>
+    </button>
+
+    <script>
+        const passwordInput = document.getElementById('passwordLama');
+        const passwordBaru = document.getElementById('passwordBaru');
+        const confirmPassword = document.getElementById('confirmPassword');
+        const showPasswordCheckbox = document.getElementById('show-password');
+        const showPasswordCheckbox2 = document.getElementById('show-password2');
+
+        showPasswordCheckbox.addEventListener('change', function () {
+            if (showPasswordCheckbox.checked) {
+                passwordInput.type = 'text';
+            } else {
+                passwordInput.type = 'password';
+            }
+        });
+
+        showPasswordCheckbox2.addEventListener('change', function () {
+            if (showPasswordCheckbox2.checked) {
+                passwordBaru.type = 'text';
+                confirmPassword.type = 'text';
+            } else {
+                passwordBaru.type = 'password';
+                confirmPassword.type = 'password';
+            }
+        });
+
+        const alerts = document.querySelectorAll('.alert')
+        for (let i = 0; i < alerts.length; i++) {
+            setTimeout(() => {
+                alerts[i].remove();
+            }, 2500);
+        }
+
+    </script>
+
+    <!-- Plugin Js -->
+    <script src="../assets/libs/simplebar/simplebar.min.js"></script>
+    <script src="../assets/libs/feather-icons/feather.min.js"></script>
+    <script src="../assets/libs/%40frostui/tailwindcss/frostui.js"></script>
+
+    <!-- App Js -->
+    <script src="../assets/js/app.js"></script>
+
+</body>
+
+</html>

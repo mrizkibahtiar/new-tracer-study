@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Mirrored from coderthemes.com/konrix/layouts/apps-calendar.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 09 Oct 2024 06:31:06 GMT -->
+
+<head>
+    <meta charset="utf-8">
+    <title>Admin - Masukkan Alumni</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description">
+    <meta content="coderthemes" name="author">
+
+    <link href="../assets/images/smk-bp.png" rel="icon" type="image/png">
+
+    <!-- App css -->
+    <link href="../assets/css/app.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Icons css -->
+    <link href="../assets/css/icons.min.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=pin, id_card" />
+
+
+    <!-- Theme Config Js -->
+    <script src="../assets/js/config.js"></script>
+</head>
+
+<body>
+
+    <div class="flex wrapper">
+
+        <!-- Sidenav Menu -->
+        <%- include ('../../components/sidebar_admin') %>
+
+            <div class="page-content">
+
+                <%- include ('../../components/topbar_admin') %>
+
+                    <main class="flex-grow p-6">
+                        <!-- Page Title Start -->
+                        <div class="flex justify-between items-center mb-6">
+                            <h4 class="text-slate-700 dark:text-slate-200 text-lg font-medium">Masukkan Alumni</h4>
+
+                            <div class="md:flex hidden items-center gap-2.5 text-sm font-semibold">
+                                <div class="flex items-center gap-2">
+                                    <a href="/admin"
+                                        class="text-sm font-medium text-slate-700 dark:text-slate-400">Alumni</a>
+                                </div>
+
+                                <div class="flex items-center gap-2">
+                                    <i class="mgc_right_line text-lg flex-shrink-0 text-slate-400 rtl:rotate-180"></i>
+                                    <a href="/admin/alumni-form"
+                                        class="text-sm font-medium text-slate-700 dark:text-slate-400">Masukkan
+                                        Alumni</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Page Title End -->
+
+                        <div class="col-span-2">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Masukkan Alumni</h4>
+                                </div>
+
+                                <div class="p-6">
+                                    <% if (typeof error !=='undefined' ) { %>
+                                        <div class="alert bg-danger/25 text-danger text-sm rounded-md p-4 my-3"
+                                            role="alert">
+                                            <span class="font-bold">Error :</span>
+                                            <%= error %>
+                                        </div>
+                                        <% } %>
+
+                                            <% if (typeof success !=='undefined' ) { %>
+                                                <div class="alert bg-success/25 text-success text-sm rounded-md p-4 my-3"
+                                                    role="alert">
+                                                    <span class="font-bold">Success :</span>
+                                                    <%= success %>
+                                                </div>
+                                                <% } %>
+
+                                                    <form method="post" action="/admin/alumni-form">
+                                                        <div class="grid grid-cols-1  gap-6 mb-3">
+
+                                                            <div>
+                                                                <div class="flex items-center gap-2 mb-2">
+                                                                    <span
+                                                                        class="material-symbols-rounded text-gray-800 dark:text-white">
+                                                                        pin
+                                                                    </span>
+                                                                    <label for="nisn"
+                                                                        class="text-gray-800 text-sm font-medium inline-block">NISN
+                                                                        <span class="text-red-500">*</span></label>
+                                                                </div>
+                                                                <input type="text"
+                                                                    class="form-input text-gray-800 dark:text-white"
+                                                                    id="nisn" placeholder="Masukkan NISN" name="nisn"
+                                                                    required
+                                                                    value="<%= typeof nisn !== 'undefined' ? nisn : '' %>">
+                                                            </div>
+                                                            <div>
+                                                                <div class="flex items-center gap-2 mb-2">
+                                                                    <span
+                                                                        class="material-symbols-rounded text-gray-800 dark:text-white">
+                                                                        badge
+                                                                    </span>
+                                                                    <label for="nama"
+                                                                        class="text-gray-800 text-sm font-medium inline-block">Nama
+                                                                        <span class="text-red-500">*</span></label>
+                                                                </div>
+                                                                <input type="text"
+                                                                    class="form-input text-gray-800 dark:text-white"
+                                                                    id="nama" placeholder="Masukkan Nama Alumni "
+                                                                    required name="nama"
+                                                                    value="<%= typeof nama !== 'undefined' ? nama : '' %>">
+                                                            </div>
+
+                                                            <div>
+                                                                <div class="flex items-center gap-2 mb-2">
+                                                                    <span
+                                                                        class="material-symbols-rounded text-gray-800 dark:text-white">
+                                                                        wc
+                                                                    </span>
+                                                                    <label for="inputState"
+                                                                        class="text-gray-800 text-sm font-medium inline-block">Jenis
+                                                                        Kelamin <span
+                                                                            class="text-red-500">*</span></label></label>
+                                                                </div>
+                                                                <select id="inputState"
+                                                                    class="form-select focus:border-primary text-black dark:text-white"
+                                                                    name="jenisKelamin" required>
+                                                                    <option value="" disabled selected
+                                                                        class="text-black">Pilih Jenis Kelamin
+                                                                    </option>
+                                                                    <option value="Laki-laki" class="text-black">
+                                                                        Laki-laki
+                                                                    </option>
+                                                                    <option value="Perempuan" class="text-black">
+                                                                        Perempuan
+                                                                    </option>
+                                                                </select>
+                                                            </div>
+
+                                                            <div>
+                                                                <div class="flex items-center gap-2 mb-2">
+                                                                    <span
+                                                                        class="material-symbols-rounded text-gray-800 dark:text-white">
+                                                                        password
+                                                                    </span>
+                                                                    <label for="password"
+                                                                        class="text-gray-800 text-sm font-medium inline-block mb-2">
+                                                                        Password <span class="text-red-500">*</span>
+                                                                    </label>
+                                                                </div>
+                                                                <input type="password"
+                                                                    class="form-input text-gray-800 dark:text-white"
+                                                                    id="password" placeholder="Masukkan Password"
+                                                                    required name="password"
+                                                                    autocomplete="current-password">
+                                                                <div class="form-check mt-2">
+                                                                    <input type="checkbox"
+                                                                        class="form-checkbox rounded text-primary"
+                                                                        id="show-password">
+                                                                    <label class="ms-1.5 text-sm"
+                                                                        for="show-password">Lihat
+                                                                        Password</label>
+                                                                </div>
+                                                            </div>
+
+
+                                                        </div>
+
+                                                        <button type="submit"
+                                                            class="btn bg-primary text-white">Submit</button>
+                                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </main>
+
+                    <%- include('../../components/footer') %>
+            </div>
+    </div>
+
+    <!-- Back to Top Button -->
+    <button data-toggle="back-to-top"
+        class="fixed hidden h-10 w-10 items-center justify-center rounded-full z-10 bottom-20 end-14 p-2.5 bg-primary cursor-pointer shadow-lg text-white">
+        <i class="mgc_arrow_up_line text-lg"></i>
+    </button>
+
+    <!-- Plugin Js -->
+    <script src="../assets/libs/simplebar/simplebar.min.js"></script>
+    <script src="../assets/libs/feather-icons/feather.min.js"></script>
+    <script src="../assets/libs/%40frostui/tailwindcss/frostui.js"></script>
+
+    <!-- App Js -->
+    <script src="../assets/js/app.js"></script>
+
+    <script>
+        // toggle password
+        const passwordInput = document.getElementById('password');
+        const showPasswordCheckbox = document.getElementById('show-password');
+
+        showPasswordCheckbox.addEventListener('change', function () {
+            if (showPasswordCheckbox.checked) {
+                passwordInput.type = 'text';
+            } else {
+                passwordInput.type = 'password';
+            }
+        });
+
+        // Alert
+        const alerts = document.querySelectorAll('.alert')
+        for (let i = 0; i < alerts.length; i++) {
+            setTimeout(() => {
+                alerts[i].remove();
+            }, 2500);
+        }
+
+    </script>
+
+</body>
+
+
+<!-- Mirrored from coderthemes.com/konrix/layouts/apps-calendar.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 09 Oct 2024 06:31:06 GMT -->
+
+</html>

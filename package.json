@@ -1,0 +1,31 @@
+{
+  "name": "tracer-study",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:css": "npx tailwindcss -i ./public/styles/tailwind.css -o ./public/styles/style.css --watch",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "autoprefixer": "^10.4.20",
+    "bcrypt": "^5.1.1",
+    "connect-flash": "^0.1.1",
+    "connect-mongodb-session": "^5.0.0",
+    "dotenv": "^16.4.7",
+    "ejs": "^3.1.10",
+    "ejs-lint": "^2.0.0",
+    "express": "^4.21.0",
+    "express-session": "^1.18.1",
+    "method-override": "^3.0.0",
+    "mongodb": "^6.9.0",
+    "mongoose": "^8.9.0"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.13"
+  }
+}

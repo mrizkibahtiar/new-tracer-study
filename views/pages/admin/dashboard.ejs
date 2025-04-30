@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Admin - Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description">
+    <meta content="coderthemes" name="author">
+
+    <!-- App favicon -->
+    <link href="/assets/images/smk-bp.png" rel="icon" type="image/png">
+
+    <!-- App css -->
+    <link href="/assets/css/app.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Icons css -->
+    <link href="/assets/css/icons.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Theme Config Js -->
+    <script src="/assets/js/config.js"></script>
+</head>
+
+<body>
+
+    <div class="flex wrapper">
+        <%- include('../../components/sidebar_admin') %>
+
+            <div class="page-content">
+                <%- include ('../../components/topbar_admin') %>
+
+                    <main class="flex-grow p-6">
+
+                        <!-- Page Title Start -->
+                        <div class="flex justify-between items-center mb-6">
+                            <h4 class="text-slate-900 dark:text-slate-200 text-lg font-medium">Dashboard</h4>
+
+                            <div class="md:flex hidden items-center gap-2.5 text-sm font-semibold">
+                                <div class="flex items-center gap-2">
+                                    <a href="/admin"
+                                        class="text-sm font-medium text-slate-700 dark:text-slate-400">Dashboard</a>
+                                </div>
+
+                                <!-- <div class="flex items-center gap-2">
+                                    <i class="mgc_right_line text-lg flex-shrink-0 text-slate-400 rtl:rotate-180"></i>
+                                    <a href="#"
+                                        class="text-sm font-medium text-slate-700 dark:text-slate-400">Elements</a>
+                                </div> -->
+                            </div>
+                        </div>
+                        <!-- Page Title End -->
+
+                        <div class="grid 2xl:grid-cols-4 gap-6 mb-6">
+
+                            <div class="2xl:col-span-4">
+                                <div class="card p-6">
+                                    <!-- <h4 class="text-gray-600 dark:text-gray-300 mb-2.5">Presentase Penyelesain Form
+                                        Tracer Study
+                                    </h4> -->
+                                    <div class="flex justify-between items-center mb-6">
+                                        <h5 class="text-base font-semibold">Presentase Penyelesain Tracer Study
+                                        </h5>
+                                        <h5 class="text-gray-600 dark:text-gray-300"> <span class="text-primary">
+                                                <%= percentage %>%
+                                            </span> / 100% alumni
+                                        </h5>
+                                    </div>
+                                    <div
+                                        class="flex w-full h-1 bg-gray-200 rounded-full overflow-hidden dark:bg-gray-700 ">
+                                        <div class="flex flex-col justify-center overflow-hidden bg-primary"
+                                            style="width: <%= percentage %>%" role="progressbar" aria-valuenow="25"
+                                            aria-valuemin="65" aria-valuemax="100">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="2xl:col-span-4">
+                                <div class="grid lg:grid-cols-3 gap-6">
+                                    <div class="col-span-1">
+                                        <div class="card">
+                                            <div class="p-6">
+                                                <h4 class="card-title">Perbandingan Kegiatan</h4>
+
+                                                <div id="perbandingan-kegiatan" class="apex-charts my-8"
+                                                    data-berkegiatan="<%= JSON.stringify(berkegiatan) %>"
+                                                    data-belumadakegiatan="<%= JSON.stringify(belumAdaKegiatan) %>">
+                                                </div>
+
+                                                <div class="flex justify-center">
+                                                    <div class="w-1/2 text-center">
+                                                        <p class="fw-semibold text-muted">
+                                                            <i class="mgc_round_fill text-red-500"></i> Belum Ada
+                                                            Kegiatan
+                                                        </p>
+                                                    </div>
+                                                    <div class="w-1/2 text-center">
+                                                        <p class="fw-semibold text-muted">
+                                                            <i class="mgc_round_fill text-green-500"></i> Berkegiatan
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="lg:col-span-2">
+                                        <div class="card">
+                                            <div class="p-6">
+                                                <h4 class="card-title">Detail Kegiatan Alumni</h4>
+                                                <div id="bar_chart" class="apex-charts" dir="ltr"
+                                                    data-bekerja="<%= JSON.stringify(bekerja) %>"
+                                                    data-melanjutkanstudi="<%= JSON.stringify(studiLanjutan) %>"
+                                                    data-berwirausaha="<%= JSON.stringify(berwirausaha) %>"
+                                                    data-kursus="<%= JSON.stringify(kursus) %>"
+                                                    data-belumadakegiatan="<%= JSON.stringify(belumAdaKegiatan) %>">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- Grid End -->
+
+                        <div class="grid lg:grid-cols-4 md:grid-cols-2 gap-6 mb-6">
+                            <div class="col-span-1">
+                                <div class="card">
+                                    <div class="p-6">
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0 me-3">
+                                                <div
+                                                    class="w-12 h-12 flex justify-center items-center rounded text-primary bg-primary/25">
+                                                    <i class="mgc_emoji_line text-xl"></i>
+                                                </div>
+                                            </div>
+                                            <div class="flex-grow">
+                                                <h5 class="mb-1">Total Admin</h5>
+                                                <p>
+                                                    <%= jumlahAdmin %>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-span-1">
+                                <div class="card">
+                                    <div class="p-6">
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0 me-3">
+                                                <div
+                                                    class="w-12 h-12 flex justify-center items-center rounded text-success bg-success/25">
+                                                    <i class="mgc_group_line text-xl"></i>
+                                                </div>
+                                            </div>
+                                            <div class="flex-grow">
+                                                <h5 class="mb-1">Total Alumni</h5>
+                                                <p>
+                                                    <%= jumlahAlumni %>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-span-1">
+                                <div class="card">
+                                    <div class="p-6">
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0 me-3">
+                                                <div
+                                                    class="w-12 h-12 flex justify-center items-center rounded text-info bg-info/25">
+                                                    <i class="mgc_border_outer_fill text-xl"></i>
+                                                </div>
+                                            </div>
+                                            <div class="flex-grow">
+                                                <h5 class="mb-1">Alumni yang mengisi</h5>
+                                                <p>
+                                                    <%= jumlahTracer %>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-span-1">
+                                <div class="card">
+                                    <div class="p-6">
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0 me-3">
+                                                <div
+                                                    class="w-12 h-12 flex justify-center items-center rounded text-warning bg-warning/25">
+                                                    <i class="mgc_briefcase_fill text-xl"></i>
+                                                </div>
+                                            </div>
+                                            <div class="flex-grow">
+                                                <h5 class="mb-1">Alumni Bekerja</h5>
+                                                <p>
+                                                    <%= bekerja %>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- Grid End -->
+
+
+                    </main>
+
+                    <%- include('../../components/footer') %>
+            </div>
+
+    </div>
+
+    <!-- Back to Top Button -->
+    <button data-toggle="back-to-top"
+        class="fixed hidden h-10 w-10 items-center justify-center rounded-full z-10 bottom-20 translate-x-52 end-14 p-2.5 bg-primary cursor-pointer shadow-lg text-white">
+        <i class="mgc_arrow_up_line text-lg"></i>
+    </button>
+
+    <!-- Apex Chart Plugin Js -->
+    <script src="/assets/libs/apexcharts/apexcharts.min.js"></script>
+
+    <!-- <script src="assets/js/pages/dashboard.js"></script> -->
+
+    <!-- Plugin Js -->
+    <script src="/assets/libs/simplebar/simplebar.min.js"></script>
+    <script src="/assets/libs/feather-icons/feather.min.js"></script>
+    <script src="/assets/libs/%40frostui/tailwindcss/frostui.js"></script>
+
+    <!-- App Js -->
+    <script src="/assets/js/app.js"></script>
+
+    <script>
+        function renderBarChart() {
+            var colors = ["#3073F1", "#0acf97", "#f1b44c", "#c16363", "#bb9451"];
+            var dataColors = document.querySelector("#bar_chart").dataset.colors;
+            var dataBekerja = JSON.parse(document.querySelector("#bar_chart").dataset.bekerja);
+            var dataMelanjutkanStudi = JSON.parse(document.querySelector("#bar_chart").dataset.melanjutkanstudi);
+            var dataKursus = JSON.parse(document.querySelector("#bar_chart").dataset.kursus);
+            var dataBerwirausaha = JSON.parse(document.querySelector("#bar_chart").dataset.berwirausaha);
+            var dataBelumAdaKegiatan = JSON.parse(document.querySelector("#bar_chart").dataset.belumadakegiatan);
+            console.log(dataBekerja, dataMelanjutkanStudi, dataKursus, dataBerwirausaha, dataBelumAdaKegiatan);
+            var options = {
+                chart: { height: 350, type: "bar", toolbar: { show: !1 } },
+                plotOptions: { bar: { horizontal: !0 } },
+                dataLabels: { enabled: !1 },
+                series: [{ data: [dataBekerja, dataMelanjutkanStudi, dataKursus, dataBerwirausaha, dataBelumAdaKegiatan] }],
+                colors: colors,
+                grid: { borderColor: [] },
+                xaxis: { categories: ["Bekerja", "Melanjutkan Studi", "Kursus", "Usaha", "Belum ada Kegiatan"] },
+            };
+            var chart = new ApexCharts(document.querySelector("#bar_chart"), options);
+            chart.render();
+        }
+
+        function renderDonutChart() {
+            var colors = ["#0acf97", "#bb9451"];
+            var dataColors = document.querySelector("#perbandingan-kegiatan").dataset.colors;
+            var dataBerkegiatan = JSON.parse(document.querySelector("#perbandingan-kegiatan").dataset.berkegiatan);
+            var dataBelumAdaKegiatan = JSON.parse(document.querySelector("#perbandingan-kegiatan").dataset.belumadakegiatan);
+            var options = {
+                chart: { height: 280, type: "donut" },
+                legend: { show: !1 },
+                stroke: { colors: ["transparent"] },
+                series: [dataBerkegiatan, dataBelumAdaKegiatan],
+                labels: ["Berkegiatan", "Belum ada Kegiatan"],
+                colors: (colors = dataColors ? dataColors.split(",") : colors),
+                responsive: [{ breakpoint: 480, options: { chart: { width: 200 }, legend: { position: "bottom" } } }],
+            };
+            var chart = new ApexCharts(document.querySelector("#perbandingan-kegiatan"), options);
+            chart.render();
+        }
+
+        function renderRadialBarChart() {
+            var colors = ["#3073F1", "#0acf97", "#f1b44c", "#c16363"];
+            var dataColors = document.querySelector("#project-overview-chart").dataset.colors;
+            var options = {
+                chart: { height: 350, type: "radialBar" },
+                colors: (colors = dataColors ? dataColors.split(",") : colors),
+                series: [85, 70, 80, 65],
+                labels: ["Product Design", "Web Development", "Illustration Design", "UI/UX Design"],
+                plotOptions: { radialBar: { track: { margin: 5 } } },
+            };
+            var chart = new ApexCharts(document.querySelector("#project-overview-chart"), options);
+            chart.render();
+        }
+
+        // Panggil fungsi
+        renderBarChart();
+        renderDonutChart();
+        // renderRadialBarChart();
+
+    </script>
+
+</body>
+
+</html>
