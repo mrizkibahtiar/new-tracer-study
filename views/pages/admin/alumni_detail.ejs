@@ -252,66 +252,6 @@
                                                 </form>
                                             </div>
                                         </div>
-
-                                        <!-- button ganti password -->
-                                        <button class="btn bg-success/25 text-success hover:bg-success hover:text-white"
-                                            data-fc-target="ganti-password" data-fc-type="modal" type="button">
-                                            Ganti Password
-                                        </button>
-                                        <!-- modal ganti password -->
-                                        <div id="ganti-password"
-                                            class="w-full h-full mt-5 fixed top-0 left-0 z-50 transition-all duration-500 fc-modal hidden">
-                                            <div
-                                                class="fc-modal-open:opacity-100 duration-500 opacity-0 ease-out transition-all sm:max-w-lg sm:w-full m-3 sm:mx-auto flex flex-col bg-white border shadow-sm rounded-md dark:bg-slate-800 dark:border-gray-700">
-                                                <div
-                                                    class="flex justify-between items-center py-2.5 px-4 border-b dark:border-gray-700">
-                                                    <h3 class="font-medium text-gray-800 dark:text-white text-lg">
-                                                        Ganti Password
-                                                    </h3>
-                                                    <button
-                                                        class="inline-flex flex-shrink-0 justify-center items-center h-8 w-8 dark:text-gray-200"
-                                                        data-fc-dismiss type="button">
-                                                        <span class="material-symbols-rounded">close</span>
-                                                    </button>
-                                                </div>
-                                                <form method="POST"
-                                                    action="/admin/alumni-edit/password/<%= alumni.nisn %>/?_method=PUT">
-                                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-3 px-4">
-                                                        <div class="md:col-span-2">
-                                                            <label for="password"
-                                                                class="text-gray-800 text-sm font-medium inline-block mb-2">
-                                                                Password <span class="text-red-500">*</span>
-                                                            </label>
-                                                            <input type="password"
-                                                                class="form-input text-black dark:text-white"
-                                                                id="password" placeholder="Masukkan Password Baru"
-                                                                required name="password">
-                                                        </div>
-                                                        <div class="md:col-span-2">
-                                                            <label for="confirmPassword"
-                                                                class="text-gray-800 text-sm font-medium inline-block mb-2">
-                                                                Konfirmasi Password <span class="text-red-500">*</span>
-                                                            </label>
-                                                            <input type="password"
-                                                                class="form-input text-black dark:text-white"
-                                                                id="confirmPassword"
-                                                                placeholder="Masukkan Konfirmasi Password" required
-                                                                name="confirmPassword">
-                                                        </div>
-                                                    </div>
-                                                    <div class="flex gap-3 mt-2">
-                                                        <div
-                                                            class="flex justify-end items-center gap-4 p-4 dark:border-slate-700">
-                                                            <button
-                                                                class="btn dark:text-gray-200 border border-slate-200 dark:border-slate-700 hover:bg-slate-100 hover:dark:bg-slate-700 transition-all"
-                                                                data-fc-dismiss type="button">Close</button>
-                                                            <button type="submit"
-                                                                class="btn bg-success text-white">Save</button>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
