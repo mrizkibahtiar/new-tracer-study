@@ -17,7 +17,7 @@
 
     <!-- Style css -->
     <link href="assets/auth/style.min.css" rel="stylesheet" type="text/css">
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 
 <body>
@@ -53,7 +53,6 @@
                                     </div>
 
                                     <div class="space-y-5 mt-5">
-
                                         <div>
                                             <label class="font-medium text-sm block mb-2" for="nisn">NISN</label>
                                             <input
@@ -61,10 +60,16 @@
                                                 type="text" id="nisn" name="nisn" placeholder="Masukkan NISN">
                                         </div>
                                     </div>
+                                    <div class="w-full flex justify-center">
+                                        <div class="g-recaptcha mt-5"
+                                            data-sitekey="6Lfc7jorAAAAAJV9jQmVWO0_b0HD3C99hZ6EsBwl">
+                                        </div>
+                                    </div>
 
-                                    <div class="flex flex-wrap items-center justify-between gap-6 mt-8">
+                                    <div class="flex flex-wrap items-center justify-between gap-6 mt-5">
                                         <button type="submit"
-                                            class="bg-sky-600 text-white text-sm rounded-lg px-6 py-2.5 w-full font-semibold">Masuk</button>
+                                            class="text-white text-sm rounded-lg px-6 py-2.5 w-full font-semibold"
+                                            style="background-color: #16a34a;">Masuk</button>
                                     </div>
                                 </div>
 
