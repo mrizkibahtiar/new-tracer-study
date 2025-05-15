@@ -15,7 +15,7 @@ module.exports = {
             req.session.save();
             return res.redirect('/alumni');
         } else {
-            return res.render('login', { error: 'Alumni dengan NISN tersebut tidak ditemukan' }); // Pastikan render ke view yang benar
+            return res.render('pages/login', { error: 'Alumni dengan NISN tersebut tidak ditemukan' }); // Pastikan render ke view yang benar
         }
     },
     AdminLogin: async (req, res) => {
