@@ -54,18 +54,28 @@ module.exports = {
             });
 
             // Hitung persentase
-            const percentage =
+            const alumniPersen =
                 alumni.length > 0 ? Math.round((tracerStudy.length / alumni.length) * 100) : 0;
+            let bekerjaPersen = bekerja > 0 ? Math.round((tracerStudy.length / bekerja) * 100) : 0;
+            let studiPersen = studiLanjutan > 0 ? Math.round((tracerStudy.length / studiLanjutan) * 100) : 0;
+            let kursusPersen = kursus > 0 ? Math.round((tracerStudy.length / kursus) * 100) : 0;
+            let usahaPersen = berwirausaha > 0 ? Math.round((tracerStudy.length / berwirausaha) * 100) : 0;
+            let bakPersen = belumAdaKegiatan > 0 ? Math.round((tracerStudy.length / belumAdaKegiatan) * 100) : 0;
 
             return res.render('pages/admin/dashboard', {
                 admin,
-                percentage,
+                alumniPersen,
                 berkegiatan,
                 belumAdaKegiatan,
                 bekerja,
                 berwirausaha,
                 studiLanjutan,
                 kursus,
+                bekerjaPersen,
+                studiPersen,
+                kursusPersen,
+                usahaPersen,
+                bakPersen,
                 jumlahAdmin,
                 jumlahAlumni: alumni.length,
                 jumlahTracer: tracerStudy.length

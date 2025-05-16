@@ -17,45 +17,68 @@
     <link href="assets/admin/libs/simplebar/simplebar.min.css" rel="stylesheet">
     <link href="assets/admin/libs/%40mdi/font/css/materialdesignicons.min.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="assets/admin/css/tailwind.min.css">
+    <style>
+        @media (min-width: 768px) {
+            .grid-container {
+                display: grid;
+                grid-template-columns: repeat(12, minmax(0, 1fr));
+                gap: 1.5rem;
+                /* Setara dengan gap-6 */
+            }
+
+            .col-span-6 {
+                grid-column: span 6 / span 6;
+            }
+
+            .col-span-3 {
+                grid-column: span 3 / span 3;
+            }
+        }
+
+        .grid-container {
+            display: grid;
+            gap: 1.5rem;
+            /* Tetap berikan gap untuk layout mobile */
+        }
+    </style>
 </head>
 
 <body>
     <div class="page-wrapper toggled">
-        <!-- sidebar-wrapper -->
         <nav id="sidebar" class="sidebar-wrapper sidebar-dark">
             <div class="sidebar-content">
                 <div class="sidebar-brand">
-                    <a href="/"><img src="assets/admin/images/logo-light.png" alt="" width="200px"></a>
+                    <a href="/"><img src="../../assets/admin/images/logo-light.png" alt="" width="200px"></a>
                 </div>
 
                 <ul class="sidebar-menu border-t border-white/10" data-simplebar style="height: calc(100% - 70px);">
                     <li>
-                        <a href="/admin"><i class="mdi mdi-chart-bell-curve-cumulative me-2"></i>Dashboard</a>
+                        <a href="/admin" style="font-size: 1.4rem;"><i
+                                class="mdi mdi-chart-bell-curve-cumulative me-2"></i>Dashboard</a>
                     </li>
 
                     <li>
-                        <a href="explore-property.html"><i class="mdi mdi-home-city me-2"></i>Alumni </a>
+                        <a href="/admin/alumni-list" style="font-size: 1.4rem;"><i
+                                class="mdi mdi-home-city me-2"></i>Alumni </a>
                     </li>
 
                     <li>
-                        <a href="favorite-property.html"><i class="mdi mdi-home-heart me-2"></i>Berita </a>
+                        <a href="favorite-property.html" style="font-size: 1.4rem;"><i
+                                class="mdi mdi-home-heart me-2"></i>Berita </a>
                     </li>
 
                     <li>
-                        <a href="add-property.html"><i class="mdi mdi-home-plus me-2"></i>Lowongan </a>
+                        <a href="add-property.html" style="font-size: 1.4rem;"><i
+                                class="mdi mdi-home-plus me-2"></i>Lowongan </a>
                     </li>
 
                     <li>
-                        <a href="chat.html"><i class="mdi mdi-chat-outline me-2"></i>Saran</a>
+                        <a href="chat.html" style="font-size: 1.4rem;"><i
+                                class="mdi mdi-chat-outline me-2"></i>Saran</a>
                     </li>
-
-
                 </ul>
-                <!-- sidebar-menu  -->
             </div>
         </nav>
-        <!-- sidebar-wrapper  -->
-
         <!-- Start Page Content -->
         <main class="page-content bg-gray-50 dark:bg-slate-800">
             <!-- Top Header -->
@@ -64,7 +87,7 @@
                     <div class="flex items-center space-x-1">
                         <!-- Logo -->
                         <a href="#" class="xl:hidden block me-2">
-                            <img src="assets/admin/images/logo-icon-32.png" class="md:hidden block" alt="">
+                            <img src="assets/admin/images/smk-bp.png" class="md:hidden block" alt="" width="40px">
                             <span class="md:block hidden">
                                 <img src="assets/admin/images/logo-dark.png" class="inline-block dark:hidden" alt=""
                                     width="200px">
@@ -76,7 +99,7 @@
 
                         <!-- show or close sidebar -->
                         <a id="close-sidebar"
-                            class="size-8 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-[20px] text-center bg-gray-50 dark:bg-slate-800 hover:bg-gray-100 dark:hover:bg-slate-700 border border-gray-100 dark:border-gray-800 text-slate-900 dark:text-white rounded-md"
+                            class="size-8 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-[20px] text-center bg-gray-50 dark:bg-slate-800 hover:bg-gray-100 dark:hover:bg-slate-700 border border-black dark:border-gray-800 text-slate-900 dark:text-white rounded-md"
                             href="javascript:void(0)">
                             <i data-feather="menu" class="size-4"></i>
                         </a>
@@ -89,9 +112,9 @@
                         <li class="dropdown inline-block relative">
                             <button data-dropdown-toggle="dropdown" class="dropdown-toggle items-center" type="button">
                                 <span
-                                    class="size-10 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-[20px] text-center bg-gray-50 dark:bg-slate-800 hover:bg-gray-100 dark:hover:bg-slate-700 border border-gray-100 dark:border-gray-800 text-slate-900 dark:text-white rounded-md"><img
+                                    class="size-10 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-[20px] text-center bg-gray-50 dark:bg-slate-800 hover:bg-gray-100 dark:hover:bg-slate-700 border border-black dark:border-gray-800 text-slate-900 dark:text-white rounded-md"><img
                                         src="assets/admin/images/profile-icon-light.png" class="rounded-md w-full"
-                                        alt=""></span>
+                                        alt="" style="cursor: pointer;"></span>
                             </button>
                             <!-- Dropdown menu -->
                             <div class="dropdown-menu absolute end-0 m-0 mt-4 z-10 w-44 rounded-md overflow-hidden bg-white dark:bg-slate-900 shadow-sm dark:shadow-gray-700 hidden"
@@ -119,114 +142,257 @@
 
             <div class="container-fluid relative px-3">
                 <div class="layout-specing">
-                    <!-- Start Content -->
-                    <div class="flex justify-between items-center">
-                        <div>
-                            <h5 class="text-xl font-semibold">Hello, Admin</h5>
-                            <h6 class="text-slate-400">Selamat Datang Kembali!</h6>
+                    <div class="grid mt-6 gap-6">
+                        <div class="grid-container">
+                            <div class="col-span-6 relative rounded-md p-6 overflow-hidden"
+                                style="background-image: linear-gradient(to right, #d4edda, #34d399);">
+                                <div>
+                                    <h2 class="text-2xl font-bold text-gray-800">
+                                        Halo <%= admin.nama %> <span class="inline-block">👋</span>
+                                    </h2>
+                                    <p class="text-gray-700 mt-1 text-xl">
+                                        Selamat Datang Kembali!
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="col-span-3 relative overflow-hidden rounded-md shadow-sm dark:shadow-gray-700 bg-white dark:bg-slate-900" ">
+                                <div class=" p-5 flex items-center justify-between">
+                                <span class="me-3">
+                                    <span class="text-black block text-xl">Total Admin </span>
+                                    <span class="flex items-center justify-between mt-1">
+                                        <span class="text-2xl font-medium"><span class="counter-value"
+                                                data-target="<%= jumlahAdmin %>"></span></span>
+                                    </span>
+                                </span>
+
+                                <span
+                                    class="flex justify-center items-center rounded-md size-12 min-w-[48px] bg-green-600 dark:bg-slate-800 shadow-sm shadow-gray-100 dark:shadow-gray-700 text-white">
+                                    <i class="mdi 	mdi-account text-[28px]"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="col-span-3 relative overflow-hidden rounded-md shadow-sm dark:shadow-gray-700 bg-white dark:bg-slate-900" ">
+                                <div class=" p-5 flex items-center justify-between">
+                            <span class="me-3">
+                                <span class="text-black block text-xl">Total Alumni</span>
+                                <span class="flex items-center justify-between mt-1">
+                                    <span class="text-2xl font-medium"><span class="counter-value"
+                                            data-target="<%= jumlahAlumni %>"></span></span>
+                                </span>
+                            </span>
+
+                            <span
+                                class="flex justify-center items-center rounded-md size-12 min-w-[48px] bg-green-600 dark:bg-slate-800 shadow-sm shadow-gray-100 dark:shadow-gray-700 text-white">
+                                <i class="mdi mdi-account-group text-[28px]"></i>
+                            </span>
                         </div>
                     </div>
+                </div>
 
-                    <div class="grid xl:grid-cols-5 md:grid-cols-3 grid-cols-1 mt-6 gap-6">
-                        <div
-                            class="relative overflow-hidden rounded-md shadow-sm dark:shadow-gray-700 bg-white dark:bg-slate-900">
-                            <div class="p-5 flex items-center justify-between">
-                                <span class="me-3">
-                                    <span class="text-slate-400 block">Total</span>
-                                    <span class="flex items-center justify-between mt-1">
-                                        <span class="text-2xl font-medium"><span class="counter-value"
-                                                data-target="45890">42205</span></span>
-                                    </span>
-                                </span>
-
-                                <span
-                                    class="flex justify-center items-center rounded-md size-12 min-w-[48px] bg-slate-50 dark:bg-slate-800 shadow-sm shadow-gray-100 dark:shadow-gray-700 text-green-600">
-                                    <i class="mdi mdi-currency-usd text-[28px]"></i>
-                                </span>
-                            </div>
-                        </div><!--end-->
-
-                        <div
-                            class="relative overflow-hidden rounded-md shadow-sm dark:shadow-gray-700 bg-white dark:bg-slate-900">
-                            <div class="p-5 flex items-center justify-between">
-                                <span class="me-3">
-                                    <span class="text-slate-400 block">Total</span>
-                                    <span class="flex items-center justify-between mt-1">
-                                        <span class="text-2xl font-medium"><span class="counter-value"
-                                                data-target="2456">1857</span></span>
-                                    </span>
-                                </span>
-
-                                <span
-                                    class="flex justify-center items-center rounded-md size-12 min-w-[48px] bg-slate-50 dark:bg-slate-800 shadow-sm shadow-gray-100 dark:shadow-gray-700 text-green-600">
-                                    <i class="mdi mdi-account-group-outline text-[28px]"></i>
-                                </span>
-                            </div>
-                        </div><!--end-->
-
-                        <div
-                            class="relative overflow-hidden rounded-md shadow-sm dark:shadow-gray-700 bg-white dark:bg-slate-900">
-                            <div class="p-5 flex items-center justify-between">
-                                <span class="me-3">
-                                    <span class="text-slate-400 block">Total </span>
-                                    <span class="flex items-center justify-between mt-1">
-                                        <span class="text-2xl font-medium"><span class="counter-value"
-                                                data-target="358">54</span></span>
-                                    </span>
-                                </span>
-
-                                <span
-                                    class="flex justify-center items-center rounded-md size-12 min-w-[48px] bg-slate-50 dark:bg-slate-800 shadow-sm shadow-gray-100 dark:shadow-gray-700 text-green-600">
-                                    <i class="mdi mdi-home-city-outline text-[28px]"></i>
-                                </span>
-                            </div>
-                        </div><!--end-->
-
-                        <div
-                            class="relative overflow-hidden rounded-md shadow-sm dark:shadow-gray-700 bg-white dark:bg-slate-900">
-                            <div class="p-5 flex items-center justify-between">
-                                <span class="me-3">
-                                    <span class="text-slate-400 block">Total</span>
-                                    <span class="flex items-center justify-between mt-1">
-                                        <span class="text-2xl font-medium"><span class="counter-value"
-                                                data-target="243">60</span></span>
-                                    </span>
-                                </span>
-
-                                <span
-                                    class="flex justify-center items-center rounded-md size-12 min-w-[48px] bg-slate-50 dark:bg-slate-800 shadow-sm shadow-gray-100 dark:shadow-gray-700 text-green-600">
-                                    <i class="mdi mdi-home-lightning-bolt-outline text-[28px]"></i>
-                                </span>
-                            </div>
-                        </div><!--end-->
-
-                        <div
-                            class="relative overflow-hidden rounded-md shadow-sm dark:shadow-gray-700 bg-white dark:bg-slate-900">
-                            <div class="p-5 flex items-center justify-between">
-                                <span class="me-3">
-                                    <span class="text-slate-400 block">Total</span>
-                                    <span class="flex items-center justify-between mt-1">
-                                        <span class="text-2xl font-medium"><span class="counter-value"
-                                                data-target="115">45</span></span>
-                                    </span>
-                                </span>
-
-                                <span
-                                    class="flex justify-center items-center rounded-md size-12 min-w-[48px] bg-slate-50 dark:bg-slate-800 shadow-sm shadow-gray-100 dark:shadow-gray-700 text-green-600">
-                                    <i class="mdi mdi-home-clock-outline text-[28px]"></i>
-                                </span>
-                            </div>
-                        </div><!--end-->
+                <div
+                    class="relative overflow-hidden rounded-md shadow-sm dark:shadow-gray-700 bg-white dark:bg-slate-900 py-3">
+                    <div
+                        class="flex items-center justify-between border-b border-gray-100 dark:border-gray-800 mb-5 px-6">
+                        <h6 class="text-2xl font-semibold">Rincian Tracer Study : </h6>
                     </div>
 
-                    <script src="assets/admin/libs/jsvectormap/jsvectormap.min.js"></script>
-                    <script src="assets/admin/libs/jsvectormap/maps/world.js"></script>
-                    <script src="assets/admin/js/jsvectormap.init.js"></script>
-                    <script src="assets/admin/libs/apexcharts/apexcharts.min.js"></script>
-                    <script src="assets/admin/libs/feather-icons/feather.min.js"></script>
-                    <script src="assets/admin/libs/simplebar/simplebar.min.js"></script>
-                    <script src="assets/admin/js/plugins.init.js"></script>
-                    <script src="assets/admin/js/app.js"></script>
+                    <div class="grid md:grid-cols-3 gap-6 px-6">
+                        <div
+                            class="relative overflow-hidden rounded-md shadow-sm dark:shadow-gray-700 bg-white dark:bg-slate-900">
+                            <div class="p-5 flex items-center justify-between">
+                                <span class="me-3">
+                                    <span class="text-black block text-xl">Mengisi Form</span>
+                                    <span class="flex items-center justify-between mt-1">
+                                        <span class="text-2xl font-medium"><span class="counter-value"
+                                                data-target="<%= jumlahTracer %>"></span> Alumni</span>
+                                    </span>
+                                </span>
+
+                                <span
+                                    class="flex justify-center items-center rounded-md size-12 min-w-[48px] bg-green-600 dark:bg-slate-800 shadow-sm shadow-gray-100 dark:shadow-gray-700 text-white">
+                                    <i class="mdi mdi-list-box text-[28px]"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div
+                            class="relative overflow-hidden rounded-md shadow-sm dark:shadow-gray-700 bg-white dark:bg-slate-900">
+                            <div class="p-5 flex items-center justify-between">
+                                <span class="me-3">
+                                    <span class="text-black block text-xl">Bekerja</span>
+                                    <span class="flex items-center justify-between mt-1">
+                                        <span class="text-2xl font-medium"><span class="counter-value"
+                                                data-target="<%= jumlahTracer %>"></span> Alumni</span>
+                                    </span>
+                                </span>
+
+                                <span
+                                    class="flex justify-center items-center rounded-md size-12 min-w-[48px] bg-green-600 dark:bg-slate-800 shadow-sm shadow-gray-100 dark:shadow-gray-700 text-white">
+                                    <i class="mdi mdi-briefcase text-[28px]"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div
+                            class="relative overflow-hidden rounded-md shadow-sm dark:shadow-gray-700 bg-white dark:bg-slate-900">
+                            <div class="p-5 flex items-center justify-between">
+                                <span class="me-3">
+                                    <span class="text-black block text-xl">Lanjut Studi </span>
+                                    <span class="flex items-center justify-between mt-1">
+                                        <span class="text-2xl font-medium"><span class="counter-value"
+                                                data-target="<%= jumlahTracer %>"></span> Alumni</span>
+                                    </span>
+                                </span>
+
+                                <span
+                                    class="flex justify-center items-center rounded-md size-12 min-w-[48px] bg-green-600 dark:bg-slate-800 shadow-sm shadow-gray-100 dark:shadow-gray-700 text-white">
+                                    <i class="mdi mdi-school text-[28px]"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div
+                            class="relative overflow-hidden rounded-md shadow-sm dark:shadow-gray-700 bg-white dark:bg-slate-900">
+                            <div class="p-5 flex items-center justify-between">
+                                <span class="me-3">
+                                    <span class="text-black block text-xl">Kursus </span>
+                                    <span class="flex items-center justify-between mt-1">
+                                        <span class="text-2xl font-medium"><span class="counter-value"
+                                                data-target="<%= jumlahTracer %>"></span> Alumni</span>
+                                    </span>
+                                </span>
+
+                                <span
+                                    class="flex justify-center items-center rounded-md size-12 min-w-[48px] bg-green-600 dark:bg-slate-800 shadow-sm shadow-gray-100 dark:shadow-gray-700 text-white">
+                                    <i class="mdi mdi-book-open-page-variant text-[28px]"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div
+                            class="relative overflow-hidden rounded-md shadow-sm dark:shadow-gray-700 bg-white dark:bg-slate-900">
+                            <div class="p-5 flex items-center justify-between">
+                                <span class="me-3">
+                                    <span class="text-black block text-xl">Usaha </span>
+                                    <span class="flex items-center justify-between mt-1">
+                                        <span class="text-2xl font-medium"><span class="counter-value"
+                                                data-target="<%= jumlahTracer %>"></span> Alumni</span>
+                                    </span>
+                                </span>
+
+                                <span
+                                    class="flex justify-center items-center rounded-md size-12 min-w-[48px] bg-green-600 dark:bg-slate-800 shadow-sm shadow-gray-100 dark:shadow-gray-700 text-white">
+                                    <i class="mdi mdi-store text-[28px]"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div
+                            class="relative overflow-hidden rounded-md shadow-sm dark:shadow-gray-700 bg-white dark:bg-slate-900">
+                            <div class="p-5 flex items-center justify-between">
+                                <span class="me-3">
+                                    <span class="text-black block text-xl">Belum Ada Kegiatan </span>
+                                    <span class="flex items-center justify-between mt-1">
+                                        <span class="text-2xl font-medium"><span class="counter-value"
+                                                data-target="<%= jumlahTracer %>"></span> Alumni</span>
+                                    </span>
+                                </span>
+
+                                <span
+                                    class="flex justify-center items-center rounded-md size-12 min-w-[48px] bg-green-600 dark:bg-slate-800 shadow-sm shadow-gray-100 dark:shadow-gray-700 text-white">
+                                    <i class="mdi mdi-account-box text-[28px]"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="grid lg:grid-cols-12 grid-cols-1 mt-6 gap-6">
+                <div class="lg:col-span-12">
+                    <div
+                        class="relative overflow-hidden rounded-md shadow-sm dark:shadow-gray-700 bg-white dark:bg-slate-900">
+                        <div
+                            class="p-6 flex items-center justify-between border-b border-gray-100 dark:border-gray-800">
+                            <h6 class="text-2xl font-semibold">Persebaran alumni (persen)</h6>
+                        </div>
+
+                        <div class="p-6">
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-slate-400">Bekerja</span>
+                                    <span class="text-slate-400">
+                                        <%= bekerjaPersen %>%
+                                    </span>
+                                </div>
+                                <div class="w-full bg-gray-100 dark:bg-gray-800 rounded-full h-[6px]">
+                                    <div class="bg-green-600 h-[6px] rounded-full" style="width: <%= bekerjaPersen %>%">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-5">
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-slate-400">Melanjutkan Study</span>
+                                    <span class="text-slate-400">
+                                        <%= studiPersen %>%
+                                    </span>
+                                </div>
+                                <div class="w-full bg-gray-100 dark:bg-gray-800 rounded-full h-[6px]">
+                                    <div class="bg-green-600 h-[6px] rounded-full" style="width: <%= studiPersen %>%">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-5">
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-slate-400">Kursus</span>
+                                    <span class="text-slate-400">
+                                        <%= kursusPersen %>%
+                                    </span>
+                                </div>
+                                <div class="w-full bg-gray-100 dark:bg-gray-800 rounded-full h-[6px]">
+                                    <div class="bg-green-600 h-[6px] rounded-full" style="width: <%= kursusPersen %>%">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-5">
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-slate-400">Usaha</span>
+                                    <span class="text-slate-400">
+                                        <%= usahaPersen %>%
+                                    </span>
+                                </div>
+                                <div class="w-full bg-gray-100 dark:bg-gray-800 rounded-full h-[6px]">
+                                    <div class="bg-green-600 h-[6px] rounded-full" style="width: <%= usahaPersen %>%">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-5">
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-slate-400">Belum Ada Kegiatan</span>
+                                    <span class="text-slate-400">
+                                        <%= bakPersen %>%
+                                    </span>
+                                </div>
+                                <div class="w-full bg-gray-100 dark:bg-gray-800 rounded-full h-[6px]">
+                                    <div class="bg-green-600 h-[6px] rounded-full" style="width: <%= bakPersen %>%">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script src="assets/admin/libs/jsvectormap/jsvectormap.min.js"></script>
+            <script src="assets/admin/libs/jsvectormap/maps/world.js"></script>
+            <script src="assets/admin/js/jsvectormap.init.js"></script>
+            <script src="assets/admin/libs/apexcharts/apexcharts.min.js"></script>
+            <script src="assets/admin/libs/feather-icons/feather.min.js"></script>
+            <script src="assets/admin/libs/simplebar/simplebar.min.js"></script>
+            <script src="assets/admin/js/plugins.init.js"></script>
+            <script src="assets/admin/js/app.js"></script>
 </body>
 
 </html>
