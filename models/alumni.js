@@ -5,10 +5,6 @@ const alumniSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    password: {
-        type: String,
-        required: true
-    },
     nama: {
         type: String,
         required: true

@@ -60,6 +60,7 @@
 
         <!-- Start Page Content -->
         <main class="page-content bg-gray-50 dark:bg-slate-800">
+
             <!-- Top Header -->
             <div class="top-header">
                 <div class="header-bar flex justify-between">
@@ -120,13 +121,97 @@
 
             <div class="relative overflow-hidden rounded-md shadow-sm dark:shadow-gray-700 bg-white dark:bg-slate-900 py-3"
                 style="margin-top: 2.5rem;">
-                <div class="p-6">
+                <div class="p-6" style="position: relative;">
+                    <div style="position: absolute; top: 2rem; right: 1.7rem; z-index: 10;">
+                        <button id="tambahAlumniBtn"
+                            style="background-color: #4CAF50; color: white; border: none; padding: 0.5rem 1rem; border-radius: 10px; cursor: pointer; font-size: 1.3rem;">
+                            Tambah
+                        </button>
+                    </div>
                     <div class="table-responsive overflow-x-visible">
                         <div id="table-gridjs" data-alumni="<%= JSON.stringify(alumni)%>"
                             data-tracer="<%= JSON.stringify(tracerStudy)%>"></div>
                     </div>
                 </div>
             </div>
+
+            <div id="tambahAlumniModal"
+                style="display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);">
+                <div
+                    style="background-color: #fefefe; margin: 10% auto; padding: 25px; border: 1px solid #888; width: 80%; max-width: 600px; font-size: 1.1rem;">
+                    <span id="closeModalBtn"
+                        style="color: #aaa; float: right; font-size: 34px; font-weight: bold; cursor: pointer;">&times;</span>
+                    <h2 style="font-size: 1.8rem; margin-bottom: 15px;">Tambah Data Alumni</h2>
+                    <form id="formTambahAlumni" style="font-size: 1.1rem;" method="post" action="/admin/alumni-list">
+                        <div style="margin-bottom: 15px;">
+                            <label for="nama" style="font-size: 1.2rem;">Nama:</label><br>
+                            <input type="text" id="nama" name="nama"
+                                style="width: 100%; padding: 0.7rem; margin-top: 5px; margin-bottom: 10px; box-sizing: border-box; font-size: 1.1rem; border: 1px solid #888; border-radius: 10px;"
+                                placeholder="masukkan nama">
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label for="nisn" style="font-size: 1.2rem;">NISN:</label><br>
+                            <input type="number" id="nisn" name="nisn"
+                                style="width: 100%; padding: 0.7rem; margin-top: 5px; margin-bottom: 10px; box-sizing: border-box; font-size: 1.1rem; border: 1px solid #888;  border-radius: 10px;"
+                                placeholder="masukkan NISN">
+                        </div>
+                        <div style=" margin-bottom: 15px;">
+                            <label for="jenisKelamin" style="font-size: 1.2rem;">Jenis Kelamin:</label><br>
+                            <select id="jenisKelamin" name="jenisKelamin"
+                                style="width: 100%; padding: 0.7rem; margin-top: 5px; margin-bottom: 10px; box-sizing: border-box; font-size: 1.1rem; border: 1px solid #888;  border-radius: 10px;">
+                                <option value="Laki-laki">Laki-laki</option>
+                                <option value="Perempuan">Perempuan</option>
+                            </select>
+                        </div>
+                        <button type="submit"
+                            style="background-color: #4CAF50; color: white; border: none; padding: 0.7rem 1.2rem; border-radius: 0.7rem; cursor: pointer; font-size: 1.2rem;">Simpan</button>
+                    </form>
+                </div>
+            </div>
+            <div
+                style="position: fixed; top: 5rem; right: 0; left: 0; z-index: 50; display: flex; align-items: center; justify-content: center;">
+                <% if (typeof success !=='undefined' ) { %>
+                    <div class="alert-success"
+                        style="display: flex; justify-content: center; align-items: center; width: 75%; max-width: 640px; margin-bottom: 2.25rem; padding: 1rem; border-radius: 0.375rem; font-size: 0.875rem; line-height: 1.25rem; color: #fff; background-color: #22c55e; font-size: 1.3rem;">
+                        <p style="margin: 0;">
+                            <%= success %>
+                        </p>
+                    </div>
+                    <% } %>
+                        <% if (typeof error !=='undefined' ) { %>
+                            <div class="alert-error"
+                                style="display: flex; justify-content: center; align-items: center; width: 75%; max-width: 640px; margin-bottom: 2.25rem; padding: 1rem; border-radius: 0.375rem; font-size: 0.875rem; line-height: 1.25rem; color: #fff; background-color: #ef4444;">
+                                <p style="margin: 0; font-size: 1.3rem;">
+                                    <%= error %>
+                                </p>
+                            </div>
+                            <% } %>
+            </div>
+
+
+            <div
+                style="position: fixed; top: 5rem; right: 0; left: 0; z-index: 50; display: flex; align-items: center; justify-content: center;">
+                <% if (success_msg && success_msg.length> 0) { %>
+                    <div class="alert-success"
+                        style="background-color: #4CAF50; color: white; border-radius: 0.375rem; padding: 1rem; margin-bottom: 2.25rem; width: 75%; max-width: 640px; font-size: 1.3rem; line-height: 1.25rem;"
+                        role="alert">
+                        <p style="margin: 0;">
+                            <%= success_msg %>
+                        </p>
+                    </div>
+                    <% } %>
+                        <% if (error_msg && error_msg.length> 0) { %>
+                            <div class="alert-error"
+                                style="background-color: #F44336; color: white; border-radius: 0.375rem; padding: 1rem; margin-bottom: 2.25rem; width: 75%; max-width: 640px; font-size: 1.3rem; line-height: 1.25rem;"
+                                role="alert">
+                                <p style="margin: 0;">
+                                    <%= error_msg %>
+                                </p>
+                            </div>
+                            <% } %>
+            </div>
+
+
         </main>
         <!-- End Page Content -->
 
@@ -211,20 +296,32 @@
                                         name: "Actions",
                                         formatter: (cell, row) => {
                                             const nisn = row.cells[2].data;
+                                            const nama = row.cells[1].data; // Ambil nama
+                                            const jenisKelamin = row.cells[3].data; // Ambil jenis kelamin
+
                                             return html(`
                                                 <div style="display: flex; gap: 0.5rem; align-items: center;">
-                                                <button style="background-color: blue; color: white; border: none; padding: 0.2rem 0.5rem; border-radius: 0.2rem; cursor: pointer; font-size: 1.2rem;">
-                                                    <a href='/admin/alumni-list/${nisn}' style="color: white; text-decoration: none;">Detail</a>
-                                                </button>
-                                                <button style="background-color: #f44336; color: white; border: none; padding: 0.2rem 0.5rem; border-radius: 0.2rem; cursor: pointer; font-size: 1.2rem;">
-                                                    Delete
-                                                </button>
+                                                    <button style="background-color: blue; color: white; border: none; padding: 0.2rem 0.5rem; border-radius: 10px; cursor: pointer; font-size: 1.2rem;">
+                                                        <a href='/admin/alumni-list/${nisn}' style="color: white; text-decoration: none;">Detail</a>
+                                                    </button>
+                                                    <button
+                                                        style="background-color: #ffc107; border: none; padding: 0.2rem 0.5rem; border-radius: 10px; cursor: pointer; font-size: 1.2rem; color: white;"
+                                                        onclick="openEditModal('${nisn}', '${nama}', '${jenisKelamin}')"
+                                                    >
+                                                        Edit
+                                                    </button>
+                                                    <form method="post" action="/admin/alumni-list/delete" style="display: inline-block;">
+                                                        <input type="hidden" name="nisn" value="${nisn}">
+                                                        <button type="submit" style="background-color: #f44336; color: white; border: none; padding: 0.2rem 0.5rem; border-radius: 10px; cursor: pointer; font-size: 1.2rem;">
+                                                            Delete
+                                                        </button>
+                                                    </form>
                                                 </div>
                                             `);
                                         },
                                     },
                                 ],
-                                pagination: { limit: 5 },
+                                pagination: { limit: 10 },
                                 resizable: true,
                                 sort: true,
                                 search: true,
@@ -243,6 +340,95 @@
                 console.error("Terjadi kesalahan:", error);
             }
         });
+    </script>
+
+    <!-- logic button edit -->
+    <script>
+        function openEditModal(nisn, nama, jenisKelamin) {
+            const modal = document.getElementById("tambahAlumniModal");
+            const modalTitle = document.getElementById("modalTitle");
+            const namaInput = document.getElementById("nama");
+            const nisnInput = document.getElementById("nisn");
+            const jenisKelaminSelect = document.getElementById("jenisKelamin");
+            const form = document.getElementById("formTambahAlumni");
+
+            modalTitle.textContent = "Edit Data Alumni";
+            namaInput.value = nama;
+            nisnInput.value = nisn;
+            nisnInput.readOnly = true; // Set NISN menjadi readonly saat edit
+            jenisKelaminSelect.value = jenisKelamin;
+            form.action = "/admin/alumni-list/update"; // Ubah action form untuk update
+
+            // Tambahkan input hidden untuk menyimpan NISN yang diedit
+            let editNisnInput = document.getElementById('editNisn');
+            if (!editNisnInput) {
+                editNisnInput = document.createElement('input');
+                editNisnInput.type = 'hidden';
+                editNisnInput.name = 'editNisn';
+                editNisnInput.id = 'editNisn'; // Pastikan ada ID untuk referensi jika diperlukan
+                form.appendChild(editNisnInput);
+            }
+            editNisnInput.value = nisn;
+
+            modal.style.display = "block";
+        }
+
+        document.getElementById('closeModalBtn').onclick = function () {
+            document.getElementById('tambahAlumniModal').style.display = "none";
+            resetModal(); // Reset form dan title saat modal ditutup
+        }
+
+        window.onclick = function (event) {
+            if (event.target == document.getElementById('tambahAlumniModal')) {
+                document.getElementById('tambahAlumniModal').style.display = "none";
+                resetModal(); // Reset form dan title saat modal ditutup
+            }
+        }
+
+        function resetModal() {
+            const modalTitle = document.getElementById("modalTitle");
+            const namaInput = document.getElementById("nama");
+            const nisnInput = document.getElementById("nisn");
+            const jenisKelaminSelect = document.getElementById("jenisKelamin");
+            const form = document.getElementById("formTambahAlumni");
+            const editNisnInput = document.getElementById('editNisn');
+
+            modalTitle.textContent = "Tambah Data Alumni";
+            namaInput.value = "";
+            nisnInput.value = "";
+            nisnInput.readOnly = false; // Kembalikan NISN menjadi tidak readonly untuk tambah
+            jenisKelaminSelect.selectedIndex = 0; // Reset pilihan jenis kelamin
+            form.action = "/admin/alumni-list"; // Kembalikan action form untuk tambah
+            if (editNisnInput) {
+                editNisnInput.remove(); // Hapus input hidden editNisn
+            }
+        }
+    </script>
+
+    <!-- logic untuk tambah alumni -->
+    <script>
+        const tambahAlumniBtn = document.getElementById("tambahAlumniBtn");
+        const tambahAlumniModal = document.getElementById("tambahAlumniModal");
+        const closeModalBtn = document.getElementById("closeModalBtn");
+        const formTambahAlumni = document.getElementById("formTambahAlumni");
+        const alumniTableElement = document.getElementById("table-gridjs");
+
+        // Fungsi untuk membuka modal
+        tambahAlumniBtn.onclick = function () {
+            tambahAlumniModal.style.display = "block";
+        }
+
+        // Fungsi untuk menutup modal saat tombol close diklik
+        closeModalBtn.onclick = function () {
+            tambahAlumniModal.style.display = "none";
+        }
+
+        // Fungsi untuk menutup modal saat area di luar modal diklik
+        window.onclick = function (event) {
+            if (event.target == tambahAlumniModal) {
+                tambahAlumniModal.style.display = "none";
+            }
+        }
     </script>
     <script>
         const alertSuccess = document.querySelector('.alert-success');

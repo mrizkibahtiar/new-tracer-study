@@ -85,41 +85,52 @@ module.exports = {
             return res.status(500).send('Terjadi kesalahan pada server.');
         }
     },
-
-    alumniForm: function (req, res) {
-        res.render('pages/admin/alumni_form');
-    },
-
     store: async function (req, res) {
-        const { nama, nisn, jenisKelamin, password } = req.body;
+        const { nama, nisn, jenisKelamin } = req.body;
+        console.log(req.body);
         try {
-            // Hash password dengan bcrypt sebelum menyimpan
-            const hashedPassword = await bcrypt.hash(password.trim(), 10);
             // Membuat objek untuk alumni
             const alumniData = {
                 nisn: nisn.trim(),
                 nama: nama.trim(),
                 jenisKelamin: jenisKelamin.trim(),
-                password: hashedPassword,
             };
 
             // Mengecek apakah NISN sudah terdaftar
             const existingAlumni = await Alumni.findOne({ nisn: alumniData.nisn });
             if (existingAlumni) {
-                return res.render('pages/admin/alumni_form', { error: 'NISN sudah terdaftar. Mohon gunakan NISN lain.', nama, nisn });
+                const allAlumni = await Alumni.find({});
+                const allTracerStudy = await TracerStudy.find({});
+                return res.render('pages/admin/alumni_list', { error: 'NISN sudah terdaftar. Mohon gunakan NISN lain.', nama, nisn, alumni: allAlumni, tracerStudy: allTracerStudy });
             }
 
             // Membuat alumni
-            const alumni = await Alumni.create(alumniData);
+            const newAlumni = await Alumni.create(alumniData);
+
+            // Mengambil semua data alumni dan tracer study setelah penambahan
+            const allAlumni = await Alumni.find({});
+            const alumniIds = allAlumni.map(alumni => alumni._id);
+            const allTracerStudy = await TracerStudy.find({ alumniId: { $in: alumniIds } });
+
+            // Memetakan tracer study ke alumni
+            const tracerStudyMap = new Map();
+            allTracerStudy.forEach(tracer => {
+                tracerStudyMap.set(tracer.alumniId.toString(), tracer);
+            });
+            const dataTracerStudy = allAlumni.map(alumniItem => {
+                return tracerStudyMap.get(alumniItem._id.toString()) || null;
+            });
 
             // Mengirim success message jika berhasil
-            res.render('pages/admin/alumni_form', { success: 'Alumni berhasil ditambahkan!', alumni: alumni });
+            res.render('pages/admin/alumni_list', { success: 'Alumni berhasil ditambahkan!', alumni: allAlumni, tracerStudy: dataTracerStudy });
         } catch (err) {
+            const allAlumni = await Alumni.find({});
+            const allTracerStudy = await TracerStudy.find({});
             if (err.code === 11000 && err.keyPattern.nisn) {
-                return res.render('pages/admin/alumni_form', { error: 'NISN sudah terdaftar. Mohon gunakan NISN lain.', nama, nisn });
+                return res.render('pages/admin/alumni_list', { alumni: allAlumni, tracerStudy: allTracerStudy, error: 'NISN sudah terdaftar. Mohon gunakan NISN lain.', nama, nisn, });
             }
             // Error lainnya
-            return res.render('pages/admin/alumni_form', { error: 'Terjadi kesalahan. Mohon coba lagi.', nama, nisn });
+            return res.render('pages/admin/alumni_list', { alumni: allAlumni, tracerStudy: dataTracerStudy, error: 'Terjadi kesalahan. Mohon coba lagi.', nama, nisn });
         }
     },
 
@@ -141,7 +152,7 @@ module.exports = {
     },
 
     deleteAlumni: async function (req, res) {
-        const { nisn } = req.params;
+        const { nisn } = req.body;
         try {
             // Hapus data alumni berdasarkan NISN
             const alumni = await Alumni.findOneAndDelete({ nisn: nisn });
@@ -168,7 +179,6 @@ module.exports = {
                 } else if (tracerStudy.kegiatan === "Kursus") {
                     deletions.push(Kursus.findOneAndDelete({ alumniId: alumni._id }));
                 }
-
                 if (tracerStudy.kegiatan === "Feedback") {
                     deletions.push(Feedback.findOneAndDelete({ alumniId: alumni._id }));
                 }
