@@ -135,6 +135,7 @@
                 </div>
             </div>
 
+            <!-- modal tambah -->
             <div id="tambahAlumniModal"
                 style="display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);">
                 <div
@@ -168,6 +169,44 @@
                     </form>
                 </div>
             </div>
+
+            <!-- modal edit -->
+            <div id="editAlumniModal"
+                style="display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);">
+                <div
+                    style="background-color: #fefefe; margin: 10% auto; padding: 25px; border: 1px solid #888; width: 80%; max-width: 600px; font-size: 1.1rem;">
+                    <span id="closeEditModalBtn"
+                        style="color: #aaa; float: right; font-size: 34px; font-weight: bold; cursor: pointer;">&times;</span>
+                    <h2 id="editModalTitle" style="font-size: 1.8rem; margin-bottom: 15px;">Edit Data Alumni</h2>
+                    <form id="formEditAlumni" style="font-size: 1.1rem;" method="post" action="/admin/alumni-list/edit">
+                        <input type="hidden" id="editNisn" name="editNisn">
+                        <div style="margin-bottom: 15px;">
+                            <label for="editNama" style="font-size: 1.2rem;">Nama:</label><br>
+                            <input type="text" id="editNama" name="nama"
+                                style="width: 100%; padding: 0.7rem; margin-top: 5px; margin-bottom: 10px; box-sizing: border-box; font-size: 1.1rem; border: 1px solid #888; border-radius: 10px;"
+                                placeholder="masukkan nama">
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label for="editNisnInput" style="font-size: 1.2rem;">NISN:</label><br>
+                            <input type="number" id="editNisnInput" name="nisn"
+                                style="width: 100%; padding: 0.7rem; margin-top: 5px; margin-bottom: 10px; box-sizing: border-box; font-size: 1.1rem; border: 1px solid #888;  border-radius: 10px;"
+                                placeholder="masukkan NISN">
+                        </div>
+                        <div style=" margin-bottom: 15px;">
+                            <label for="editJenisKelamin" style="font-size: 1.2rem;">Jenis Kelamin:</label><br>
+                            <select id="editJenisKelamin" name="jenisKelamin"
+                                style="width: 100%; padding: 0.7rem; margin-top: 5px; margin-bottom: 10px; box-sizing: border-box; font-size: 1.1rem; border: 1px solid #888;  border-radius: 10px;">
+                                <option value="Laki-laki">Laki-laki</option>
+                                <option value="Perempuan">Perempuan</option>
+                            </select>
+                        </div>
+                        <button type="submit"
+                            style="background-color: #007bff; color: white; border: none; padding: 0.7rem 1.2rem; border-radius: 0.7rem; cursor: pointer; font-size: 1.2rem;">Update</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- alert -->
             <div
                 style="position: fixed; top: 5rem; right: 0; left: 0; z-index: 50; display: flex; align-items: center; justify-content: center;">
                 <% if (typeof success !=='undefined' ) { %>
@@ -345,62 +384,30 @@
     <!-- logic button edit -->
     <script>
         function openEditModal(nisn, nama, jenisKelamin) {
-            const modal = document.getElementById("tambahAlumniModal");
-            const modalTitle = document.getElementById("modalTitle");
-            const namaInput = document.getElementById("nama");
-            const nisnInput = document.getElementById("nisn");
-            const jenisKelaminSelect = document.getElementById("jenisKelamin");
-            const form = document.getElementById("formTambahAlumni");
+            const modal = document.getElementById("editAlumniModal");
+            const modalTitle = document.getElementById("editModalTitle");
+            const namaInput = document.getElementById("editNama");
+            const nisnInput = document.getElementById("editNisnInput"); // Dapatkan elemen input NISN yang benar
+            const jenisKelaminSelect = document.getElementById("editJenisKelamin");
+            const form = document.getElementById("formEditAlumni");
+            const editNisnHidden = document.getElementById("editNisn");
 
             modalTitle.textContent = "Edit Data Alumni";
             namaInput.value = nama;
             nisnInput.value = nisn;
-            nisnInput.readOnly = true; // Set NISN menjadi readonly saat edit
             jenisKelaminSelect.value = jenisKelamin;
-            form.action = "/admin/alumni-list/update"; // Ubah action form untuk update
-
-            // Tambahkan input hidden untuk menyimpan NISN yang diedit
-            let editNisnInput = document.getElementById('editNisn');
-            if (!editNisnInput) {
-                editNisnInput = document.createElement('input');
-                editNisnInput.type = 'hidden';
-                editNisnInput.name = 'editNisn';
-                editNisnInput.id = 'editNisn'; // Pastikan ada ID untuk referensi jika diperlukan
-                form.appendChild(editNisnInput);
-            }
-            editNisnInput.value = nisn;
+            editNisnHidden.value = nisn; // Set nilai input hidden untuk update (NISN lama)
 
             modal.style.display = "block";
         }
 
-        document.getElementById('closeModalBtn').onclick = function () {
-            document.getElementById('tambahAlumniModal').style.display = "none";
-            resetModal(); // Reset form dan title saat modal ditutup
+        document.getElementById('closeEditModalBtn').onclick = function () {
+            document.getElementById('editAlumniModal').style.display = "none";
         }
 
         window.onclick = function (event) {
-            if (event.target == document.getElementById('tambahAlumniModal')) {
-                document.getElementById('tambahAlumniModal').style.display = "none";
-                resetModal(); // Reset form dan title saat modal ditutup
-            }
-        }
-
-        function resetModal() {
-            const modalTitle = document.getElementById("modalTitle");
-            const namaInput = document.getElementById("nama");
-            const nisnInput = document.getElementById("nisn");
-            const jenisKelaminSelect = document.getElementById("jenisKelamin");
-            const form = document.getElementById("formTambahAlumni");
-            const editNisnInput = document.getElementById('editNisn');
-
-            modalTitle.textContent = "Tambah Data Alumni";
-            namaInput.value = "";
-            nisnInput.value = "";
-            nisnInput.readOnly = false; // Kembalikan NISN menjadi tidak readonly untuk tambah
-            jenisKelaminSelect.selectedIndex = 0; // Reset pilihan jenis kelamin
-            form.action = "/admin/alumni-list"; // Kembalikan action form untuk tambah
-            if (editNisnInput) {
-                editNisnInput.remove(); // Hapus input hidden editNisn
+            if (event.target == document.getElementById('editAlumniModal')) {
+                document.getElementById('editAlumniModal').style.display = "none";
             }
         }
     </script>

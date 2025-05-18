@@ -85,10 +85,23 @@ module.exports = {
             return res.status(500).send('Terjadi kesalahan pada server.');
         }
     },
-    store: async function (req, res) {
+    storeAlumni: async function (req, res) {
         const { nama, nisn, jenisKelamin } = req.body;
         console.log(req.body);
         try {
+            // Validasi panjang NISN
+            if (nisn.length < 10) {
+                const allAlumni = await Alumni.find({});
+                const allTracerStudy = await TracerStudy.find({});
+                return res.render('pages/admin/alumni_list', {
+                    error: 'NISN harus terdiri dari minimal 10 angka.',
+                    nama,
+                    nisn,
+                    alumni: allAlumni,
+                    tracerStudy: allTracerStudy
+                });
+            }
+
             // Membuat objek untuk alumni
             const alumniData = {
                 nisn: nisn.trim(),
@@ -101,7 +114,13 @@ module.exports = {
             if (existingAlumni) {
                 const allAlumni = await Alumni.find({});
                 const allTracerStudy = await TracerStudy.find({});
-                return res.render('pages/admin/alumni_list', { error: 'NISN sudah terdaftar. Mohon gunakan NISN lain.', nama, nisn, alumni: allAlumni, tracerStudy: allTracerStudy });
+                return res.render('pages/admin/alumni_list', {
+                    error: 'NISN sudah terdaftar. Mohon gunakan NISN lain.',
+                    nama,
+                    nisn,
+                    alumni: allAlumni,
+                    tracerStudy: allTracerStudy
+                });
             }
 
             // Membuat alumni
@@ -127,10 +146,23 @@ module.exports = {
             const allAlumni = await Alumni.find({});
             const allTracerStudy = await TracerStudy.find({});
             if (err.code === 11000 && err.keyPattern.nisn) {
-                return res.render('pages/admin/alumni_list', { alumni: allAlumni, tracerStudy: allTracerStudy, error: 'NISN sudah terdaftar. Mohon gunakan NISN lain.', nama, nisn, });
+                return res.render('pages/admin/alumni_list', {
+                    alumni: allAlumni,
+                    tracerStudy: allTracerStudy,
+                    error: 'NISN sudah terdaftar. Mohon gunakan NISN lain.',
+                    nama,
+                    nisn,
+                });
             }
             // Error lainnya
-            return res.render('pages/admin/alumni_list', { alumni: allAlumni, tracerStudy: dataTracerStudy, error: 'Terjadi kesalahan. Mohon coba lagi.', nama, nisn });
+            console.error("Error creating alumni:", err); // Tambahkan logging error
+            return res.render('pages/admin/alumni_list', {
+                alumni: allAlumni,
+                tracerStudy: dataTracerStudy,
+                error: 'Terjadi kesalahan. Mohon coba lagi.',
+                nama,
+                nisn
+            });
         }
     },
 
@@ -197,20 +229,24 @@ module.exports = {
             req.flash('error_msg', 'Terjadi kesalahan saat menghapus data.');
             return res.redirect('/admin/alumni-list');
         }
-    }
-    ,
+    },
 
     alumniUpdate: async function (req, res) {
-        const { nisn } = req.params; // NISN dari URL
-        const { nisnBaru, nama, jenisKelamin } = req.body; // Data dari form
+        const { editNisn, nama, jenisKelamin, nisn: nisnBaru } = req.body; // Data dari form, termasuk editNisn sebagai NISN lama dan nisn sebagai NISN baru
 
         try {
-            // Validasi apakah NISN baru sudah ada di database
-            if (nisnBaru !== nisn) {
+            // Validasi panjang NISN baru
+            if (nisnBaru.length < 10) {
+                req.flash('error_msg', 'NISN harus terdiri dari minimal 10 angka.');
+                return res.redirect('/admin/alumni-list'); // Redirect ke daftar alumni
+            }
+
+            // Validasi apakah NISN baru sudah ada di database (jika diubah)
+            if (nisnBaru !== editNisn) {
                 const existingAlumni = await Alumni.findOne({ nisn: nisnBaru });
                 if (existingAlumni) {
                     req.flash('error_msg', 'NISN baru sudah digunakan.');
-                    return res.redirect('/admin/alumni-list/' + nisn);
+                    return res.redirect('/admin/alumni-list'); // Redirect ke daftar alumni
                 }
             }
 
@@ -221,63 +257,29 @@ module.exports = {
                 jenisKelamin: jenisKelamin
             };
 
-            // Update data alumni berdasarkan NISN lama
+            // Update data alumni berdasarkan NISN lama (editNisn)
             const alumni = await Alumni.findOneAndUpdate(
-                { nisn: nisn }, // Kondisi pencarian
+                { nisn: editNisn }, // Kondisi pencarian menggunakan NISN lama dari input hidden
                 updateData, // Data yang diperbarui
-                { new: true } // Mengembalikan data terbaru setelah update
+                { new: true, runValidators: true } // Mengembalikan data terbaru setelah update dan menjalankan validasi skema
             );
+
+            if (!alumni) {
+                req.flash('error_msg', 'Alumni dengan NISN tersebut tidak ditemukan.');
+                return res.redirect('/admin/alumni-list');
+            }
 
             // Flash pesan sukses
             req.flash('success_msg', 'Alumni berhasil diperbarui!');
-            return res.redirect('/admin/alumni-list/' + nisnBaru);
+            return res.redirect('/admin/alumni-list'); // Redirect kembali ke daftar alumni
         } catch (err) {
             console.error('Error saat update alumni:', err.message, err.stack);
 
             // Flash pesan error dan redirect kembali
             req.flash('error_msg', 'Terjadi kesalahan. Mohon coba lagi.');
-            return res.redirect('/admin/alumni-list/' + nisn);
+            return res.redirect('/admin/alumni-list');
         }
     },
-
-    alumniUpdatePassword: async function (req, res) {
-        const { nisn } = req.params;
-        const { password, confirmPassword } = req.body;
-
-        if (!password || !confirmPassword) {
-            req.flash('error_msg', 'Semua field wajib diisi.');
-            return res.redirect('/admin/alumni-list/' + nisn);
-        }
-
-        if (password !== confirmPassword) {
-            req.flash('error_msg', 'Password dan konfirmasi password tidak cocok.');
-            return res.redirect('/admin/alumni-list/' + nisn);
-        }
-
-        try {
-            // Hash password sebelum menyimpannya
-            const hashedPassword = await bcrypt.hash(password.trim(), 10);
-
-            const alumni = await Alumni.findOneAndUpdate(
-                { nisn: nisn },
-                { password: hashedPassword },
-                { new: true }
-            );
-
-            if (!alumni) {
-                req.flash('error_msg', 'Alumni tidak ditemukan.');
-                return res.redirect('/admin/alumni-list');
-            }
-
-            req.flash('success_msg', 'Password berhasil diperbarui!');
-            return res.redirect('/admin/alumni-list/' + nisn);
-        } catch (err) {
-            console.error(err);
-            req.flash('error_msg', 'Terjadi kesalahan. Mohon coba lagi.');
-            return res.redirect('/admin/alumni-list/' + nisn);
-        }
-    },
-
     profile: async function (req, res) {
         const { adminId } = req.session.user;
         const admin = await Admin.findOne({ _id: adminId });
@@ -316,5 +318,10 @@ module.exports = {
         await Admin.findOneAndUpdate({ email: email }, { password: hashedPassword }, { new: true });
         req.flash('success_msg', 'Password berhasil diperbarui!');
         return res.redirect('/admin/profile');
+    },
+    viewBerita: async function (req, res) {
+
+    }, storeBerita: async function (req, res) {
+
     }
 }

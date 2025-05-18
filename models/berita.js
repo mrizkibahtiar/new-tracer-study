@@ -1,0 +1,30 @@
+const mongoose = require('mongoose');
+
+const newsSchema = new mongoose.Schema({
+    // Judul berita, wajib diisi, dan unik
+    title: {
+        type: String,
+        required: true,
+        unique: true,
+        trim: true, // Menghapus spasi di awal dan akhir judul
+    },
+    // Isi berita, wajib diisi
+    content: {
+        type: String,
+        required: true,
+    },
+    // Gambar utama berita
+    featuredImage: {
+        type: String,
+    },
+    // Ringkasan singkat berita
+    excerpt: {
+        type: String,
+        maxlength: 255, // Batasi panjang ringkasan
+    },
+}, { timestamps: true }); // Menambahkan createdAt dan updatedAt
+
+// Membuat model dari skema
+const News = mongoose.model('News', newsSchema);
+
+module.exports = News;

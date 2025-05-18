@@ -5,13 +5,20 @@ const { isAdmin } = require('../middleware/auth');
 
 
 router.get('/admin', isAdmin, adminController.index);
+
+// Alumni
 router.route('/admin/alumni-list')
     .get(isAdmin, adminController.viewAlumniList)
-    .post(isAdmin, adminController.store);
+    .post(isAdmin, adminController.storeAlumni);
 router.get('/admin/alumni-list/:nisn', isAdmin, adminController.viewAlumniDetail);
 router.post('/admin/alumni-list/delete', isAdmin, adminController.deleteAlumni);
-router.put('/admin/alumni-edit/:nisn', isAdmin, adminController.alumniUpdate);
-router.put('/admin/alumni-edit/password/:nisn', isAdmin, adminController.alumniUpdatePassword);
+router.post('/admin/alumni-list/edit', isAdmin, adminController.alumniUpdate);
+
+// Berita 
+router.route('/admin/berita')
+    .get(isAdmin, adminController.viewBerita)
+    .post(isAdmin, adminController.storeBerita);
+
 router.get('/admin/profile', isAdmin, adminController.profile);
 router.put('/admin/profile-edit/:adminId', isAdmin, adminController.profileUpdate);
 router.put('/admin/profile-edit/password/:adminId', isAdmin, adminController.profileUpdatePassword);
