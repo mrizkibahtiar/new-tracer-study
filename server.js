@@ -102,17 +102,17 @@ app.get('/berita/:beritaId', async function (req, res) {
         // Jika tidak ditemukan
         if (!berita) {
             req.flash('error_msg', 'Berita tidak ditemukan');
-            return res.redirect('/admin/berita'); // arahkan kembali ke daftar berita
+            return res.redirect('/berita'); // arahkan kembali ke daftar berita
         }
 
         // Kirim data ke view
-        res.render('pages/admin/berita_detail', {
+        res.render('pages/berita_detail', {
             berita,
         });
     } catch (err) {
         console.error(err);
         req.flash('error_msg', 'Terjadi kesalahan saat memuat detail berita');
-        return res.redirect('/admin/berita');
+        return res.redirect('/berita');
     }
 })
 
