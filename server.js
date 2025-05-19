@@ -15,7 +15,8 @@ const authRouter = require('./router/auth');
 const adminRouter = require('./router/admin');
 const { checkLogin } = require('./middleware/auth');
 const { flashMessage } = require('./middleware/flash');
-const TracerStudy = require('./models/tracerStudy');
+const Berita = require('./models/berita');
+const Lowongan = require('./models/lowongan');
 
 // Konfigurasi variabel lingkungan
 const DB_USERNAME = process.env.DB_USERNAME;
@@ -76,18 +77,34 @@ app.use('/uploads', express.static('public/uploads'));
 
 // Route utama
 app.get('/', async (req, res) => {
-    const tracerStudy = await TracerStudy.find({})
-        .populate('feedback')
-        .populate('alumniId')
-        .populate('kegiatanDetail');
-    let feedback = [];
-    for (let i = 0; i < tracerStudy.length; i++) {
-        if (['Bekerja', 'Melanjutkan Studi', 'Berwirausaha'].includes(tracerStudy[i].kegiatan)) {
-            feedback.push(tracerStudy[i]);
-        }
-    }
-    res.render('pages/index', { feedback: feedback });
+    res.render('pages/index');
 });
+
+app.get('/berita', async (req, res) => {
+    try {
+        const semuaBerita = await Berita.find().sort({ createdAt: -1 }); // Berita terbaru dulu
+        res.render('pages/berita', {
+            beritaList: semuaBerita
+        });
+    } catch (error) {
+        req.flash('error_msh', 'Gagal mengambil berita');
+        return res.redirect('/berita');
+    }
+})
+
+
+
+app.get('/lowongan', async (req, res) => {
+    try {
+        const semuaLowongan = await Lowongan.find().sort({ createdAt: -1 }); // Berita terbaru dulu
+        res.render('pages/lowongan', {
+            lowonganList: semuaLowongan
+        });
+    } catch (error) {
+        req.flash('error_msh', 'Gagal mengambil Lowongan');
+        return res.redirect('/lowongan');
+    }
+})
 
 // Halaman login
 app.get('/loginPage', checkLogin, (req, res) => {
