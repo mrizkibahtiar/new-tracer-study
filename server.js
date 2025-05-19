@@ -92,7 +92,29 @@ app.get('/berita', async (req, res) => {
     }
 })
 
+app.get('/berita/:beritaId', async function (req, res) {
+    try {
+        const { beritaId } = req.params;
 
+        // Ambil berita berdasarkan ID
+        const berita = await Berita.findById(beritaId);
+
+        // Jika tidak ditemukan
+        if (!berita) {
+            req.flash('error_msg', 'Berita tidak ditemukan');
+            return res.redirect('/admin/berita'); // arahkan kembali ke daftar berita
+        }
+
+        // Kirim data ke view
+        res.render('pages/admin/berita_detail', {
+            berita,
+        });
+    } catch (err) {
+        console.error(err);
+        req.flash('error_msg', 'Terjadi kesalahan saat memuat detail berita');
+        return res.redirect('/admin/berita');
+    }
+})
 
 app.get('/lowongan', async (req, res) => {
     try {

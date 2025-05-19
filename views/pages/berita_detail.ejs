@@ -33,242 +33,270 @@
 </head>
 
 <body>
-    <nav id="topnav" class="defaultscroll is-sticky">
-        <div class="container relative">
-            <!-- Start Logo container-->
-            <a class="logo" href="index.html">
-                <span class="inline-block dark:hidden">
-                    <img src="assets/landing/images/logo-dark.png" class="l-dark" width="170" alt="">
-                    <img src="assets/landing/images/logo-light.png" class="l-light" width="170" alt="">
-                </span>
-                <img src="assets/landing/images/logo-light.png" width="170" class="hidden dark:inline-block" alt="">
-            </a>
-            <!-- End Logo container-->
 
-            <!-- Start Mobile Toggle -->
-            <div class="menu-extras">
-                <div class="menu-item">
-                    <a class="navbar-toggle" id="isToggle" onclick="toggleMenu()">
-                        <div class="lines">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-                    </a>
-                </div>
+
+    <% if (error_msg && error_msg.length> 0) { %>
+        <div
+            style="position: fixed; top: 5rem; right: 0; left: 0; z-index: 50; display: flex; align-items: center; justify-content: center;">
+            <div class="alert-error"
+                style="background-color: #F44336; color: white; border-radius: 0.375rem; padding: 1rem; margin-bottom: 2.25rem; width: 75%; max-width: 640px; font-size: 1.3rem; line-height: 1.25rem; text-align: center;"
+                role="alert">
+                <p style="margin: 0;">
+                    <%= error_msg %>
+                </p>
             </div>
-            <!-- End Mobile Toggle -->
+        </div>
+        <% } %>
+            <nav id="topnav" class="defaultscroll is-sticky">
+                <div class="container relative">
+                    <!-- Start Logo container-->
+                    <a class="logo" href="index.html">
+                        <span class="inline-block dark:hidden">
+                            <img src="assets/landing/images/logo-dark.png" class="l-dark" width="170" alt="">
+                            <img src="assets/landing/images/logo-light.png" class="l-light" width="170" alt="">
+                        </span>
+                        <img src="assets/landing/images/logo-light.png" width="170" class="hidden dark:inline-block"
+                            alt="">
+                    </a>
+                    <!-- End Logo container-->
 
-            <!--Login button Start-->
-            <ul class="buy-button list-none mb-0">
-                <li class="sm:inline ps-1 mb-0 hidden">
-                    <a href="/loginPage"
-                        class="btn bg-green-600 hover:bg-green-700 border-green-600 dark:border-green-600 text-white !rounded-full"
-                        style="font-size: 1.3rem;">Masuk</a>
-                </li>
-            </ul>
-            <!--Login button End-->
-
-            <div id="navigation">
-                <!-- Navigation Menu-->
-                <ul class="navigation-menu !justify-end nav-light">
-                    <li class="has-submenu parent-parent-menu-item">
-                        <a href="/" style="font-size: 1.5rem;">Home</a>
-
-                    </li>
-
-                    <li><a href="/berita" class="sub-menu-item" style="font-size: 1.5rem;">Berita</a></li>
-
-                    <li><a href="/lowongan" class="sub-menu-item" style="font-size: 1.5rem;">Lowongan</a></li>
-                    <li><a href="/saran" class="sub-menu-item" style="font-size: 1.5rem;">Saran</a></li>
-                </ul><!--end navigation menu-->
-            </div><!--end navigation-->
-        </div><!--end container-->
-    </nav><!--end header-->
-    <!-- End Navbar -->
-
-
-    <section class="relative md:py-24 pt-24 pb-16">
-        <div class="container relative">
-            <div class="grid md:grid-cols-12 grid-cols-1 gap-[30px]">
-                <div class="lg:col-span-8 md:col-span-7">
-                    <div class="grid grid-cols-1 relative">
-                        <div class="tiny-one-item">
-                            <div class="tiny-slide">
-                                <img src="assets/images/property/single/1.jpg"
-                                    class="rounded-md shadow-sm dark:shadow-gray-700" alt="">
-                            </div>
-
-                            <div class="tiny-slide">
-                                <img src="assets/images/property/single/2.jpg"
-                                    class="rounded-md shadow-sm dark:shadow-gray-700" alt="">
-                            </div>
-
-                            <div class="tiny-slide">
-                                <img src="assets/images/property/single/3.jpg"
-                                    class="rounded-md shadow-sm dark:shadow-gray-700" alt="">
-                            </div>
-
-                            <div class="tiny-slide">
-                                <img src="assets/images/property/single/4.jpg"
-                                    class="rounded-md shadow-sm dark:shadow-gray-700" alt="">
-                            </div>
-
-                            <div class="tiny-slide">
-                                <img src="assets/images/property/single/5.jpg"
-                                    class="rounded-md shadow-sm dark:shadow-gray-700" alt="">
-                            </div>
+                    <!-- Start Mobile Toggle -->
+                    <div class="menu-extras">
+                        <div class="menu-item">
+                            <a class="navbar-toggle" id="isToggle" onclick="toggleMenu()">
+                                <div class="lines">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            </a>
                         </div>
                     </div>
+                    <!-- End Mobile Toggle -->
 
-                    <h4 class="text-2xl font-medium mt-6 mb-3">4BHK Luxury Family Home</h4>
-                    <span class="text-slate-400 flex items-center"><i data-feather="map-pin" class="size-5 me-2"></i>
-                        10765 Hillshire Ave, Baton Rouge, LA 70810, USA</span>
-
-                    <ul class="py-6 flex items-center list-none">
-                        <li class="flex items-center lg:me-6 me-4">
-                            <i class="uil uil-compress-arrows lg:text-3xl text-2xl me-2 text-green-600"></i>
-                            <span class="lg:text-xl">8000sqf</span>
-                        </li>
-
-                        <li class="flex items-center lg:me-6 me-4">
-                            <i class="uil uil-bed-double lg:text-3xl text-2xl me-2 text-green-600"></i>
-                            <span class="lg:text-xl">4 Beds</span>
-                        </li>
-
-                        <li class="flex items-center">
-                            <i class="uil uil-bath lg:text-3xl text-2xl me-2 text-green-600"></i>
-                            <span class="lg:text-xl">4 Baths</span>
+                    <!--Login button Start-->
+                    <ul class="buy-button list-none mb-0">
+                        <li class="sm:inline ps-1 mb-0 hidden">
+                            <a href="/loginPage"
+                                class="btn bg-green-600 hover:bg-green-700 border-green-600 dark:border-green-600 text-white !rounded-full"
+                                style="font-size: 1.3rem;">Masuk</a>
                         </li>
                     </ul>
+                    <!--Login button End-->
 
-                    <p class="text-slate-400">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
-                        doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi
-                        architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit
-                        aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem
-                        sequi nesciunt.</p>
-                    <p class="text-slate-400 mt-4">But I must explain to you how all this mistaken idea of denouncing
-                        pleasure and praising pain was born and I will give you a complete account of the system, and
-                        expound the actual teachings of the great explorer of the truth, the master-builder of human
-                        happiness.</p>
-                    <p class="text-slate-400 mt-4">Nor again is there anyone who loves or pursues or desires to obtain
-                        pain of itself, because it is pain, but because occasionally circumstances occur in which toil
-                        and pain can procure him some great pleasure.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+                    <div id="navigation">
+                        <!-- Navigation Menu-->
+                        <ul class="navigation-menu !justify-end nav-light">
+                            <li class="has-submenu parent-parent-menu-item">
+                                <a href="/" style="font-size: 1.5rem;">Home</a>
 
-    <footer class="relative bg-slate-900 dark:bg-slate-800 mt-24">
-        <div class="container relative">
-            <div class="grid grid-cols-1">
-                <div class="relative py-16">
-                    <!-- Subscribe -->
-                    <div class="relative w-full">
+                            </li>
 
-                        <div class="grid md:grid-cols-12 grid-cols-1 gap-[30px] mt-14">
-                            <div class="lg:col-span-4 md:col-span-12">
-                                <a href="#" class="text-[22px] focus:outline-none">
-                                    <img src="assets/landing/images/logo-light.png" alt="">
-                                </a>
-                                <p class="mt-6 text-gray-300">Platform yang memfasilitasi para alumni dalam memperbarui
-                                    informasi terkait karir dan
-                                    pendidikan.</p>
+                            <li><a href="/berita" class="sub-menu-item" style="font-size: 1.5rem;">Berita</a></li>
 
+                            <li><a href="/lowongan" class="sub-menu-item" style="font-size: 1.5rem;">Lowongan</a></li>
+                            <li><a href="/saran" class="sub-menu-item" style="font-size: 1.5rem;">Saran</a></li>
+                        </ul><!--end navigation menu-->
+                    </div><!--end navigation-->
+                </div><!--end container-->
+            </nav><!--end header-->
+            <!-- End Navbar -->
+
+
+            <section class="relative md:py-24 pt-24 pb-16">
+                <div class="container relative">
+                    <div class="grid md:grid-cols-12 grid-cols-1 gap-[30px]">
+                        <div class="lg:col-span-8 md:col-span-7">
+                            <div class="grid grid-cols-1 relative">
+                                <div class="tiny-one-item">
+                                    <div class="tiny-slide">
+                                        <img src="assets/images/property/single/1.jpg"
+                                            class="rounded-md shadow-sm dark:shadow-gray-700" alt="">
+                                    </div>
+
+                                    <div class="tiny-slide">
+                                        <img src="assets/images/property/single/2.jpg"
+                                            class="rounded-md shadow-sm dark:shadow-gray-700" alt="">
+                                    </div>
+
+                                    <div class="tiny-slide">
+                                        <img src="assets/images/property/single/3.jpg"
+                                            class="rounded-md shadow-sm dark:shadow-gray-700" alt="">
+                                    </div>
+
+                                    <div class="tiny-slide">
+                                        <img src="assets/images/property/single/4.jpg"
+                                            class="rounded-md shadow-sm dark:shadow-gray-700" alt="">
+                                    </div>
+
+                                    <div class="tiny-slide">
+                                        <img src="assets/images/property/single/5.jpg"
+                                            class="rounded-md shadow-sm dark:shadow-gray-700" alt="">
+                                    </div>
+                                </div>
                             </div>
 
-                            <div class="lg:col-span-4 md:col-span-4">
-                                <h5 class="tracking-[1px] text-gray-100 font-semibold">Menu</h5>
-                                <ul class="list-none footer-list mt-6">
-                                    <li><a href="/"
-                                            class="text-slate-300 hover:text-slate-400 duration-500 ease-in-out"><i
-                                                class="uil uil-angle-right-b me-1"></i>Home</a></li>
-                                    <li class="mt-[10px]"><a href="/berita"
-                                            class="text-slate-300 hover:text-slate-400 duration-500 ease-in-out"><i
-                                                class="uil uil-angle-right-b me-1"></i>Berita</a></li>
-                                    <li class="mt-[10px]"><a href="/lowongan"
-                                            class="text-slate-300 hover:text-slate-400 duration-500 ease-in-out"><i
-                                                class="uil uil-angle-right-b me-1"></i>Lowongan</a></li>
-                                    <li class="mt-[10px]"><a href="/saran"
-                                            class="text-slate-300 hover:text-slate-400 duration-500 ease-in-out"><i
-                                                class="uil uil-angle-right-b me-1"></i> Saran</a></li>
-                                </ul>
-                            </div><!--end col-->
+                            <h4 class="text-2xl font-medium mt-6 mb-3">4BHK Luxury Family Home</h4>
+                            <span class="text-slate-400 flex items-center"><i data-feather="map-pin"
+                                    class="size-5 me-2"></i>
+                                10765 Hillshire Ave, Baton Rouge, LA 70810, USA</span>
 
-                            <div class="lg:col-span-4 md:col-span-4">
-                                <h5 class="tracking-[1px] text-gray-100 font-semibold">Contact Details</h5>
+                            <ul class="py-6 flex items-center list-none">
+                                <li class="flex items-center lg:me-6 me-4">
+                                    <i class="uil uil-compress-arrows lg:text-3xl text-2xl me-2 text-green-600"></i>
+                                    <span class="lg:text-xl">8000sqf</span>
+                                </li>
 
+                                <li class="flex items-center lg:me-6 me-4">
+                                    <i class="uil uil-bed-double lg:text-3xl text-2xl me-2 text-green-600"></i>
+                                    <span class="lg:text-xl">4 Beds</span>
+                                </li>
 
-                                <div class="flex mt-6">
-                                    <i data-feather="map-pin" class="size-5 text-green-600 me-3"></i>
-                                    <div class="">
-                                        <h6 class="text-gray-300 mb-2">Jalan Anggur, RT.8/RW.2,<br> Kembangsawit,
-                                            Rejosari,<br>
-                                            Kebon Sari, Madiun Regency, East Java 63173</h6>
-                                        <a href="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3953.60992800336!2d111.4765123750043!3d-7.72493229229321!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e79981ca25d32a5%3A0xece99a71c6c89e69!2sPondok%20Pesantren%20Subulul%20Huda!5e0!3m2!1sid!2sid!4v1747219372907!5m2!1sid!2sid"
-                                            data-type="iframe"
-                                            class="text-green-600 hover:text-green-700 duration-500 ease-in-out lightbox">View
-                                            on Google map</a>
-                                    </div>
-                                </div>
+                                <li class="flex items-center">
+                                    <i class="uil uil-bath lg:text-3xl text-2xl me-2 text-green-600"></i>
+                                    <span class="lg:text-xl">4 Baths</span>
+                                </li>
+                            </ul>
 
-                                <div class="flex mt-6">
-                                    <i data-feather="mail" class="size-5 text-green-600 me-3"></i>
-                                    <div class="">
-                                        <a href="mailto:contact@example.com"
-                                            class="text-slate-300 hover:text-slate-400 duration-500 ease-in-out">contact@example.com</a>
-                                    </div>
-                                </div>
-
-                                <div class="flex mt-6">
-                                    <i data-feather="phone" class="size-5 text-green-600 me-3"></i>
-                                    <div class="">
-                                        <a href="tel:+152534-468-854"
-                                            class="text-slate-300 hover:text-slate-400 duration-500 ease-in-out">(0351)
-                                            366704</a>
-                                    </div>
-                                </div>
-                            </div><!--end col-->
-                        </div><!--end grid-->
+                            <p class="text-slate-400">Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+                                accusantium
+                                doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et
+                                quasi
+                                architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas
+                                sit
+                                aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione
+                                voluptatem
+                                sequi nesciunt.</p>
+                            <p class="text-slate-400 mt-4">But I must explain to you how all this mistaken idea of
+                                denouncing
+                                pleasure and praising pain was born and I will give you a complete account of the
+                                system, and
+                                expound the actual teachings of the great explorer of the truth, the master-builder of
+                                human
+                                happiness.</p>
+                            <p class="text-slate-400 mt-4">Nor again is there anyone who loves or pursues or desires to
+                                obtain
+                                pain of itself, because it is pain, but because occasionally circumstances occur in
+                                which toil
+                                and pain can procure him some great pleasure.</p>
+                        </div>
                     </div>
-                    <!-- Subscribe -->
                 </div>
-            </div>
-        </div><!--end container-->
+            </section>
 
-        <div class="py-[30px] px-0 border-t border-gray-800 dark:border-gray-700">
-            <div class="container relative text-center">
-                <div class="grid md:grid-cols-2 items-center gap-6">
-                    <div class="md:text-start text-center">
-                        <p class="mb-0 text-gray-300">©
-                            <script>document.write(new Date().getFullYear())</script> SMK BP Subulul Huda
-                        </p>
+            <footer class="relative bg-slate-900 dark:bg-slate-800 mt-24">
+                <div class="container relative">
+                    <div class="grid grid-cols-1">
+                        <div class="relative py-16">
+                            <!-- Subscribe -->
+                            <div class="relative w-full">
+
+                                <div class="grid md:grid-cols-12 grid-cols-1 gap-[30px] mt-14">
+                                    <div class="lg:col-span-4 md:col-span-12">
+                                        <a href="#" class="text-[22px] focus:outline-none">
+                                            <img src="assets/landing/images/logo-light.png" alt="">
+                                        </a>
+                                        <p class="mt-6 text-gray-300">Platform yang memfasilitasi para alumni dalam
+                                            memperbarui
+                                            informasi terkait karir dan
+                                            pendidikan.</p>
+
+                                    </div>
+
+                                    <div class="lg:col-span-4 md:col-span-4">
+                                        <h5 class="tracking-[1px] text-gray-100 font-semibold">Menu</h5>
+                                        <ul class="list-none footer-list mt-6">
+                                            <li><a href="/"
+                                                    class="text-slate-300 hover:text-slate-400 duration-500 ease-in-out"><i
+                                                        class="uil uil-angle-right-b me-1"></i>Home</a></li>
+                                            <li class="mt-[10px]"><a href="/berita"
+                                                    class="text-slate-300 hover:text-slate-400 duration-500 ease-in-out"><i
+                                                        class="uil uil-angle-right-b me-1"></i>Berita</a></li>
+                                            <li class="mt-[10px]"><a href="/lowongan"
+                                                    class="text-slate-300 hover:text-slate-400 duration-500 ease-in-out"><i
+                                                        class="uil uil-angle-right-b me-1"></i>Lowongan</a></li>
+                                            <li class="mt-[10px]"><a href="/saran"
+                                                    class="text-slate-300 hover:text-slate-400 duration-500 ease-in-out"><i
+                                                        class="uil uil-angle-right-b me-1"></i> Saran</a></li>
+                                        </ul>
+                                    </div><!--end col-->
+
+                                    <div class="lg:col-span-4 md:col-span-4">
+                                        <h5 class="tracking-[1px] text-gray-100 font-semibold">Contact Details</h5>
+
+
+                                        <div class="flex mt-6">
+                                            <i data-feather="map-pin" class="size-5 text-green-600 me-3"></i>
+                                            <div class="">
+                                                <h6 class="text-gray-300 mb-2">Jalan Anggur, RT.8/RW.2,<br>
+                                                    Kembangsawit,
+                                                    Rejosari,<br>
+                                                    Kebon Sari, Madiun Regency, East Java 63173</h6>
+                                                <a href="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3953.60992800336!2d111.4765123750043!3d-7.72493229229321!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e79981ca25d32a5%3A0xece99a71c6c89e69!2sPondok%20Pesantren%20Subulul%20Huda!5e0!3m2!1sid!2sid!4v1747219372907!5m2!1sid!2sid"
+                                                    data-type="iframe"
+                                                    class="text-green-600 hover:text-green-700 duration-500 ease-in-out lightbox">View
+                                                    on Google map</a>
+                                            </div>
+                                        </div>
+
+                                        <div class="flex mt-6">
+                                            <i data-feather="mail" class="size-5 text-green-600 me-3"></i>
+                                            <div class="">
+                                                <a href="mailto:contact@example.com"
+                                                    class="text-slate-300 hover:text-slate-400 duration-500 ease-in-out">contact@example.com</a>
+                                            </div>
+                                        </div>
+
+                                        <div class="flex mt-6">
+                                            <i data-feather="phone" class="size-5 text-green-600 me-3"></i>
+                                            <div class="">
+                                                <a href="tel:+152534-468-854"
+                                                    class="text-slate-300 hover:text-slate-400 duration-500 ease-in-out">(0351)
+                                                    366704</a>
+                                            </div>
+                                        </div>
+                                    </div><!--end col-->
+                                </div><!--end grid-->
+                            </div>
+                            <!-- Subscribe -->
+                        </div>
                     </div>
+                </div>
 
-                    <ul class="list-none md:text-end text-center">
-                        <li class="inline"><a href="https://www.facebook.com/shreethemes" target="_blank"
-                                class="btn btn-icon btn-sm text-gray-400 hover:text-white border border-gray-800 dark:border-gray-700 rounded-md hover:border-green-600 dark:hover:border-green-600 hover:bg-green-600 dark:hover:bg-green-600"><i
-                                    data-feather="facebook" class="size-4"></i></a></li>
-                        <li class="inline"><a href="https://www.instagram.com/shreethemes/" target="_blank"
-                                class="btn btn-icon btn-sm text-gray-400 hover:text-white border border-gray-800 dark:border-gray-700 rounded-md hover:border-green-600 dark:hover:border-green-600 hover:bg-green-600 dark:hover:bg-green-600"><i
-                                    data-feather="instagram" class="size-4"></i></a></li>
-                        <li class="inline"><a href="mailto:support@shreethemes.in"
-                                class="btn btn-icon btn-sm text-gray-400 hover:text-white border border-gray-800 dark:border-gray-700 rounded-md hover:border-green-600 dark:hover:border-green-600 hover:bg-green-600 dark:hover:bg-green-600"><i
-                                    data-feather="mail" class="size-4"></i></a></li>
-                    </ul><!--end icon-->
-                </div><!--end grid-->
-            </div><!--end container-->
-        </div>
-    </footer>
 
-    <!-- JAVASCRIPTS -->
-    <script src="assets/landing/libs/tiny-slider/min/tiny-slider.js"></script>
-    <script src="assets/landing/libs/tobii/js/tobii.min.js"></script>
-    <script src="assets/landing/libs/choices.js/public/assets/scripts/choices.min.js"></script>
-    <script src="assets/landing/libs/feather-icons/feather.min.js"></script>
-    <script src="assets/landing/js/plugins.init.js"></script>
-    <script src="assets/landing/js/app.js"></script>
-    <!-- JAVASCRIPTS -->
+                <div class="py-[30px] px-0 border-t border-gray-800 dark:border-gray-700">
+                    <div class="container relative text-center">
+                        <div class="grid md:grid-cols-2 items-center gap-6">
+                            <div class="md:text-start text-center">
+                                <p class="mb-0 text-gray-300">©
+                                    <script>document.write(new Date().getFullYear())</script> SMK BP Subulul Huda
+                                </p>
+                            </div>
+
+                            <ul class="list-none md:text-end text-center">
+                                <li class="inline"><a href="https://www.facebook.com/shreethemes" target="_blank"
+                                        class="btn btn-icon btn-sm text-gray-400 hover:text-white border border-gray-800 dark:border-gray-700 rounded-md hover:border-green-600 dark:hover:border-green-600 hover:bg-green-600 dark:hover:bg-green-600"><i
+                                            data-feather="facebook" class="size-4"></i></a></li>
+                                <li class="inline"><a href="https://www.instagram.com/shreethemes/" target="_blank"
+                                        class="btn btn-icon btn-sm text-gray-400 hover:text-white border border-gray-800 dark:border-gray-700 rounded-md hover:border-green-600 dark:hover:border-green-600 hover:bg-green-600 dark:hover:bg-green-600"><i
+                                            data-feather="instagram" class="size-4"></i></a></li>
+                                <li class="inline"><a href="mailto:support@shreethemes.in"
+                                        class="btn btn-icon btn-sm text-gray-400 hover:text-white border border-gray-800 dark:border-gray-700 rounded-md hover:border-green-600 dark:hover:border-green-600 hover:bg-green-600 dark:hover:bg-green-600"><i
+                                            data-feather="mail" class="size-4"></i></a></li>
+                            </ul><!--end icon-->
+                        </div><!--end grid-->
+                    </div><!--end container-->
+                </div>
+            </footer>
+
+            <!-- JAVASCRIPTS -->
+            <script src="assets/landing/libs/tiny-slider/min/tiny-slider.js"></script>
+            <script src="assets/landing/libs/tobii/js/tobii.min.js"></script>
+            <script src="assets/landing/libs/choices.js/public/assets/scripts/choices.min.js"></script>
+            <script src="assets/landing/libs/feather-icons/feather.min.js"></script>
+            <script src="assets/landing/js/plugins.init.js"></script>
+            <script src="assets/landing/js/app.js"></script>
+            <!-- JAVASCRIPTS -->
 
 </body>
 
