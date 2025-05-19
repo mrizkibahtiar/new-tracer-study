@@ -10,8 +10,7 @@
     <meta content="coderthemes" name="author">
     <link rel="shortcut icon" href="../../assets/admin/smk-bp.png">
 
-    <!-- Css -->
-    <link href="../../assets/admin/libs/jsvectormap/jsvectormap.min.css" rel="stylesheet">
+
     <!-- Main Css -->
     <link href="../../assets/admin/libs/simplebar/simplebar.min.css" rel="stylesheet">
     <link href="../../assets/admin/libs/%40mdi/font/css/materialdesignicons.min.css" rel="stylesheet" type="text/css">
@@ -41,8 +40,8 @@
                     </li>
 
                     <li>
-                        <a href="favorite-property.html" style="font-size: 1.4rem;"><i
-                                class="mdi mdi-home-heart me-2"></i>Berita </a>
+                        <a href="/admin/berita" style="font-size: 1.4rem;"><i class="mdi mdi-home-heart me-2"></i>Berita
+                        </a>
                     </li>
 
                     <li>
@@ -119,21 +118,28 @@
             </div>
             <!-- Top Header -->
 
-            <div class="relative overflow-hidden rounded-md shadow-sm dark:shadow-gray-700 bg-white dark:bg-slate-900 py-3"
-                style="margin-top: 2.5rem;">
-                <div class="p-6" style="position: relative;">
-                    <div style="position: absolute; top: 2rem; right: 1.7rem; z-index: 10;">
-                        <button id="tambahAlumniBtn"
-                            style="background-color: #4CAF50; color: white; border: none; padding: 0.5rem 1rem; border-radius: 10px; cursor: pointer; font-size: 1.3rem;">
-                            Tambah
-                        </button>
-                    </div>
-                    <div class="table-responsive overflow-x-visible">
-                        <div id="table-gridjs" data-alumni="<%= JSON.stringify(alumni)%>"
-                            data-tracer="<%= JSON.stringify(tracerStudy)%>"></div>
+            <div class="container-fluid relative px-3">
+                <div class="layout-specing">
+                    <p style="color: black; font-size: 2rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
+                        Daftar Alumni</p>
+                    <div
+                        class="relative overflow-hidden rounded-md shadow-sm dark:shadow-gray-700 bg-white dark:bg-slate-900 py-3">
+                        <div class="px-6" style="position: relative;">
+                            <div style="position: absolute; top: 0.6rem; right: 1.7rem; z-index: 10;">
+                                <button id="tambahAlumniBtn"
+                                    style="background-color: #4CAF50; color: white; border: none; padding: 0.5rem 1rem; border-radius: 10px; cursor: pointer; font-size: 1.3rem;">
+                                    Tambah
+                                </button>
+                            </div>
+                            <div class="table-responsive overflow-x-visible">
+                                <div id="table-gridjs" data-alumni="<%= JSON.stringify(alumni)%>"
+                                    data-tracer="<%= JSON.stringify(tracerStudy)%>"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+
 
             <!-- modal tambah -->
             <div id="tambahAlumniModal"
@@ -249,17 +255,11 @@
                             </div>
                             <% } %>
             </div>
-
-
         </main>
         <!-- End Page Content -->
-
     </div>
 
     <!-- script -->
-    <script src="../../assets/admin/libs/jsvectormap/jsvectormap.min.js"></script>
-    <script src="../../assets/admin/libs/jsvectormap/maps/world.js"></script>
-    <script src="../../assets/admin/js/jsvectormap.init.js"></script>
     <script src="../../assets/admin/libs/feather-icons/feather.min.js"></script>
     <script src="../../assets/admin/libs/simplebar/simplebar.min.js"></script>
     <script src="../../assets/admin/js/plugins.init.js"></script>
@@ -325,7 +325,7 @@
                                         name: "Tracer Study",
                                         formatter: (e) => {
                                             if (e === "Sudah") {
-                                                return html(`<span style="font-weight: bold; color: white; background-color: #4CAF50; padding: 0.2rem 0.5rem; border-radius: 0.2rem;">${e} Mengisi</span>`);
+                                                return html(`<span style="font-weight: bold; color: white; background-color: #4CAF50; padding: 0.7rem 0.7rem; border-radius: 0.2rem;">${e} Mengisi</span>`);
                                             } else {
                                                 return html(`<span style="font-weight: bold; color: white; background-color: #f44336; padding: 0.7rem 0.7rem; border-radius: 0.2rem;">${e} Mengisi</span>`);
                                             }

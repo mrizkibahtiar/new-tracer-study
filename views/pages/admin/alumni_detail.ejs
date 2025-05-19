@@ -11,751 +11,607 @@
 
     <link href="../../assets/images/smk-bp.png" rel="icon" type="image/png">
 
-    <!-- Gridjs Plugin css -->
-    <link href="../../assets/libs/gridjs/theme/mermaid.min.css" rel="stylesheet" type="text/css">
+    <!-- Main Css -->
+    <link href="../../assets/admin/libs/simplebar/simplebar.min.css" rel="stylesheet">
+    <link href="../../assets/admin/libs/%40mdi/font/css/materialdesignicons.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../../assets/admin/css/tailwind.min.css">
 
-    <!-- App css -->
-    <link href="../../assets/css/app.min.css" rel="stylesheet" type="text/css">
-
-    <!-- Icons css -->
-    <link href="../../assets/css/icons.min.css" rel="stylesheet" type="text/css">
-
-    <!-- Theme Config Js -->
-    <script src="../../assets/js/config.js"></script>
 
 </head>
 
 <body>
+    <div class="page-wrapper toggled">
+        <nav id="sidebar" class="sidebar-wrapper sidebar-dark">
+            <div class="sidebar-content">
+                <div class="sidebar-brand">
+                    <a href="/"><img src="../../assets/admin/images/logo-light.png" alt="" width="200px"></a>
+                </div>
 
-    <div class="flex wrapper">
+                <ul class="sidebar-menu border-t border-white/10" data-simplebar style="height: calc(100% - 70px);">
+                    <li>
+                        <a href="/admin" style="font-size: 1.4rem;"><i
+                                class="mdi mdi-chart-bell-curve-cumulative me-2"></i>Dashboard</a>
+                    </li>
 
-        <!-- Sidenav Menu -->
-        <%- include ('../../components/sidebar_admin') %>
+                    <li>
+                        <a href="/admin/alumni-list" style="font-size: 1.4rem;"><i
+                                class="mdi mdi-home-city me-2"></i>Alumni </a>
+                    </li>
 
-            <div class="page-content">
+                    <li>
+                        <a href="favorite-property.html" style="font-size: 1.4rem;"><i
+                                class="mdi mdi-home-heart me-2"></i>Berita </a>
+                    </li>
 
-                <%- include ('../../components/topbar_admin') %>
+                    <li>
+                        <a href="add-property.html" style="font-size: 1.4rem;"><i
+                                class="mdi mdi-home-plus me-2"></i>Lowongan </a>
+                    </li>
 
-                    <main class="flex-grow p-6">
+                    <li>
+                        <a href="chat.html" style="font-size: 1.4rem;"><i
+                                class="mdi mdi-chat-outline me-2"></i>Saran</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
 
+        <!-- Start Page Content -->
+        <main class="page-content bg-gray-50 dark:bg-slate-800">
 
-                        <div class="fixed top-0 right-0 left-0 z-50 flex items-center justify-center">
-                            <% if (success_msg && success_msg.length> 0) { %>
-                                <div class="alert-success fixed bg-green-500 text-sm text-white rounded-md p-4 z-50 2xl:w-1/4 lg:w-1/3 w-3/4 mb-9 top-7"
-                                    role="alert">
-                                    <p>
-                                        <%= success_msg %>
-                                    </p>
-                                </div>
-                                <% } %>
-                                    <% if (error_msg && error_msg.length> 0) { %>
-                                        <div class="alert-error fixed bg-red-500 text-sm text-white rounded-md z-50 p-4 2xl:w-1/4 lg:w-1/3 w-3/4 mb-9 top-7"
-                                            role="alert">
-                                            <p>
-                                                <%= error_msg %>
-                                            </p>
-                                        </div>
-                                        <% } %>
-                        </div>
+            <!-- Top Header -->
+            <div class="top-header">
+                <div class="header-bar flex justify-between">
+                    <div class="flex items-center space-x-1">
+                        <!-- Logo -->
+                        <a href="#" class="xl:hidden block me-2">
+                            <img src="../../assets/admin/images/smk-bp.png" width="40px" class="md:hidden block" alt="">
+                            <span class="md:block hidden">
+                                <img src="../../assets/admin/images/logo-dark.png" class="inline-block dark:hidden"
+                                    alt="" width="200px">
+                                <img src="../../assets/admin/images/logo-light.png" class="hidden dark:inline-block"
+                                    alt="" width="200px">
+                            </span>
+                        </a>
+                        <!-- Logo -->
 
-                        <!-- Page Title Start -->
-                        <div class="flex justify-between items-center mb-6">
-                            <div class="flex items-center">
-                                <!-- button back -->
-                                <a href="/admin/alumni-list" class="btn btn-ghost">
-                                    <i
-                                        class="mgc_arrow_left_circle_line text-3xl text-slate-700 rtl:rotate-180 dark:text-slate-200"></i>
-                                </a>
+                        <!-- show or close sidebar -->
+                        <a id="close-sidebar"
+                            class="size-8 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-[20px] text-center bg-gray-50 dark:bg-slate-800 hover:bg-gray-100 dark:hover:bg-slate-700 border border-black dark:border-gray-800 text-slate-900 dark:text-white rounded-md"
+                            href="javascript:void(0)">
+                            <i data-feather="menu" class="size-4"></i>
+                        </a>
+                        <!-- show or close sidebar -->
+                    </div>
 
-                                <h4 class="text-slate-700 dark:text-slate-200 text-lg font-medium">
-                                    Detail
-                                </h4>
+                    <ul class="list-none mb-0 space-x-1">
+                        <!-- User/Profile Dropdown -->
+                        <li class="dropdown inline-block relative">
+                            <button data-dropdown-toggle="dropdown" class="dropdown-toggle items-center" type="button">
+                                <span
+                                    class="size-10 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-[20px] text-center bg-gray-50 dark:bg-slate-800 hover:bg-gray-100 dark:hover:bg-slate-700 border border-black dark:border-gray-800 text-slate-900 dark:text-white rounded-md"><img
+                                        src="../../assets/admin/images/profile-icon-light.png" class="rounded-md w-full"
+                                        alt="" style="cursor: pointer;"></span>
+                            </button>
+                            <!-- Dropdown menu -->
+                            <div class="dropdown-menu absolute end-0 m-0 mt-4 z-10 w-44 rounded-md overflow-hidden bg-white dark:bg-slate-900 shadow-sm dark:shadow-gray-700 hidden"
+                                onclick="event.stopPropagation();">
+                                <ul class="py-2 text-start">
+                                    <li>
+                                        <a href="/admin/profile"
+                                            class="block py-1 px-4 dark:text-white/70 hover:text-green-600 dark:hover:text-white"><i
+                                                class="mdi mdi-account-outline me-2"></i>Profile</a>
+                                    </li>
+                                    <li class="border-t border-gray-100 dark:border-gray-800 my-2"></li>
+                                    <li>
+                                        <a href="/logout"
+                                            class="block py-1 px-4 dark:text-white/70 hover:text-green-600 dark:hover:text-white"><i
+                                                class="mdi mdi-logout me-2"></i>Logout</a>
+                                    </li>
+                                </ul>
                             </div>
+                        </li><!--end dropdown-->
+                        <!-- User/Profile Dropdown -->
+                    </ul>
+                </div>
+            </div>
+            <!-- Top Header -->
 
-                            <div class="md:flex hidden items-center gap-2.5 text-sm font-semibold">
-                                <div class="flex items-center gap-2">
-                                    <a href="/admin"
-                                        class="text-sm font-medium text-slate-700 dark:text-slate-400">Alumni</a>
-                                </div>
-
-                                <div class="flex items-center gap-2">
-                                    <i class="mgc_right_line text-lg flex-shrink-0 text-slate-400 rtl:rotate-180"></i>
-                                    <a href="/admin/alumni-list"
-                                        class="text-sm font-medium text-slate-700 dark:text-slate-400">Daftar
-                                        Alumni</a>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <i class="mgc_right_line text-lg flex-shrink-0 text-slate-400 rtl:rotate-180"></i>
-                                    <a href="#" class="text-sm font-medium text-slate-700 dark:text-slate-400">Detail
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Page Title End -->
-
-                        <!-- Page Content Start -->
+            <div class="container-fluid relative px-3">
+                <div class="layout-specing">
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <a href="/admin/alumni-list">
+                            <span class="mdi mdi-arrow-left-circle"
+                                style="font-size: 40px; margin-bottom: 10px; display: block;"></span>
+                        </a>
+                        <p style="color: black; font-size: 2rem; font-weight: bold; margin-bottom: 0.7rem;">
+                            Detail Alumni</p>
+                    </div>
+                    <div
+                        class="relative overflow-hidden rounded-md shadow-sm dark:shadow-gray-700 bg-white dark:bg-slate-900">
                         <div class="col-span-2">
                             <div class="card">
                                 <div class="p-6">
-                                    <div class="grid grid-cols-1 md:grid-cols-2  gap-6 mb-3">
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div>
                                             <p
-                                                class="text-gray-800 text-sm font-medium inline-block mb-2 dark:text-slate-400">
+                                                style="color: navy; font-size: 1.1rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
                                                 NISN</p>
-                                            <h2 class="dark:text-white">
+                                            <h2 style="color: black; font-size: 1.5rem;">
                                                 <%= alumni.nisn %>
                                             </h2>
                                         </div>
                                         <div>
                                             <p
-                                                class="text-gray-800 text-sm font-medium inline-block mb-2 dark:text-slate-400">
+                                                style="color: navy; font-size: 1.1rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
                                                 Nama</p>
-                                            <h2 class="dark:text-white">
+                                            <h2 style="color: black; font-size: 1.5rem;">
                                                 <%= alumni.nama %>
                                             </h2>
                                         </div>
                                         <div>
                                             <p
-                                                class="text-gray-800 text-sm font-medium inline-block mb-2 dark:text-slate-400">
+                                                style="color: navy; font-size: 1.1rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
                                                 Jenis Kelamin</p>
-                                            <h2 class="dark:text-white">
+                                            <h2 style="color: black; font-size: 1.5rem;">
                                                 <%= alumni.jenisKelamin %>
                                             </h2>
-                                        </div>
-                                    </div>
-
-                                    <div class="mt-6 flex gap-3 w-full">
-                                        <!-- button hapus -->
-                                        <button class="btn bg-danger/25 text-danger hover:bg-danger hover:text-white"
-                                            data-fc-target="modal-hapus" data-fc-type="modal" type="button">
-                                            Hapus
-                                        </button>
-                                        <!-- modal hapus -->
-                                        <div id="modal-hapus"
-                                            class="w-full h-full mt-5 fixed top-0 left-0 z-50 transition-all duration-500 fc-modal hidden">
-                                            <div
-                                                class="fc-modal-open:opacity-100 duration-500 opacity-0 ease-out transition-all sm:max-w-lg sm:w-full m-3 sm:mx-auto flex flex-col bg-white border shadow-sm rounded-md dark:bg-slate-800 dark:border-gray-700">
-                                                <div
-                                                    class="flex justify-between items-center py-2.5 px-4 border-b dark:border-gray-700">
-                                                    <h3 class="font-medium text-gray-800 dark:text-white text-lg">
-                                                        Peringatan!
-                                                    </h3>
-                                                    <button
-                                                        class="inline-flex flex-shrink-0 justify-center items-center h-8 w-8 dark:text-gray-200"
-                                                        data-fc-dismiss type="button">
-                                                        <span class="material-symbols-rounded">close</span>
-                                                    </button>
-                                                </div>
-                                                <div class="px-4 py-8 overflow-y-auto">
-                                                    <p class="text-gray-800 dark:text-gray-200">
-                                                        Tindakan ini akan menghapus data <b>
-                                                            <%= alumni.nama %>
-                                                        </b>. Apakah anda yakin?
-                                                    </p>
-                                                </div>
-                                                <div
-                                                    class="flex justify-end items-center gap-4 p-4 border-t dark:border-slate-700">
-                                                    <button
-                                                        class="btn dark:text-gray-200 border border-slate-200 dark:border-slate-700 hover:bg-slate-100 hover:dark:bg-slate-700 transition-all"
-                                                        data-fc-dismiss type="button">Close
-                                                    </button>
-                                                    <form action="/admin/alumni-list/<%= alumni.nisn %>/?_method=DELETE"
-                                                        method="POST">
-                                                        <button type="submit"
-                                                            class="btn bg-danger text-white">Hapus</button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <!-- button edit -->
-                                        <button class="btn bg-primary/25 text-primary hover:bg-primary hover:text-white"
-                                            data-fc-target="modal-edit" data-fc-type="modal" type="button">
-                                            Edit
-                                        </button>
-                                        <!-- modal edit -->
-                                        <div id="modal-edit"
-                                            class="w-full h-full mt-5 fixed top-0 left-0 z-50 transition-all duration-500 fc-modal hidden">
-                                            <div
-                                                class="fc-modal-open:opacity-100 duration-500 opacity-0 ease-out transition-all sm:max-w-lg sm:w-full m-3 sm:mx-auto flex flex-col bg-white border shadow-sm rounded-md dark:bg-slate-800 dark:border-gray-700">
-                                                <div
-                                                    class="flex justify-between items-center py-2.5 px-4 border-b dark:border-gray-700">
-                                                    <h3 class="font-medium text-gray-800 dark:text-white text-lg">
-                                                        Edit
-                                                    </h3>
-                                                    <button
-                                                        class="inline-flex flex-shrink-0 justify-center items-center h-8 w-8 dark:text-gray-200"
-                                                        data-fc-dismiss type="button">
-                                                        <span class="material-symbols-rounded">close</span>
-                                                    </button>
-                                                </div>
-                                                <form method="POST"
-                                                    action="/admin/alumni-edit/<%= alumni.nisn %>/?_method=PUT">
-                                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-3 px-4">
-
-                                                        <div class="md:col-span-2">
-                                                            <label for="nisn"
-                                                                class="text-gray-800 text-sm font-medium inline-block mb-2">NISN
-                                                                <span class="text-red-500">*</span></label>
-                                                            <input type="text"
-                                                                class="form-input text-black dark:text-white" id="nisn"
-                                                                placeholder="Masukkan Nama Alumni " required
-                                                                name="nisnBaru" value="<%= alumni.nisn %>">
-                                                        </div>
-                                                        <div class="md:col-span-2">
-                                                            <label for="nama"
-                                                                class="text-gray-800 text-sm font-medium inline-block mb-2">Nama
-                                                                <span class="text-red-500">*</span></label>
-                                                            <input type="text"
-                                                                class="form-input text-black dark:text-white" id="nama"
-                                                                placeholder="Masukkan Nama Alumni " required name="nama"
-                                                                value="<%= typeof alumni.nama !== 'undefined' ? alumni.nama : '' %>">
-                                                        </div>
-                                                        <div>
-                                                            <div class="flex items-center gap-2 mb-2">
-                                                                <label for="inputState"
-                                                                    class="text-gray-800 text-sm font-medium inline-block">Jenis
-                                                                    Kelamin <span
-                                                                        class="text-red-500">*</span></label></label>
-                                                            </div>
-                                                            <select id="inputState"
-                                                                class="form-select focus:border-primary text-black dark:text-white"
-                                                                name="jenisKelamin" required>
-                                                                <option value="" disabled selected class="text-black">
-                                                                    Pilih
-                                                                    Jenis Kelamin
-                                                                </option>
-                                                                <option value="Laki-laki" class="text-black" <% if
-                                                                    (alumni.jenisKelamin=='Laki-laki' ) { %> selected <%
-                                                                        } %>>
-                                                                        Laki-laki
-                                                                </option>
-                                                                <option value="Perempuan" class="text-black" <% if
-                                                                    (alumni.jenisKelamin=='Perempuan' ) { %> selected <%
-                                                                        } %>>
-                                                                        Perempuan
-                                                                </option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="flex gap-3 mt-2">
-                                                        <div
-                                                            class="flex justify-end items-center gap-4 p-4 dark:border-slate-700">
-                                                            <button
-                                                                class="btn dark:text-gray-200 border border-slate-200 dark:border-slate-700 hover:bg-slate-100 hover:dark:bg-slate-700 transition-all"
-                                                                data-fc-dismiss type="button">Close</button>
-                                                            <button type="submit"
-                                                                class="btn bg-success text-white">Save</button>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
 
-                        <% if(tracerStudy.length> 0) { %>
-                            <div class="col-span-2 mt-6">
-                                <div class="card">
-                                    <div class="p-6">
-                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                            <div>
-                                                <div class="flex items-center gap-2 mb-2">
-                                                    <span
-                                                        class="material-symbols-rounded text-gray-800 dark:text-white">
-                                                        mail
-                                                    </span>
-                                                    <label for="inputEmail4"
-                                                        class="text-gray-800 text-sm font-medium inline-block">Email</label>
-                                                </div>
-                                                <input type="email"
-                                                    class="form-input focus:border-primary text-black dark:text-white bg-yellow-50 dark:bg-gray-700"
-                                                    id="inputEmail4" placeholder="Email" name="email"
-                                                    value="<%= tracerStudy[0].email %>" disabled>
-                                            </div>
-
-                                            <div>
-                                                <div class="flex items-center gap-2 mb-2">
-                                                    <span
-                                                        class="material-symbols-rounded text-gray-800 dark:text-white">
-                                                        event
-                                                    </span>
-                                                    <label for="inputState"
-                                                        class="text-gray-800 text-sm font-medium inline-block">Tahun
-                                                        Lulus</label>
-                                                </div>
-                                                <input type="text"
-                                                    class="form-input focus:border-primary text-black dark:text-white bg-yellow-50 dark:bg-gray-700"
-                                                    value="<%= tracerStudy[0].tahunLulus %>" disabled>
-                                            </div>
-                                            <div>
-                                                <div class="flex items-center gap-2 mb-2">
-                                                    <span
-                                                        class="material-symbols-rounded text-gray-800 dark:text-white">
-                                                        sprint
-                                                    </span>
-                                                    <label for="inputState"
-                                                        class="text-gray-800 text-sm font-medium inline-block">Kegiatan
-                                                        setelah Lulus</label>
-                                                </div>
-                                                <input type="text"
-                                                    class="form-input focus:border-primary text-black dark:text-white bg-yellow-50 dark:bg-gray-700"
-                                                    id="inputState" placeholder="Kegiatan" name="kegiatan"
-                                                    value="<%= tracerStudy[0].kegiatan %>" disabled>
-                                            </div>
+                    <% if(tracerStudy.length> 0) { %>
+                        <div
+                            class="relative overflow-hidden rounded-md shadow-sm dark:shadow-gray-700 bg-white dark:bg-slate-900 mt-3">
+                            <div class="p-6">
+                                <div class="grid grid-cols-1 md:grid-cols-2" style="gap: 2rem;">
+                                    <div>
+                                        <div class="flex items-center gap-2 mb-2">
+                                            <span style="font-size: 28px; margin-bottom: 10px; display: block;"
+                                                class="mdi mdi-mail"></span>
+                                            <p
+                                                style="color: navy; font-size: 1.2rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
+                                                Email</p>
                                         </div>
+                                        <h2 class="text-black" style="font-size: 1.5rem;">
+                                            <%= tracerStudy[0].email %>
+                                        </h2>
+                                    </div>
 
+                                    <div>
+                                        <div class="flex items-center gap-2 mb-2">
+                                            <span style="font-size: 28px; margin-bottom: 10px; display: block;"
+                                                class="mdi mdi-calendar-text"></span>
+                                            <p
+                                                style="color: navy; font-size: 1.2rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
+                                                Tahun
+                                                Lulus
+                                            </p>
+                                        </div>
+                                        <h2 class="text-black" style="font-size: 1.5rem;">
+                                            <%= tracerStudy[0].tahunLulus %>
+                                        </h2>
+                                    </div>
+
+                                    <div>
+                                        <div class="flex items-center gap-2 mb-2">
+                                            <span style="font-size: 28px; margin-bottom: 10px; display: block;"
+                                                class="mdi mdi-run"></span>
+                                            <p
+                                                style="color: navy; font-size: 1.2rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
+                                                Kegiatan
+                                                setelah Lulus</p>
+                                        </div>
+                                        <h2 class="text-black" style="font-size: 1.5rem;">
+                                            <%= tracerStudy[0].kegiatan %>
+                                        </h2>
                                     </div>
                                 </div>
-                                <% if(tracerStudy[0].kegiatan=="Bekerja" ) { %>
-                                    <!-- bekerja -->
-                                    <div class="card p-6 mt-6">
-                                        <div id="bekerja" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            </div>
+                        </div>
+
+                        <% if(tracerStudy[0].kegiatan=="Bekerja" ) { %>
+                            <div
+                                class="relative overflow-hidden rounded-md shadow-sm dark:shadow-gray-700 bg-white dark:bg-slate-900 mt-3">
+                                <div class="p-6">
+                                    <div class="grid grid-cols-1 md:grid-cols-2" style="gap: 2rem;">
+                                        <div>
+                                            <div class="flex items-center gap-2 mb-2"
+                                                style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                                <span style="font-size: 28px; margin-bottom: 10px; display: block;"
+                                                    class="mdi mdi-domain">
+                                                </span>
+                                                <p
+                                                    style="color: navy; font-size: 1.2rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
+                                                    Nama
+                                                    Perusahaan</p>
+                                            </div>
+                                            <h2 style="font-size: 1.5rem; color: black;">
+                                                <%= tracerStudy[0].kegiatanDetail.namaPerusahaan %>
+                                            </h2>
+                                        </div>
+                                        <div>
+                                            <div class="flex items-center gap-2 mb-2"
+                                                style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                                <span style="font-size: 28px; margin-bottom: 10px; display: block;"
+                                                    class="mdi mdi-view-dashboard ">
+                                                </span>
+                                                <p style=" color: navy; font-size: 1.2rem; font-weight: bold; display:
+                                                    block; margin-bottom: 0.7rem;">
+                                                    Alamat
+                                                    Perusahaan</p>
+                                            </div>
+                                            <h2 style="font-size: 1.5rem; color: black;">
+                                                <%= tracerStudy[0].kegiatanDetail.alamatPerusahaan %>
+                                            </h2>
+                                        </div>
+                                        <div>
+                                            <div class="flex items-center gap-2 mb-2"
+                                                style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                                <span style="font-size: 28px; margin-bottom: 10px; display: block;"
+                                                    class="mdi mdi-phone">
+                                                </span>
+                                                <label style=" color: navy; font-size: 1.2rem; font-weight: bold; display:
+                                                    block; margin-bottom: 0.7rem;">Telepon
+                                                    Perusahaan</label>
+                                            </div>
+                                            <h2 style="font-size: 1.5rem; color: black;">
+                                                <%= tracerStudy[0].kegiatanDetail.teleponPerusahaan %>
+                                            </h2>
+                                        </div>
+                                        <div>
+                                            <div class="flex items-center gap-2 mb-2"
+                                                style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                                <span style="font-size: 28px; margin-bottom: 10px; display: block;"
+                                                    class="mdi mdi-shape-plus">
+                                                </span>
+                                                <label style=" color: navy; font-size: 1.2rem; font-weight: bold; display:
+                                                    block; margin-bottom: 0.7rem;">Sektor
+                                                    Perusahaan</label>
+                                            </div>
+                                            <h2 style="font-size: 1.5rem; color: black;">
+                                                <%= tracerStudy[0].kegiatanDetail.sektorPerusahaan %>
+                                            </h2>
+                                        </div>
+                                        <div>
+                                            <div class="flex items-center gap-2 mb-2"
+                                                style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                                <span style="font-size: 28px; margin-bottom: 10px; display: block;"
+                                                    class="mdi mdi-bag-checked">
+                                                </span>
+                                                <label style=" color: navy; font-size: 1.2rem; font-weight: bold; display:
+                                                    block; margin-bottom: 0.7rem;">Posisi</label>
+                                            </div>
+                                            <h2 style="font-size: 1.5rem; color: black;">
+                                                <%= tracerStudy[0].kegiatanDetail.posisi %>
+                                            </h2>
+                                        </div>
+                                        <div>
+                                            <div class="flex items-center gap-2 mb-2"
+                                                style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                                <span style="font-size: 28px; margin-bottom: 10px; display: block;"
+                                                    class="mdi mdi-calendar-range">
+                                                </span>
+                                                <label style=" color: navy; font-size: 1.2rem; font-weight: bold; display:
+                                                    block; margin-bottom: 0.7rem;">Tanggal
+                                                    Masuk</label>
+                                            </div>
+                                            <h2 style="font-size: 1.5rem; color: black;">
+                                                <%= new
+                                                    Date(tracerStudy[0].kegiatanDetail.tanggalMasuk).toLocaleDateString('id-ID',
+                                                    { weekday: 'long' , year: 'numeric' , month: 'long' , day: 'numeric'
+                                                    }) %>
+                                            </h2>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <% } else if(tracerStudy[0].kegiatan=="Melanjutkan Studi" ) { %>
+                                <div
+                                    class="relative overflow-hidden rounded-md shadow-sm dark:shadow-gray-700 bg-white dark:bg-slate-900 mt-6">
+                                    <div class="p-6">
+                                        <div class="grid grid-cols-1 md:grid-cols-2" style="gap: 2rem;">
                                             <div>
                                                 <div class="flex items-center gap-2 mb-2">
-                                                    <span
-                                                        class="material-symbols-rounded text-gray-800 dark:text-white">
-                                                        apartment
-                                                    </span>
-                                                    <label for="inputState"
-                                                        class="text-gray-800 text-sm font-medium inline-block">Nama
-                                                        Perusahaan</label>
+                                                    <span style="font-size: 28px; margin-bottom: 10px; display: block;"
+                                                        class="mdi mdi-domain"></span>
+                                                    <p
+                                                        style="color: navy; font-size: 1.2rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
+                                                        Nama Universitas</p>
                                                 </div>
-                                                <input type="text"
-                                                    class="form-input focus:border-primary text-black dark:text-white bg-yellow-50 dark:bg-gray-700"
-                                                    id="inputState" placeholder="PT. ABC" name="namaPerusahaan"
-                                                    value="<%= tracerStudy[0].kegiatanDetail.namaPerusahaan %>"
-                                                    disabled>
+                                                <h2 style="font-size: 1.5rem; color: black;">
+                                                    <%= tracerStudy[0].kegiatanDetail.namaUniversitas %>
+                                                </h2>
                                             </div>
                                             <div>
                                                 <div class="flex items-center gap-2 mb-2">
-                                                    <span
-                                                        class="material-symbols-rounded text-gray-800 dark:text-white">
-                                                        view_stream
-                                                    </span>
-                                                    <label for="inputState"
-                                                        class="text-gray-800 text-sm font-medium inline-block">Alamat
-                                                        Perusahaan</label>
+                                                    <span style="font-size: 28px; margin-bottom: 10px; display: block;"
+                                                        class="mdi mdi-view-stream"></span>
+                                                    <p
+                                                        style="color: navy; font-size: 1.2rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
+                                                        Alamat Universitas</p>
                                                 </div>
-                                                <input type="text"
-                                                    class="form-input focus:border-primary text-black dark:text-white bg-yellow-50 dark:bg-gray-700"
-                                                    id="inputState" placeholder="Jl. ABC, No. 123, Jakarta"
-                                                    name="alamatPerusahaan"
-                                                    value="<%= tracerStudy[0].kegiatanDetail.alamatPerusahaan %>"
-                                                    disabled>
+                                                <h2 style="font-size: 1.5rem; color: black;">
+                                                    <%= tracerStudy[0].kegiatanDetail.alamatUniversitas %>
+                                                </h2>
                                             </div>
                                             <div>
                                                 <div class="flex items-center gap-2 mb-2">
-                                                    <span
-                                                        class="material-symbols-rounded text-gray-800 dark:text-white">
-                                                        call
-                                                    </span>
-                                                    <label for="inputState"
-                                                        class="text-gray-800 text-sm font-medium inline-block">Telepon
-                                                        Perusahaan</label>
+                                                    <span style="font-size: 28px; margin-bottom: 10px; display: block;"
+                                                        class="mdi mdi-backpack"></span>
+                                                    <p
+                                                        style="color: navy; font-size: 1.2rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
+                                                        Fakultas</p>
                                                 </div>
-                                                <input type="text"
-                                                    class="form-input focus:border-primary text-black dark:text-white bg-yellow-50 dark:bg-gray-700"
-                                                    id="inputState" placeholder="08123456789 (masukkan nomor saja)"
-                                                    name="teleponPerusahaan"
-                                                    value="<%= tracerStudy[0].kegiatanDetail.teleponPerusahaan %>"
-                                                    disabled>
+                                                <h2 style="font-size: 1.5rem; color: black;">
+                                                    <%= tracerStudy[0].kegiatanDetail.fakultas %>
+                                                </h2>
                                             </div>
                                             <div>
                                                 <div class="flex items-center gap-2 mb-2">
-                                                    <span
-                                                        class="material-symbols-rounded text-gray-800 dark:text-white">
-                                                        variables
-                                                    </span>
-                                                    <label for="inputState"
-                                                        class="text-gray-800 text-sm font-medium inline-block">Sektor
-                                                        Perusahaan</label>
+                                                    <span style="font-size: 28px; margin-bottom: 10px; display: block;"
+                                                        class="mdi mdi-memory"></span>
+                                                    <p
+                                                        style="color: navy; font-size: 1.2rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
+                                                        Program Studi</p>
                                                 </div>
-                                                <input type="text"
-                                                    class="form-input focus:border-primary text-black dark:text-white bg-yellow-50 dark:bg-gray-700"
-                                                    id="inputState" placeholder="Teknologi" name="sektorPerusahaan"
-                                                    value="<%= tracerStudy[0].kegiatanDetail.sektorPerusahaan %>"
-                                                    disabled>
+                                                <h2 style="font-size: 1.5rem; color: black;">
+                                                    <%= tracerStudy[0].kegiatanDetail.programStudi %>
+                                                </h2>
                                             </div>
                                             <div>
                                                 <div class="flex items-center gap-2 mb-2">
-                                                    <span
-                                                        class="material-symbols-rounded text-gray-800 dark:text-white">
-                                                        person
-                                                    </span>
-                                                    <label for="inputState"
-                                                        class="text-gray-800 text-sm font-medium inline-block">Posisi</label>
+                                                    <span style="font-size: 28px; margin-bottom: 10px; display: block;"
+                                                        class="mdi mdi-calendar-range"></span>
+                                                    <p
+                                                        style="color: navy; font-size: 1.2rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
+                                                        Tanggal Masuk</p>
                                                 </div>
-                                                <input type="text"
-                                                    class="form-input focus:border-primary text-black dark:text-white bg-yellow-50 dark:bg-gray-700"
-                                                    id="inputState" placeholder="IT-Support" name="posisi"
-                                                    value="<%= tracerStudy[0].kegiatanDetail.posisi %>" disabled>
-                                            </div>
-                                            <div>
-                                                <div class="flex items-center gap-2 mb-2">
-                                                    <span
-                                                        class="material-symbols-rounded text-gray-800 dark:text-white">
-                                                        event
-                                                    </span>
-                                                    <label for="inputState"
-                                                        class="text-gray-800 text-sm font-medium inline-block">Tanggal
-                                                        Masuk</label>
-                                                </div>
-                                                <input type="text"
-                                                    class="form-input focus:border-primary text-black dark:text-white bg-yellow-50 dark:bg-gray-700"
-                                                    id="inputState" name="tanggalMasukBekerja"
-                                                    value="<%= new Date(tracerStudy[0].kegiatanDetail.tanggalMasuk).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) %>"
-                                                    disabled>
+                                                <h2 style="font-size: 1.5rem; color: black;">
+                                                    <%= new
+                                                        Date(tracerStudy[0].kegiatanDetail.tanggalMasuk).toLocaleDateString('id-ID',
+                                                        { weekday: 'long' , year: 'numeric' , month: 'long' ,
+                                                        day: 'numeric' }) %>
+                                                </h2>
                                             </div>
                                         </div>
                                     </div>
-                                    <% } else if(tracerStudy[0].kegiatan=="Melanjutkan Studi" ) { %>
-                                        <!-- melanjutkan studi -->
-                                        <div class="card p-6 mt-6">
-                                            <div id="melanjutkanStudi" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                </div>
+
+                                <% } else if(tracerStudy[0].kegiatan=="Berwirausaha" ) { %>
+                                    <div
+                                        class="relative overflow-hidden rounded-md shadow-sm dark:shadow-gray-700 bg-white dark:bg-slate-900 mt-6">
+                                        <div class="p-6">
+                                            <div class="grid grid-cols-1 md:grid-cols-2" style="gap: 2rem;">
+
                                                 <div>
                                                     <div class="flex items-center gap-2 mb-2">
-                                                        <span
-                                                            class="material-symbols-rounded text-gray-800 dark:text-white">
-                                                            domain
-                                                        </span>
-                                                        <label for="inputState"
-                                                            class="text-gray-800 text-sm font-medium inline-block">Nama
-                                                            Universitas</label>
+                                                        <span class="mdi mdi-domain"
+                                                            style="font-size: 28px; margin-bottom: 10px; display: block;"></span>
+                                                        <p
+                                                            style="color: navy; font-size: 1.2rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
+                                                            Nama Usaha</p>
                                                     </div>
-                                                    <input type="text"
-                                                        class="form-input focus:border-primary text-black dark:text-white bg-yellow-50 dark:bg-gray-700"
-                                                        id="inputState" placeholder="Universitas ABC"
-                                                        name="namaUniversitas"
-                                                        value="<%= tracerStudy[0].kegiatanDetail.namaUniversitas %>"
-                                                        disabled>
+                                                    <h2 style="font-size: 1.5rem; color: black;">
+                                                        <%= tracerStudy[0].kegiatanDetail.namaUsaha %>
+                                                    </h2>
                                                 </div>
+
                                                 <div>
                                                     <div class="flex items-center gap-2 mb-2">
-                                                        <span
-                                                            class="material-symbols-rounded text-gray-800 dark:text-white">
-                                                            view_stream
-                                                        </span>
-                                                        <label for="inputState"
-                                                            class="text-gray-800 text-sm font-medium inline-block">Alamat
-                                                            Universitas</label>
+                                                        <span class="mdi mdi-view-stream"
+                                                            style="font-size: 28px; margin-bottom: 10px; display: block;"></span>
+                                                        <p
+                                                            style="color: navy; font-size: 1.2rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
+                                                            Alamat Usaha</p>
                                                     </div>
-                                                    <input type="text"
-                                                        class="form-input focus:border-primary text-black dark:text-white bg-yellow-50 dark:bg-gray-700"
-                                                        id="inputState" placeholder="Jl. ABC, No. 123, Jakarta"
-                                                        name="alamatUniversitas"
-                                                        value="<%= tracerStudy[0].kegiatanDetail.alamatUniversitas %>"
-                                                        disabled>
+                                                    <h2 style="font-size: 1.5rem; color: black;">
+                                                        <%= tracerStudy[0].kegiatanDetail.alamatUsaha %>
+                                                    </h2>
                                                 </div>
+
                                                 <div>
                                                     <div class="flex items-center gap-2 mb-2">
-                                                        <span
-                                                            class="material-symbols-rounded text-gray-800 dark:text-white">
-                                                            backpack
-                                                        </span>
-                                                        <label for="inputState"
-                                                            class="text-gray-800 text-sm font-medium inline-block">Fakultas</label>
+                                                        <span class="mdi mdi-phone"
+                                                            style="font-size: 28px; margin-bottom: 10px; display: block;"></span>
+                                                        <p
+                                                            style="color: navy; font-size: 1.2rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
+                                                            Telepon Usaha</p>
                                                     </div>
-                                                    <input type="text"
-                                                        class="form-input focus:border-primary text-black dark:text-white bg-yellow-50 dark:bg-gray-700"
-                                                        id="inputState" placeholder="Ekonomi dan Bisnis" name="fakultas"
-                                                        value="<%= tracerStudy[0].kegiatanDetail.fakultas %>" disabled>
+                                                    <h2 style="font-size: 1.5rem; color: black;">
+                                                        <%= tracerStudy[0].kegiatanDetail.teleponUsaha %>
+                                                    </h2>
                                                 </div>
+
                                                 <div>
                                                     <div class="flex items-center gap-2 mb-2">
-                                                        <span
-                                                            class="material-symbols-rounded text-gray-800 dark:text-white">
-                                                            memory
-                                                        </span>
-                                                        <label for="inputState"
-                                                            class="text-gray-800 text-sm font-medium inline-block">Program
-                                                            Studi</label>
+                                                        <span class="mdi mdi-briefcase-variant"
+                                                            style="font-size: 28px; margin-bottom: 10px; display: block;"></span>
+                                                        <p
+                                                            style="color: navy; font-size: 1.2rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
+                                                            Bidang Usaha</p>
                                                     </div>
-                                                    <input type="text"
-                                                        class="form-input focus:border-primary text-black dark:text-white bg-yellow-50 dark:bg-gray-700"
-                                                        id="inputState" placeholder="Akuntansi Keuangan Publik"
-                                                        name="programStudi"
-                                                        value="<%= tracerStudy[0].kegiatanDetail.programStudi %>"
-                                                        disabled>
+                                                    <h2 style="font-size: 1.5rem; color: black;">
+                                                        <%= tracerStudy[0].kegiatanDetail.bidangUsaha %>
+                                                    </h2>
                                                 </div>
+
                                                 <div>
                                                     <div class="flex items-center gap-2 mb-2">
-                                                        <span
-                                                            class="material-symbols-rounded text-gray-800 dark:text-white">
-                                                            event
-                                                        </span>
-                                                        <label for="inputState"
-                                                            class="text-gray-800 text-sm font-medium inline-block">Tanggal
-                                                            Masuk</label>
+                                                        <span class="mdi mdi-account-group"
+                                                            style="font-size: 28px; margin-bottom: 10px; display: block;"></span>
+                                                        <p
+                                                            style="color: navy; font-size: 1.2rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
+                                                            Jumlah Karyawan</p>
                                                     </div>
-                                                    <input type="text"
-                                                        class="form-input focus:border-primary text-black dark:text-white bg-yellow-50 dark:bg-gray-700"
-                                                        id="inputState" name="tanggalMasukUniversitas"
-                                                        value="<%= new Date(tracerStudy[0].kegiatanDetail.tanggalMasuk).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) %>"
-                                                        disabled>
+                                                    <h2 style="font-size: 1.5rem; color: black;">
+                                                        <%= tracerStudy[0].kegiatanDetail.jumlahKaryawan %>
+                                                    </h2>
+                                                </div>
+
+                                                <div>
+                                                    <div class="flex items-center gap-2 mb-2">
+                                                        <span class="mdi mdi-calendar-start"
+                                                            style="font-size: 28px; margin-bottom: 10px; display: block;"></span>
+                                                        <p
+                                                            style="color: navy; font-size: 1.2rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
+                                                            Tanggal Mulai Usaha</p>
+                                                    </div>
+                                                    <h2 style="font-size: 1.5rem; color: black;">
+                                                        <%= new
+                                                            Date(tracerStudy[0].kegiatanDetail.tanggalMulai).toLocaleDateString('id-ID',
+                                                            { weekday: 'long' , year: 'numeric' , month: 'long' ,
+                                                            day: 'numeric' }) %>
+                                                    </h2>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <% } else if(tracerStudy[0].kegiatan=="Kursus" ) { %>
+                                        <div
+                                            class="relative overflow-hidden rounded-md shadow-sm dark:shadow-gray-700 bg-white dark:bg-slate-900 mt-6">
+                                            <div class="p-6">
+                                                <div class="grid grid-cols-1 md:grid-cols-2" style="gap: 2rem;">
+                                                    <div>
+                                                        <div class="flex items-center gap-2 mb-2">
+                                                            <span class="mdi mdi-domain"
+                                                                style="font-size: 28px; margin-bottom: 10px; display: block;"></span>
+                                                            <p
+                                                                style="color: navy; font-size: 1.2rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
+                                                                Nama Kursus</p>
+                                                        </div>
+                                                        <h2 style="font-size: 1.5rem; color: black;">
+                                                            <%= tracerStudy[0].kegiatanDetail.namaKursus %>
+                                                        </h2>
+                                                    </div>
+                                                    <div>
+                                                        <div class="flex items-center gap-2 mb-2">
+                                                            <span class="mdi mdi-view-stream"
+                                                                style="font-size: 28px; margin-bottom: 10px; display: block;"></span>
+                                                            <p
+                                                                style="color: navy; font-size: 1.2rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
+                                                                Alamat Kursus</p>
+                                                        </div>
+                                                        <h2 style="font-size: 1.5rem; color: black;">
+                                                            <%= tracerStudy[0].kegiatanDetail.alamatKursus %>
+                                                        </h2>
+                                                    </div>
+                                                    <div>
+                                                        <div class="flex items-center gap-2 mb-2">
+                                                            <span class="mdi mdi-backpack"
+                                                                style="font-size: 28px; margin-bottom: 10px; display: block;"></span>
+                                                            <p
+                                                                style="color: navy; font-size: 1.2rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
+                                                                Bidang Kursus</p>
+                                                        </div>
+                                                        <h2 style="font-size: 1.5rem; color: black;">
+                                                            <%= tracerStudy[0].kegiatanDetail.bidangKursus %>
+                                                        </h2>
+                                                    </div>
+                                                    <div>
+                                                        <div class="flex items-center gap-2 mb-2">
+                                                            <span class="mdi mdi-calendar-start"
+                                                                style="font-size: 28px; margin-bottom: 10px; display: block;"></span>
+                                                            <p
+                                                                style="color: navy; font-size: 1.2rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
+                                                                Tanggal Mulai Kursus</p>
+                                                        </div>
+                                                        <h2 style="font-size: 1.5rem; color: black;">
+                                                            <%= new
+                                                                Date(tracerStudy[0].kegiatanDetail.tanggalMulai).toLocaleDateString('id-ID',
+                                                                { weekday: 'long' , year: 'numeric' , month: 'long' ,
+                                                                day: 'numeric' }) %>
+                                                        </h2>
+                                                    </div>
+                                                    <div>
+                                                        <div class="flex items-center gap-2 mb-2">
+                                                            <span class="mdi mdi-calendar-end"
+                                                                style="font-size: 28px; margin-bottom: 10px; display: block;"></span>
+                                                            <p
+                                                                style="color: navy; font-size: 1.2rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
+                                                                Tanggal Selesai Kursus</p>
+                                                        </div>
+                                                        <h2 style="font-size: 1.5rem; color: black;">
+                                                            <%= new
+                                                                Date(tracerStudy[0].kegiatanDetail.tanggalSelesai).toLocaleDateString('id-ID',
+                                                                { weekday: 'long' , year: 'numeric' , month: 'long' ,
+                                                                day: 'numeric' }) %>
+                                                        </h2>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <% } else if(tracerStudy[0].kegiatan=="Berwirausaha" ) { %>
-                                            <!-- Berwirausaha -->
-                                            <div class="card p-6 mt-6">
-                                                <div id="berwirausaha"
-                                                    class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-                                                    <div>
-                                                        <div class="flex items-center gap-2 mb-2">
-                                                            <span
-                                                                class="material-symbols-rounded text-gray-800 dark:text-white">
-                                                                domain
-                                                            </span>
-                                                            <label for="inputState"
-                                                                class="text-gray-800 text-sm font-medium inline-block">Nama
-                                                                Usaha</label>
+
+                                        <% } else if(tracerStudy[0].kegiatan=="Belum Ada Kegiatan" ) { %>
+                                            <div
+                                                class="relative overflow-hidden rounded-md shadow-sm dark:shadow-gray-700 bg-white dark:bg-slate-900 mt-6">
+                                                <div class="p-6">
+                                                    <div class="grid grid-cols-1" style="gap: 2rem;">
+                                                        <div>
+                                                            <div class="flex items-center gap-2 mb-2">
+                                                                <span class="mdi mdi-calendar-clock"
+                                                                    style="font-size: 28px; margin-bottom: 10px; display: block;"></span>
+                                                                <p
+                                                                    style="color: navy; font-size: 1.2rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
+                                                                    Kegiatan Yang Dilakukan Sekarang
+                                                                </p>
+                                                            </div>
+                                                            <div class="bg-yellow-50 dark:bg-gray-700 rounded-md">
+                                                                <p style="font-size: 1.5rem; color: black;">
+                                                                    <%= tracerStudy[0].belumAdaKegiatanDetail %>
+                                                                </p>
+                                                            </div>
                                                         </div>
-                                                        <input type="text"
-                                                            class="form-input focus:border-primary text-black dark:text-white bg-yellow-50 dark:bg-gray-700"
-                                                            id="inputState" placeholder="Ayam Geprek ABC"
-                                                            name="namaUsaha"
-                                                            value="<%= tracerStudy[0].kegiatanDetail.namaUsaha %>"
-                                                            disabled>
-                                                    </div>
-                                                    <div>
-                                                        <div class="flex items-center gap-2 mb-2">
-                                                            <span
-                                                                class="material-symbols-rounded text-gray-800 dark:text-white">
-                                                                view_stream
-                                                            </span>
-                                                            <label for="inputState"
-                                                                class="text-gray-800 text-sm font-medium inline-block">Alamat
-                                                                Usaha</label>
-                                                        </div>
-                                                        <input type="text"
-                                                            class="form-input focus:border-primary text-black dark:text-white bg-yellow-50 dark:bg-gray-700"
-                                                            id="inputState" placeholder="Jl. ABC, No. 123, Jakarta"
-                                                            name="alamatUsaha"
-                                                            value="<%= tracerStudy[0].kegiatanDetail.alamatUsaha %>"
-                                                            disabled>
-                                                    </div>
-                                                    <div>
-                                                        <div class="flex items-center gap-2 mb-2">
-                                                            <span
-                                                                class="material-symbols-rounded text-gray-800 dark:text-white">
-                                                                call
-                                                            </span>
-                                                            <label for="inputState"
-                                                                class="text-gray-800 text-sm font-medium inline-block">Telepon
-                                                                Usaha</label>
-                                                        </div>
-                                                        <input type="text"
-                                                            class="form-input focus:border-primary text-black dark:text-white bg-yellow-50 dark:bg-gray-700"
-                                                            id="inputState" placeholder="021-1234567"
-                                                            name="teleponUsaha"
-                                                            value="<%= tracerStudy[0].kegiatanDetail.teleponUsaha %>"
-                                                            disabled>
-                                                    </div>
-                                                    <div>
-                                                        <div class="flex items-center gap-2 mb-2">
-                                                            <span
-                                                                class="material-symbols-rounded text-gray-800 dark:text-white">
-                                                                variables
-                                                            </span>
-                                                            <label for="inputState"
-                                                                class="text-gray-800 text-sm font-medium inline-block">Bidang
-                                                                Usaha</label>
-                                                        </div>
-                                                        <input type="text"
-                                                            class="form-input focus:border-primary text-black dark:text-white bg-yellow-50 dark:bg-gray-700"
-                                                            id="inputState" placeholder="Makanan" name="bidangUsaha"
-                                                            value="<%= tracerStudy[0].kegiatanDetail.bidangUsaha %>"
-                                                            disabled>
-                                                    </div>
-                                                    <div>
-                                                        <div class="flex items-center gap-2 mb-2">
-                                                            <span
-                                                                class="material-symbols-rounded text-gray-800 dark:text-white">
-                                                                person
-                                                            </span>
-                                                            <label for="inputState"
-                                                                class="text-gray-800 text-sm font-medium inline-block">Jumlah
-                                                                Karyawan</label>
-                                                        </div>
-                                                        <input type="number"
-                                                            class="form-input focus:border-primary text-black dark:text-white bg-yellow-50 dark:bg-gray-700"
-                                                            id="inputState" placeholder="isi 1 jika belum ada"
-                                                            name="jumlahKaryawan"
-                                                            value="<%= tracerStudy[0].kegiatanDetail.jumlahKaryawan %>"
-                                                            disabled>
-                                                    </div>
-                                                    <div>
-                                                        <div class="flex items-center gap-2 mb-2">
-                                                            <span
-                                                                class="material-symbols-rounded text-gray-800 dark:text-white">
-                                                                event
-                                                            </span>
-                                                            <label for="inputState"
-                                                                class="text-gray-800 text-sm font-medium inline-block">Tanggal
-                                                                Mulai Usaha</label>
-                                                        </div>
-                                                        <input type="text"
-                                                            class="form-input focus:border-primary text-black dark:text-white bg-yellow-50 dark:bg-gray-700"
-                                                            id="inputState" name="tanggalMulaiUsaha"
-                                                            value="<%= new Date(tracerStudy[0].kegiatanDetail.tanggalMulai).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) %>"
-                                                            disabled>
                                                     </div>
                                                 </div>
                                             </div>
-
-                                            <% } else if(tracerStudy[0].kegiatan=="Kursus" ) { %>
-                                                <!-- kursus -->
-                                                <div class="card p-6 mt-6">
-                                                    <div id="kursus" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                                        <div>
-                                                            <div class="flex items-center gap-2 mb-2">
-                                                                <span
-                                                                    class="material-symbols-rounded text-gray-800 dark:text-white">
-                                                                    apartment
-                                                                </span>
-                                                                <label for="inputState"
-                                                                    class="text-gray-800 text-sm font-medium inline-block">Nama
-                                                                    Kursus</label>
+                                            <% } %>
+                                                <div
+                                                    class="relative overflow-hidden rounded-md shadow-sm dark:shadow-gray-700 bg-white dark:bg-slate-900 mt-6">
+                                                    <div class="p-6">
+                                                        <div class="grid grid-cols-1" style="gap: 2rem;">
+                                                            <div>
+                                                                <div class="flex items-center gap-2 mb-2">
+                                                                    <span class="mdi mdi-forum"
+                                                                        style="font-size: 28px; margin-bottom: 10px; display: block;"></span>
+                                                                    <p
+                                                                        style="color: navy; font-size: 1.2rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
+                                                                        Feedback
+                                                                    </p>
+                                                                </div>
+                                                                <div class="bg-yellow-50 dark:bg-gray-700 rounded-md">
+                                                                    <p style="font-size: 1.5rem; color: black;">
+                                                                        <%= tracerStudy[0].feedback.pesan %>
+                                                                    </p>
+                                                                </div>
                                                             </div>
-                                                            <input type="text"
-                                                                class="form-input focus:border-primary text-black dark:text-white bg-yellow-50 dark:bg-gray-700"
-                                                                id="inputState" placeholder="Pemrograman Web"
-                                                                name="namaKursus"
-                                                                value="<%= tracerStudy[0].kegiatanDetail.namaKursus %>"
-                                                                disabled>
-                                                        </div>
-                                                        <div>
-                                                            <div class="flex items-center gap-2 mb-2">
-                                                                <span
-                                                                    class="material-symbols-rounded text-gray-800 dark:text-white">
-                                                                    view_stream
-                                                                </span>
-                                                                <label for="inputState"
-                                                                    class="text-gray-800 text-sm font-medium inline-block">Alamat
-                                                                    Kursus</label>
-                                                            </div>
-                                                            <input type="text"
-                                                                class="form-input focus:border-primary text-black dark:text-white bg-yellow-50 dark:bg-gray-700"
-                                                                id="inputState" placeholder="Jl. ABC, No. 123, Jakarta"
-                                                                name="alamatKursus"
-                                                                value="<%= tracerStudy[0].kegiatanDetail.alamatKursus %>"
-                                                                disabled>
-                                                        </div>
-                                                        <div>
-                                                            <div class="flex items-center gap-2 mb-2">
-                                                                <span
-                                                                    class="material-symbols-rounded text-gray-800 dark:text-white">
-                                                                    backpack
-                                                                </span>
-                                                                <label for="inputState"
-                                                                    class="text-gray-800 text-sm font-medium inline-block">Bidang
-                                                                    Kursus</label>
-                                                            </div>
-                                                            <input type="text"
-                                                                class="form-input focus:border-primary text-black dark:text-white bg-yellow-50 dark:bg-gray-700"
-                                                                id="inputState" placeholder="LPK Neptune Madiun "
-                                                                name="bidangKursus"
-                                                                value="<%= tracerStudy[0].kegiatanDetail.bidangKursus %>"
-                                                                disabled>
-                                                        </div>
-                                                        <div>
-                                                            <div class="flex items-center gap-2 mb-2">
-                                                                <span
-                                                                    class="material-symbols-rounded text-gray-800 dark:text-white">
-                                                                    event_upcoming
-                                                                </span>
-                                                                <label for="inputState"
-                                                                    class="text-gray-800 text-sm font-medium inline-block">Tanggal
-                                                                    Mulai</label>
-                                                            </div>
-                                                            <input type="text"
-                                                                class="form-input focus:border-primary text-black dark:text-white bg-yellow-50 dark:bg-gray-700"
-                                                                id="inputState" name="tanggalMulaiKursus"
-                                                                value="<%= new Date(tracerStudy[0].kegiatanDetail.tanggalMulai).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) %>"
-                                                                disabled>
-                                                        </div>
-                                                        <div>
-                                                            <div class="flex items-center gap-2 mb-2">
-                                                                <span
-                                                                    class="material-symbols-rounded text-gray-800 dark:text-white">
-                                                                    event_available
-                                                                </span>
-                                                                <label for="inputState"
-                                                                    class="text-gray-800 text-sm font-medium inline-block">Tanggal
-                                                                    Selesai</label>
-                                                            </div>
-                                                            <input type="text"
-                                                                class="form-input focus:border-primary text-black dark:text-white bg-yellow-50 dark:bg-gray-700"
-                                                                id="inputState" name="tanggalSelesaiKursus"
-                                                                value="<%= new Date(tracerStudy[0].kegiatanDetail.tanggalSelesai).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) %>"
-                                                                disabled">
                                                         </div>
                                                     </div>
                                                 </div>
 
-                                                <% } else if(tracerStudy[0].kegiatan=="Belum Ada Kegiatan" ) { %>
-                                                    <!-- belum ada kegiatan -->
-                                                    <div class="card mt-6 p-6">
-                                                        <div id="belumAdaKegiatan" class="grid-cols-1 gap-6">
-                                                            <div>
-                                                                <div class="flex items-center gap-2 mb-2">
-                                                                    <span
-                                                                        class="material-symbols-rounded text-gray-800 dark:text-white">
-                                                                        event_available
-                                                                    </span>
-                                                                    <label for="inputRencana"
-                                                                        class="text-gray-800 text-sm font-medium inline-block">Kegiatan
-                                                                        Yang Dilakukan Sekarang</label>
-                                                                </div>
-                                                                <textarea
-                                                                    class="form-input text text-black dark:text-white bg-yellow-50 dark:bg-gray-700"
-                                                                    rows="5" id="inputRencana"
-                                                                    placeholder="Mempersiapkan pendaftaran perkuliahan"
-                                                                    name="kegiatanDetail"
-                                                                    disabled><%= tracerStudy[0].belumAdaKegiatanDetail %></textarea>
+
+                                                <% } else { %>
+                                                    <div style="grid-column: span 2; margin-top: 1.5rem;">
+                                                        <div
+                                                            style="background-color: #ef4444; border-radius: 6px; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);">
+                                                            <div style="padding: 1.5rem;">
+                                                                <h1
+                                                                    style="color: #fff; text-align: center; font-weight: bold; font-size: 1.5rem;">
+                                                                    Alumni ini belum mengisi form tracer study
+                                                                </h1>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <% } %>
-                                                        <div class="card mt-6 p-6">
-                                                            <!-- feedback -->
-                                                            <div id="feedback" class="grid-cols-1 gap-6">
-                                                                <div class="flex items-center gap-2 mb-2">
-                                                                    <span
-                                                                        class="material-symbols-rounded text-gray-800 dark:text-white">
-                                                                        forum
-                                                                    </span>
-                                                                    <label for="feedback"
-                                                                        class="text-gray-800 text-sm font-medium inline-block">Feedback</label>
-                                                                </div>
-                                                                <textarea
-                                                                    class="form-input text-black dark:text-white bg-yellow-50 dark:bg-gray-700 placeholder:text-black placeholder:dark:text-white"
-                                                                    rows="5" name="feedbackDetail" rows="10"
-                                                                    disabled><%= tracerStudy[0].feedback.pesan %></textarea>
-                                                            </div>
-                                                        </div>
-                            </div>
-                            <% } else { %>
-                                <div class="col-span-2 mt-6">
-                                    <div class="card">
-
-                                        <div class="p-6">
-                                            <h1 class="text-red-500 text-center text-xl dark:text-white">
-                                                Alumni Ini
-                                                belum mengisi form tracer study</a></h1>
-                                        </div>
-                                    </div>
-                                </div>
-                                <% } %>
-                                    <!-- Page Content End -->
-                    </main>
-
-                    <%- include('../../components/footer') %>
+                </div>
             </div>
+        </main>
     </div>
 
     <!-- Back to Top Button -->
@@ -764,15 +620,13 @@
         <i class="mgc_arrow_up_line text-lg"></i>
     </button>
 
-    <!-- Plugin Js -->
-    <script src="../../assets/libs/simplebar/simplebar.min.js"></script>
-    <script src="../../assets/libs/feather-icons/feather.min.js"></script>
-    <script src="../../assets/libs/%40frostui/tailwindcss/frostui.js"></script>
 
-    <!-- App Js -->
-    <script src="../../assets/js/app.js"></script>
+    <!-- script -->
+    <script src="../../assets/admin/libs/feather-icons/feather.min.js"></script>
+    <script src="../../assets/admin/libs/simplebar/simplebar.min.js"></script>
+    <script src="../../assets/admin/js/plugins.init.js"></script>
+    <script src="../../assets/admin/js/app.js"></script>
 
-    <script src="https://unpkg.com/gridjs/dist/gridjs.production.min.js"></script>
     <script>
         const alertSuccess = document.querySelector('.alert-success');
         if (alertSuccess) {

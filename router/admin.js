@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const adminController = require('../controllers/admin');
 const { isAdmin } = require('../middleware/auth');
+const upload = require('../middleware/upload');
 
 
 router.get('/admin', isAdmin, adminController.index);
@@ -10,6 +11,7 @@ router.get('/admin', isAdmin, adminController.index);
 router.route('/admin/alumni-list')
     .get(isAdmin, adminController.viewAlumniList)
     .post(isAdmin, adminController.storeAlumni);
+
 router.get('/admin/alumni-list/:nisn', isAdmin, adminController.viewAlumniDetail);
 router.post('/admin/alumni-list/delete', isAdmin, adminController.deleteAlumni);
 router.post('/admin/alumni-list/edit', isAdmin, adminController.alumniUpdate);
@@ -17,7 +19,7 @@ router.post('/admin/alumni-list/edit', isAdmin, adminController.alumniUpdate);
 // Berita 
 router.route('/admin/berita')
     .get(isAdmin, adminController.viewBerita)
-    .post(isAdmin, adminController.storeBerita);
+    .post(isAdmin, upload.single('gambarBerita'), adminController.storeBerita);
 
 router.get('/admin/profile', isAdmin, adminController.profile);
 router.put('/admin/profile-edit/:adminId', isAdmin, adminController.profileUpdate);

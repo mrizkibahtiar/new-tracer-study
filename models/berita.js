@@ -1,11 +1,10 @@
 const mongoose = require('mongoose');
 
-const newsSchema = new mongoose.Schema({
+const beritaSchema = new mongoose.Schema({
     // Judul berita, wajib diisi, dan unik
     title: {
         type: String,
         required: true,
-        unique: true,
         trim: true, // Menghapus spasi di awal dan akhir judul
     },
     // Isi berita, wajib diisi
@@ -25,6 +24,6 @@ const newsSchema = new mongoose.Schema({
 }, { timestamps: true }); // Menambahkan createdAt dan updatedAt
 
 // Membuat model dari skema
-const News = mongoose.model('News', newsSchema);
+const Berita = mongoose.model('Berita', beritaSchema);
 
-module.exports = News;
+module.exports = Berita;

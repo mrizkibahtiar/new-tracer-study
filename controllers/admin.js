@@ -1,5 +1,6 @@
 const Admin = require('../models/admin');
 const Alumni = require('../models/alumni');
+const Berita = require('../models/berita');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const TracerStudy = require('../models/tracerStudy');
@@ -8,6 +9,8 @@ const Pekerjaan = require('../models/pekerjaan');
 const StudiLanjutan = require('../models/studiLanjutan');
 const Berwirausaha = require('../models/berwirausaha');
 const Feedback = require('../models/feedback');
+
+
 
 
 module.exports = {
@@ -320,8 +323,34 @@ module.exports = {
         return res.redirect('/admin/profile');
     },
     viewBerita: async function (req, res) {
-
+        try {
+            const allBerita = await Berita.find().sort({ createdAt: -1 });
+            return res.render('pages/admin/berita', { berita: allBerita });
+        } catch (error) {
+            console.error(error);
+            req.flash('error', 'Terjadi kesalahan saat mengambil daftar berita.');
+            res.redirect('/admin/berita'); // Ganti dengan route halaman error
+        }
     }, storeBerita: async function (req, res) {
+        try {
+            const { judulBerita, isiBerita, excerptBerita } = req.body;
+            const featuredImage = req.file ? req.file.filename : '';
 
+            const newBerita = new Berita({
+                title: judulBerita,
+                content: isiBerita,
+                featuredImage,
+                excerpt: excerptBerita,
+            });
+
+            await newBerita.save();
+
+            req.flash('success_msg', 'Berita berhasil ditambahkan!');
+            res.redirect('/admin/berita');
+        } catch (error) {
+            console.error(error);
+            req.flash('error_msg', 'Terjadi kesalahan saat menambahkan berita.');
+            res.redirect('/admin/berita');
+        }
     }
 }

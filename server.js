@@ -72,6 +72,7 @@ app.use(flashMessage);
 // Konfigurasi view engine dan static file
 app.set('view engine', 'ejs');
 app.use('/assets', express.static('public'));
+app.use('/uploads', express.static('public/uploads'));
 
 // Route utama
 app.get('/', async (req, res) => {
