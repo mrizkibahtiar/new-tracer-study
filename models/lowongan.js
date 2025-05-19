@@ -1,24 +1,24 @@
 const mongoose = require('mongoose');
 
-const beritaSchema = new mongoose.Schema({
-    // Judul berita, wajib diisi, dan unik
+const lowonganSchema = new mongoose.Schema({
+    // Judul lowongan, wajib diisi, dan unik
     title: {
         type: String,
         required: true,
         trim: true, // Menghapus spasi di awal dan akhir judul
     },
-    // Isi berita, wajib diisi
+    // Isi lowongan, wajib diisi
     content: {
         type: String,
         required: true,
     },
-    // Gambar utama berita
+    // Gambar utama lowongan
     featuredImage: {
         type: String,
     },
 }, { timestamps: true }); // Menambahkan createdAt dan updatedAt
 
 // Membuat model dari skema
-const Berita = mongoose.model('Berita', beritaSchema);
+const Lowongan = mongoose.model('Lowongan', lowonganSchema);
 
-module.exports = Berita;
+module.exports = Lowongan;

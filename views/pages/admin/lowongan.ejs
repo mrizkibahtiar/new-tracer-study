@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Admin - Berita</title>
+    <title>Admin - Lowongan</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description">
     <meta content="coderthemes" name="author">
@@ -119,26 +119,26 @@
                     <div
                         style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
                         <p style="color: black; font-size: 2rem; font-weight: bold;">
-                            Daftar Berita
+                            Daftar Lowongan
                         </p>
-                        <button id="tambahBeritaBtn"
+                        <button id="tambahLowonganBtn"
                             style="background-color: #4CAF50; color: white; border: none; padding: 0.5rem 1rem; border-radius: 10px; cursor: pointer; font-size: 1.3rem;">
-                            Tambah Berita
+                            Tambah Lowongan
                         </button>
                     </div>
-                    <% if(berita.length> 0) { %>
+                    <% if(lowongan.length> 0) { %>
                         <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6 mt-6">
-                            <% berita.forEach(function(item) { %>
+                            <% lowongan.forEach(function(item) { %>
                                 <div
                                     class="group rounded-xl bg-white dark:bg-slate-900 shadow-sm hover:shadow-xl dark:hover:shadow-xl dark:shadow-gray-700 overflow-hidden ease-in-out duration-500">
-                                    <a href="/admin/berita/<%= item._id %>">
+                                    <a href="/admin/lowongan/<%= item._id %>">
                                         <div class="relative">
                                             <img src="/uploads/<%= item.featuredImage %>" alt="<%= item.title %>"
                                                 style="height: 200px; object-fit: cover; width: 100%;">
                                         </div>
                                         <div class="p-6">
                                             <div style="padding-bottom: 0.75rem;">
-                                                <a href="/admin/berita/<%= item._id %>"
+                                                <a href="/admin/lowongan/<%= item._id %>"
                                                     class="text-2xl hover:text-green-600 font-medium ease-in-out duration-500 title-link"
                                                     style="height: 4rem; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical;">
                                                     <%= item.title %>
@@ -159,13 +159,13 @@
                                         </div>
                                     </a>
                                     <div class="px-6 pb-6 flex justify-end gap-2">
-                                        <button id="editBeritaBtn"
+                                        <button id="editLowonganBtn"
                                             style="background-color: #3b82f6; color: white; font-weight: 700; padding: 0.5rem 1rem; border-radius: 0.375rem; cursor: pointer;"
                                             data-id="<%= item._id %>" data-title="<%= item.title %>"
                                             data-content="<%= item.content %>"
                                             data-featuredImage="<%= item.featuredImage %>">Edit</button>
 
-                                        <form action="/admin/berita/delete/<%= item._id %>" method="post">
+                                        <form action="/admin/lowongan/delete/<%= item._id %>" method="post">
                                             <button
                                                 style="background-color: #dc2626;color: white; font-weight: 700; padding: 0.5rem 1rem; border-radius: 0.375rem; cursor: pointer;">Delete</button>
                                         </form>
@@ -181,7 +181,7 @@
                                     <div style="padding: 1.5rem;">
                                         <h1
                                             style="color: #fff; text-align: center; font-weight: bold; font-size: 1.5rem;">
-                                            Belum Ada Berita
+                                            Belum Ada Lowongan
                                         </h1>
                                     </div>
                                 </div>
@@ -193,30 +193,30 @@
             </div>
         </main>
 
-        <!-- modal tambah berita -->
-        <div id="modalTambahBerita"
+        <!-- modal tambah lowongan -->
+        <div id="modalTambahLowongan"
             style="display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);">
             <div
                 style="background-color: #fefefe; margin: 10% auto; padding: 25px; border: 1px solid #888; width: 80%; max-width: 600px; font-size: 1.1rem;">
                 <span id="tutupModalBtn"
                     style="color: #aaa; float: right; font-size: 34px; font-weight: bold; cursor: pointer;">&times;</span>
-                <h2 style="font-size: 1.8rem; margin-bottom: 15px; font-weight: 700;">Tambah Berita Baru</h2>
-                <form id="formTambahBerita" method="post" enctype="multipart/form-data" style="font-size: 1.1rem;">
+                <h2 style="font-size: 1.8rem; margin-bottom: 15px; font-weight: 700;">Tambah Lowongan Baru</h2>
+                <form id="formTambahLowongan" method="post" enctype="multipart/form-data" style="font-size: 1.1rem;">
                     <div style="margin-bottom: 15px;">
-                        <label for="judulBerita" style="font-size: 1.2rem;">Judul Berita:</label><br>
-                        <input type="text" id="judulBerita" name="judulBerita" required
+                        <label for="judulLowongan" style="font-size: 1.2rem;">Judul Lowongan:</label><br>
+                        <input type="text" id="judulLowongan" name="judulLowongan" required
                             style="width: 100%; padding: 0.7rem; margin-top: 5px; margin-bottom: 10px; box-sizing: border-box; font-size: 1.1rem; border: 1px solid #888; border-radius: 10px;"
-                            placeholder="Masukkan judul berita">
+                            placeholder="Masukkan judul lowongan">
                     </div>
                     <div style="margin-bottom: 15px;">
-                        <label for="isiBerita" style="font-size: 1.2rem;">Isi Berita:</label><br>
-                        <textarea id="isiBerita" name="isiBerita" rows="8" required
+                        <label for="isiLowongan" style="font-size: 1.2rem;">Isi Lowongan:</label><br>
+                        <textarea id="isiLowongan" name="isiLowongan" rows="8" required
                             style="width: 100%; padding: 0.7rem; margin-top: 5px; margin-bottom: 10px; box-sizing: border-box; font-size: 1.1rem; border: 1px solid #888; border-radius: 10px;"
-                            placeholder="Masukkan isi berita"></textarea>
+                            placeholder="Masukkan isi lowongan"></textarea>
                     </div>
                     <div style="margin-bottom: 15px;">
-                        <label for="gambarBerita" style="font-size: 1.2rem;">Gambar Utama:</label><br>
-                        <input type="file" id="gambarBerita" name="gambarBerita"
+                        <label for="gambarLowongan" style="font-size: 1.2rem;">Gambar Lowongan:</label><br>
+                        <input type="file" id="gambarLowongan" name="gambarLowongan"
                             style="margin-top: 5px; margin-bottom: 10px">
                     </div>
                     <div style="text-align: right;">
@@ -227,32 +227,32 @@
             </div>
         </div>
 
-        <!-- modal edit berita -->
-        <div id="modalEditBerita"
+        <!-- modal edit lowongan -->
+        <div id="modalEditLowongan"
             style="display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);">
             <div
                 style="background-color: #fefefe; margin: 10% auto; padding: 25px; border: 1px solid #888; width: 80%; max-width: 600px; font-size: 1.1rem;">
                 <span id="closeModalBtn"
                     style="color: #aaa; float: right; font-size: 34px; font-weight: bold; cursor: pointer;">&times;</span>
-                <h2 style="font-size: 1.8rem; margin-bottom: 15px; font-weight: 700;">Edit Berita</h2>
-                <form id="formEditBerita" method="post" enctype="multipart/form-data" style="font-size: 1.1rem;"
-                    action="/admin/berita/edit">
-                    <input type="hidden" id="idBerita" name="idBerita">
+                <h2 style="font-size: 1.8rem; margin-bottom: 15px; font-weight: 700;">Edit Lowongan</h2>
+                <form id="formEditLowongan" method="post" enctype="multipart/form-data" style="font-size: 1.1rem;"
+                    action="/admin/lowongan/edit">
+                    <input type="hidden" id="idLowongan" name="idLowongan">
                     <div style="margin-bottom: 15px;">
-                        <label for="judulBerita" style="font-size: 1.2rem;">Judul Berita:</label><br>
-                        <input type="text" id="judulBerita" name="judulBerita" required
+                        <label for="judulLowongan" style="font-size: 1.2rem;">Judul Lowongan:</label><br>
+                        <input type="text" id="judulLowongan" name="judulLowongan" required
                             style="width: 100%; padding: 0.7rem; margin-top: 5px; margin-bottom: 10px; box-sizing: border-box; font-size: 1.1rem; border: 1px solid #888; border-radius: 0.7rem;"
-                            placeholder="Masukkan judul berita">
+                            placeholder="Masukkan judul lowongan">
                     </div>
                     <div style="margin-bottom: 15px;">
-                        <label for="isiBerita" style="font-size: 1.2rem;">Isi Berita:</label><br>
-                        <textarea id="isiBerita" name="isiBerita" rows="8" required
+                        <label for="isiLowongan" style="font-size: 1.2rem;">Isi Lowongan:</label><br>
+                        <textarea id="isiLowongan" name="isiLowongan" rows="8" required
                             style="width: 100%; padding: 0.7rem; margin-top: 5px; margin-bottom: 10px; box-sizing: border-box; font-size: 1.1rem; border: 1px solid #888; border-radius: 0.7rem;"
-                            placeholder="Masukkan isi berita"></textarea>
+                            placeholder="Masukkan isi lowongan"></textarea>
                     </div>
                     <div style="margin-bottom: 15px;">
-                        <label for="gambarBerita" style="font-size: 1.2rem;">Gambar Utama:</label><br>
-                        <input type="file" id="gambarBerita" name="gambarBerita"
+                        <label for="gambarLowongan" style="font-size: 1.2rem;">Gambar Utama:</label><br>
+                        <input type="file" id="gambarLowongan" name="gambarLowongan"
                             style="margin-top: 5px; margin-bottom: 10px">
                     </div>
                     <div style="text-align: right;">
@@ -310,12 +310,12 @@
     </script>
     <script>
         // Mendapatkan elemen-elemen modal dan tombol
-        const modal = document.getElementById("modalTambahBerita");
-        const btnTambah = document.getElementById("tambahBeritaBtn");
+        const modal = document.getElementById("modalTambahLowongan");
+        const btnTambah = document.getElementById("tambahLowonganBtn");
         const btnTutup = document.getElementById("tutupModalBtn");
         const btnBatal = document.getElementById("batalModalBtn");
 
-        // Event listener untuk menampilkan modal saat tombol "Tambah Berita" diklik
+        // Event listener untuk menampilkan modal saat tombol "Tambah Lowongan" diklik
         btnTambah.addEventListener("click", () => {
             modal.style.display = "block";
         });
@@ -338,14 +338,14 @@
         });
     </script>
 
-    <!-- modal edit berita -->
+    <!-- modal edit lowongan -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const editButtons = document.querySelectorAll('[id^="editBeritaBtn"]');
-            const modal = document.getElementById('modalEditBerita');
+            const editButtons = document.querySelectorAll('[id^="editLowonganBtn"]');
+            const modal = document.getElementById('modalEditLowongan');
             const closeModalBtn = document.getElementById('closeModalBtn'); // Changed to closeModalBtn
             const batalModalBtn = document.getElementById('batalModalBtn');
-            const formEditBerita = document.getElementById('formEditBerita');
+            const formEditLowongan = document.getElementById('formEditLowongan');
 
             editButtons.forEach(button => {
                 button.addEventListener('click', () => {
@@ -357,10 +357,10 @@
 
                     modal.style.display = "block";
 
-                    formEditBerita.querySelector('#idBerita').value = id;
+                    formEditlowongan.querySelector('#idLowongan').value = id;
                     console.log(id);
-                    formEditBerita.querySelector('#judulBerita').value = title;
-                    formEditBerita.querySelector('#isiBerita').value = content;
+                    formEditlowongan.querySelector('#judulLowongan').value = title;
+                    formEditlowongan.querySelector('#isiLowongan').value = content;
 
 
                 });

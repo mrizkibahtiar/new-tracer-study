@@ -1,6 +1,7 @@
 const Admin = require('../models/admin');
 const Alumni = require('../models/alumni');
 const Berita = require('../models/berita');
+const Lowongan = require('../models/lowongan');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const TracerStudy = require('../models/tracerStudy');
@@ -9,6 +10,8 @@ const Pekerjaan = require('../models/pekerjaan');
 const StudiLanjutan = require('../models/studiLanjutan');
 const Berwirausaha = require('../models/berwirausaha');
 const Feedback = require('../models/feedback');
+const fs = require('fs');
+const path = require('path');
 
 
 
@@ -57,13 +60,14 @@ module.exports = {
             });
 
             // Hitung persentase
-            const alumniPersen =
-                alumni.length > 0 ? Math.round((tracerStudy.length / alumni.length) * 100) : 0;
-            let bekerjaPersen = bekerja > 0 ? Math.round((tracerStudy.length / bekerja) * 100) : 0;
-            let studiPersen = studiLanjutan > 0 ? Math.round((tracerStudy.length / studiLanjutan) * 100) : 0;
-            let kursusPersen = kursus > 0 ? Math.round((tracerStudy.length / kursus) * 100) : 0;
-            let usahaPersen = berwirausaha > 0 ? Math.round((tracerStudy.length / berwirausaha) * 100) : 0;
-            let bakPersen = belumAdaKegiatan > 0 ? Math.round((tracerStudy.length / belumAdaKegiatan) * 100) : 0;
+            const alumniPersen = alumni.length > 0 ? Math.round((tracerStudy.length / alumni.length) * 100) : 0;
+
+            const bekerjaPersen = alumni.length > 0 ? Math.round((bekerja / alumni.length) * 100) : 0;
+            const studiPersen = alumni.length > 0 ? Math.round((studiLanjutan / alumni.length) * 100) : 0;
+            const kursusPersen = alumni.length > 0 ? Math.round((kursus / alumni.length) * 100) : 0;
+            const usahaPersen = alumni.length > 0 ? Math.round((berwirausaha / alumni.length) * 100) : 0;
+            const bakPersen = alumni.length > 0 ? Math.round((belumAdaKegiatan / alumni.length) * 100) : 0;
+
 
             return res.render('pages/admin/dashboard', {
                 admin,
@@ -333,14 +337,13 @@ module.exports = {
         }
     }, storeBerita: async function (req, res) {
         try {
-            const { judulBerita, isiBerita, excerptBerita } = req.body;
+            const { judulBerita, isiBerita } = req.body;
             const featuredImage = req.file ? req.file.filename : '';
 
             const newBerita = new Berita({
                 title: judulBerita,
                 content: isiBerita,
                 featuredImage,
-                excerpt: excerptBerita,
             });
 
             await newBerita.save();
@@ -351,6 +354,216 @@ module.exports = {
             console.error(error);
             req.flash('error_msg', 'Terjadi kesalahan saat menambahkan berita.');
             res.redirect('/admin/berita');
+        }
+    },
+    viewBeritaDetail: async function (req, res) {
+        try {
+            const { beritaId } = req.params;
+
+            // Ambil berita berdasarkan ID
+            const berita = await Berita.findById(beritaId);
+
+            // Jika tidak ditemukan
+            if (!berita) {
+                req.flash('error_msg', 'Berita tidak ditemukan');
+                return res.redirect('/admin/berita'); // arahkan kembali ke daftar berita
+            }
+
+            // Kirim data ke view
+            res.render('pages/admin/berita_detail', {
+                berita,
+            });
+        } catch (err) {
+            console.error(err);
+            req.flash('error_msg', 'Terjadi kesalahan saat memuat detail berita');
+            return res.redirect('/admin/berita');
+        }
+    }, deleteBerita: async function (req, res) {
+        const { beritaId } = req.params;
+
+        try {
+            // Cari data berita berdasarkan ID
+            const berita = await Berita.findById(beritaId);
+
+            if (!berita) {
+                req.flash('error_msg', 'Berita tidak ditemukan');
+                return res.redirect('/admin/berita');
+            }
+
+            // Hapus file gambar jika ada
+            const imagePath = path.join(__dirname, '../../public/uploads/', berita.featuredImage);
+            if (fs.existsSync(imagePath)) {
+                fs.unlinkSync(imagePath);
+            }
+
+            // Hapus data dari database
+            await Berita.findByIdAndDelete(beritaId);
+
+            req.flash('success_msg', 'Berita berhasil dihapus');
+            res.redirect('/admin/berita');
+        } catch (err) {
+            console.error(err);
+            req.flash('error_msg', 'Gagal menghapus berita');
+            res.redirect('/admin/berita');
+        }
+    }, beritaUpdate: async function (req, res) {
+        try {
+            const { idBerita, judulBerita, isiBerita } = req.body;
+
+            const file = req.file;
+
+            const berita = await Berita.findById(idBerita);
+            if (!berita) {
+                req.flash('error_msg', 'Berita tidak ditemukan.');
+                return res.redirect('/admin/berita');
+            }
+
+            let newImageFilename = berita.featuredImage; // default: tidak ganti gambar
+
+            if (file) {
+                // Hapus gambar lama
+                const oldImagePath = path.join(__dirname, '../../public/uploads/', berita.featuredImage);
+                if (fs.existsSync(oldImagePath)) {
+                    fs.unlinkSync(oldImagePath);
+                }
+
+                // Simpan nama file baru
+                newImageFilename = file.filename;
+            }
+
+            // Update berita
+            berita.title = judulBerita;
+            berita.content = isiBerita;
+            berita.featuredImage = newImageFilename;
+
+            await berita.save();
+
+            req.flash('success_msg', 'Berita berhasil diperbarui!');
+            res.redirect('/admin/berita');
+        } catch (error) {
+            console.error(error);
+            req.flash('error_msg', 'Terjadi kesalahan saat memperbarui berita.');
+            res.redirect('/admin/berita');
+        }
+    },
+    viewLowongan: async function (req, res) {
+        try {
+            const allLowongan = await Lowongan.find().sort({ createdAt: -1 });
+            return res.render('pages/admin/lowongan', { lowongan: allLowongan });
+        } catch (error) {
+            console.error(error);
+            req.flash('error', 'Terjadi kesalahan saat mengambil daftar lowongan.');
+            res.redirect('/admin/lowongan'); // Ganti dengan route halaman error
+        }
+    }, storeLowongan: async function (req, res) {
+        try {
+            const { judulLowongan, isiLowongan } = req.body;
+            const featuredImage = req.file ? req.file.filename : '';
+
+            const newLowongan = new Lowongan({
+                title: judulLowongan,
+                content: isiLowongan,
+                featuredImage,
+            });
+
+            await newLowongan.save();
+
+            req.flash('success_msg', 'lowongan berhasil ditambahkan!');
+            res.redirect('/admin/lowongan');
+        } catch (error) {
+            console.error(error);
+            req.flash('error_msg', 'Terjadi kesalahan saat menambahkan lowongan.');
+            res.redirect('/admin/lowongan');
+        }
+    },
+    viewLowonganDetail: async function (req, res) {
+        try {
+            const { lowonganId } = req.params;
+
+            // Ambil Lowongan berdasarkan ID
+            const lowongan = await Lowongan.findById(lowonganId);
+
+            // Jika tidak ditemukan
+            if (!lowongan) {
+                req.flash('error_msg', 'lowongan tidak ditemukan');
+                return res.redirect('/admin/lowongan'); // arahkan kembali ke daftar Lowongan
+            }
+
+            // Kirim data ke view
+            res.render('pages/admin/lowongan_detail', {
+                lowongan,
+            });
+        } catch (err) {
+            console.error(err);
+            req.flash('error_msg', 'Terjadi kesalahan saat memuat detail lowongan');
+            return res.redirect('/admin/lowongan');
+        }
+    }, deleteLowongan: async function (req, res) {
+        const { lowonganId } = req.params;
+
+        try {
+            // Cari data Lowongan berdasarkan ID
+            const lowongan = await Lowongan.findById(lowonganId);
+
+            if (!lowongan) {
+                req.flash('error_msg', 'Lowongan tidak ditemukan');
+                return res.redirect('/admin/lowongan');
+            }
+
+            // Hapus file gambar jika ada
+            const imagePath = path.join(__dirname, '../../public/uploads/', lowongan.featuredImage);
+            if (fs.existsSync(imagePath)) {
+                fs.unlinkSync(imagePath);
+            }
+
+            // Hapus data dari database
+            await Lowongan.findByIdAndDelete(lowonganId);
+
+            req.flash('success_msg', 'Lowongan berhasil dihapus');
+            res.redirect('/admin/lowongan');
+        } catch (err) {
+            console.error(err);
+            req.flash('error_msg', 'Gagal menghapus lowongan');
+            res.redirect('/admin/lowongan');
+        }
+    }, lowonganUpdate: async function (req, res) {
+        try {
+            const { idLowongan, judulLowongan, isiLowongan } = req.body;
+
+            const file = req.file;
+
+            const lowongan = await Lowongan.findById(idLowongan);
+            if (!lowongan) {
+                req.flash('error_msg', 'Lowongan tidak ditemukan.');
+                return res.redirect('/admin/lowongan');
+            }
+
+            let newImageFilename = lowongan.featuredImage; // default: tidak ganti gambar
+
+            if (file) {
+                // Hapus gambar lama
+                const oldImagePath = path.join(__dirname, '../../public/uploads/', lowongan.featuredImage);
+                if (fs.existsSync(oldImagePath)) {
+                    fs.unlinkSync(oldImagePath);
+                }
+
+                // Simpan nama file baru
+                newImageFilename = file.filename;
+            }
+
+            // Update Lowongan
+            lowongan.title = judulLowongan;
+            lowongan.content = isiLowongan;
+            lowongan.featuredImage = newImageFilename;
+
+            await Lowongan.save();
+
+            req.flash('success_msg', 'Lowongan berhasil diperbarui!');
+            res.redirect('/admin/lowongan');
+        } catch (error) {
+            console.error(error);
+            req.flash('error_msg', 'Terjadi kesalahan saat memperbarui lowongan.');
+            res.redirect('/admin/lowongan');
         }
     }
 }

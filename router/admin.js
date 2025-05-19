@@ -20,6 +20,21 @@ router.post('/admin/alumni-list/edit', isAdmin, adminController.alumniUpdate);
 router.route('/admin/berita')
     .get(isAdmin, adminController.viewBerita)
     .post(isAdmin, upload.single('gambarBerita'), adminController.storeBerita);
+router.get('/admin/berita/:beritaId', isAdmin, adminController.viewBeritaDetail)
+router.post('/admin/berita/delete/:beritaId', isAdmin, adminController.deleteBerita)
+router.post('/admin/berita/edit', isAdmin, upload.single('gambarBerita'), adminController.beritaUpdate)
+
+// Lowongan 
+router.route('/admin/lowongan')
+    .get(isAdmin, adminController.viewLowongan)
+    .post(isAdmin, upload.single('gambarLowongan'), adminController.storeLowongan);
+router.get('/admin/lowongan/:lowonganId', isAdmin, adminController.viewLowonganDetail)
+router.post('/admin/lowongan/delete/:lowonganId', isAdmin, adminController.deleteLowongan)
+router.post('/admin/lowongan/edit', isAdmin, upload.single('gambarLowongan'), adminController.lowonganUpdate)
+
+
+
+
 
 router.get('/admin/profile', isAdmin, adminController.profile);
 router.put('/admin/profile-edit/:adminId', isAdmin, adminController.profileUpdate);

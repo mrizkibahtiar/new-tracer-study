@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Admin - Detail Lowongan</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description">
+    <meta content="coderthemes" name="author">
+
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="../../assets/admin/smk-bp.png">
+
+
+    <!-- Main Css -->
+    <link href="../../assets/admin/libs/simplebar/simplebar.min.css" rel="stylesheet">
+    <link href="../../assets/admin/libs/%40mdi/font/css/materialdesignicons.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../../assets/admin/css/tailwind.min.css">
+</head>
+
+<body>
+    <div class="page-wrapper toggled">
+        <nav id="sidebar" class="sidebar-wrapper sidebar-dark">
+            <div class="sidebar-content">
+                <div class="sidebar-brand">
+                    <a href="/"><img src="../../assets/admin/images/logo-light.png" alt="" width="200px"></a>
+                </div>
+
+                <ul class="sidebar-menu border-t border-white/10" data-simplebar style="height: calc(100% - 70px);">
+                    <li>
+                        <a href="/admin" style="font-size: 1.4rem;"><i
+                                class="mdi mdi-chart-bell-curve-cumulative me-2"></i>Dashboard</a>
+                    </li>
+
+                    <li>
+                        <a href="/admin/alumni-list" style="font-size: 1.4rem;"><i
+                                class="mdi mdi-home-city me-2"></i>Alumni </a>
+                    </li>
+
+                    <li>
+                        <a href="/admin/berita" style="font-size: 1.4rem;"><i class="mdi mdi-home-heart me-2"></i>Berita
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="/admin/lowongan" style="font-size: 1.4rem;"><i
+                                class="mdi mdi-home-plus me-2"></i>Lowongan </a>
+                    </li>
+
+                    <li>
+                        <a href="chat.html" style="font-size: 1.4rem;"><i
+                                class="mdi mdi-chat-outline me-2"></i>Saran</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!-- Start Page Content -->
+        <main class="page-content bg-gray-50 dark:bg-slate-800" style="min-height: 100vh;">
+            <div class="top-header">
+                <div class="header-bar flex justify-between">
+                    <div class="flex items-center space-x-1">
+                        <a href="#" class="xl:hidden block me-2">
+                            <img src="../../assets/admin/images/smk-bp.png" class="md:hidden block" alt="" width="40px">
+                            <span class="md:block hidden">
+                                <img src="../../assets/admin/images/logo-dark.png" class="inline-block dark:hidden"
+                                    alt="" width="200px">
+                                <img src="../../assets/admin/images/logo-light.png" class="hidden dark:inline-block"
+                                    alt="" width="200px">
+                            </span>
+                        </a>
+                        <a id="close-sidebar"
+                            class="size-8 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-[20px] text-center bg-gray-50 dark:bg-slate-800 hover:bg-gray-100 dark:hover:bg-slate-700 border border-black dark:border-gray-800 text-slate-900 dark:text-white rounded-md"
+                            href="javascript:void(0)">
+                            <i data-feather="menu" class="size-4"></i>
+                        </a>
+                    </div>
+
+                    <ul class="list-none mb-0 space-x-1">
+
+                        <li class="dropdown inline-block relative">
+                            <button data-dropdown-toggle="dropdown" class="dropdown-toggle items-center" type="button">
+                                <span
+                                    class="size-10 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-[20px] text-center bg-gray-50 dark:bg-slate-800 hover:bg-gray-100 dark:hover:bg-slate-700 border border-black dark:border-gray-800 text-slate-900 dark:text-white rounded-md"><img
+                                        src="../../assets/admin/images/profile-icon-light.png" class="rounded-md w-full"
+                                        alt="" style="cursor: pointer;"></span>
+                            </button>
+                            <div class="dropdown-menu absolute end-0 m-0 mt-4 z-10 w-44 rounded-md overflow-hidden bg-white dark:bg-slate-900 shadow-sm dark:shadow-gray-700 hidden"
+                                onclick="event.stopPropagation();">
+                                <ul class="py-2 text-start">
+                                    <li>
+                                        <a href="/admin/profile"
+                                            class="block py-1 px-4 dark:text-white/70 hover:text-green-600 dark:hover:text-white"><i
+                                                class="mdi mdi-account-outline me-2"></i>Profile</a>
+                                    </li>
+                                    <li class="border-t border-gray-100 dark:border-gray-800 my-2"></li>
+                                    <li>
+                                        <a href="/logout"
+                                            class="block py-1 px-4 dark:text-white/70 hover:text-green-600 dark:hover:text-white"><i
+                                                class="mdi mdi-logout me-2"></i>Logout</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="container-fluid relative px-3">
+                <div class="layout-specing">
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <a href="/admin/lowongan">
+                            <span class="mdi mdi-arrow-left-circle"
+                                style="font-size: 40px; margin-bottom: 10px; display: block;"></span>
+                        </a>
+                        <p style="color: black; font-size: 2rem; font-weight: bold; margin-bottom: 0.7rem;">
+                            Detail Lowongan</p>
+                    </div>
+
+
+                    <div class="grid lg:grid-cols-12 md:grid-cols-2 gap-6">
+                        <div class="lg:col-span-12">
+                            <div class="bg-white dark:bg-slate-900 p-6 rounded-md shadow-sm dark:shadow-gray-700">
+                                <div class="md:w-1/2 p-1 text-center" style="margin: 0 auto; margin-bottom: 1.5rem;">
+                                    <div
+                                        class="group relative overflow-hidden rounded-md shadow-sm dark:shadow-gray-700">
+                                        <img src="../../uploads/<%= lowongan.featuredImage %>" alt="Gambar Lowongan"
+                                            style="display: block; margin: 0 auto; height: 370px; object-fit: cover; width: 100%;">
+                                    </div>
+                                </div>
+                                <div>
+                                    <h4 class="text-3xl font-bold text-center">
+                                        <%= lowongan.title %>
+                                    </h4>
+                                    <h6 class="text-base font-medium text-center mb-6">
+                                        <%= lowongan.createdAt.toLocaleDateString('id-ID', { day: 'numeric' ,
+                                            month: 'long' , year: 'numeric' }) %>
+                                    </h6>
+                                </div>
+                                <p class="text-slate-400">
+                                    <%= lowongan.content %>
+                                </p>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../assets/admin/libs/feather-icons/feather.min.js"></script>
+    <script src="../../assets/admin/libs/simplebar/simplebar.min.js"></script>
+    <script src="../../assets/admin/js/plugins.init.js"></script>
+    <script src="../../assets/admin/js/app.js"></script>
+</body>
+
+</html>
