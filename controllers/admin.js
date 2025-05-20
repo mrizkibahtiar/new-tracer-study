@@ -575,5 +575,27 @@ module.exports = {
             req.flash('error_msg', 'Terjadi kesalahan saat mengambil daftar Saran.');
             res.redirect('/admin/saran'); // Ganti dengan route halaman error
         }
+    }, deleteSaran: async function (req, res) {
+        const { saranId } = req.params;
+
+        try {
+            // Cari data berita berdasarkan ID
+            const saran = await Saran.findById(saranId);
+
+            if (!saran) {
+                req.flash('error_msg', 'Saran tidak ditemukan');
+                return res.redirect('/admin/saran');
+            }
+
+            // Hapus data dari database
+            await Saran.findByIdAndDelete(saranId);
+
+            req.flash('success_msg', 'Saran berhasil dihapus');
+            res.redirect('/admin/saran');
+        } catch (err) {
+            console.error(err);
+            req.flash('error_msg', 'Gagal menghapus saran');
+            res.redirect('/admin/saran');
+        }
     }
 }

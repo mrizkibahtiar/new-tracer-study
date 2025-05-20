@@ -34,6 +34,7 @@ router.post('/admin/lowongan/edit', isAdmin, upload.single('gambarLowongan'), ad
 
 // saran
 router.get('/admin/saran', isAdmin, adminController.viewSaran);
+router.post('/admin/saran/delete/:saranId', isAdmin, adminController.deleteSaran);
 
 
 

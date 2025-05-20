@@ -112,36 +112,93 @@
                             Daftar Saran
                         </p>
                     </div>
-                    <% saran.forEach(item=> { %>
+                    <% if(saran.length> 0) { %>
                         <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6 mt-6">
-                            <div
-                                class="rounded-md shadow-sm dark:shadow-gray-700 hover:shadow-md dark:hover:shadow-gray-700 duration-500 ease-in-out">
-                                <div class="p-6">
-                                    <h5 class="font-semibold text-gray-900 dark:text-white">
-                                        <%= new Date(item.createdAt).toLocaleDateString('id-ID', { day: 'numeric' ,
-                                            month: 'long' , year: 'numeric' , hour: '2-digit' , minute: '2-digit' }) %>
-                                    </h5>
-                                    <p class="text-slate-400 mt-2">
-                                        <span class="text-green-600 text-lg"><i></i></span>
-                                        <%= item.saran.length> 100 ? item.saran.substring(0, 100) + '...' :
-                                            item.saran %>
-                                    </p>
-                                    <div class="flex gap-2 mt-4">
-                                        <form action="/admin/saran/delete/<%= item._id %>" method="post">
-                                            <button type="submit"
-                                                class="btn bg-red-600 hover:bg-red-700 text-white rounded-md w-full">Hapus</button>
-                                        </form>
-                                        <a href="/admin/saran/detail/<%= item._id %>"
-                                            class="btn bg-green-600 hover:bg-green-700 text-white rounded-md w-full">Detail</a>
+                            <% saran.forEach(item=> { %>
+                                <div
+                                    class="rounded-md shadow-sm dark:shadow-gray-700 hover:shadow-md dark:hover:shadow-gray-700 duration-500 ease-in-out">
+                                    <div class="p-6">
+                                        <h5 class="font-semibold text-gray-900 dark:text-white">
+                                            <%= new Date(item.createdAt).toLocaleDateString('id-ID', { day: 'numeric' ,
+                                                month: 'long' , year: 'numeric' , hour: '2-digit' , minute: '2-digit' })
+                                                %>
+                                        </h5>
+                                        <h6 class="font-semibold text-gray-700 dark:text-gray-300 mt-2">Nama:
+                                            <span class="font-normal">
+                                                <%= item.nama %>
+                                            </span>
+                                        </h6>
+                                        <h6 class="font-semibold text-gray-700 dark:text-gray-300 mt-2">Email:
+                                            <span class="font-normal">
+                                                <%= item.email %>
+                                            </span>
+                                        </h6>
+                                        <h6 class="font-semibold text-gray-700 dark:text-gray-300 mt-2">
+                                            Saran :
+                                        </h6>
+                                        <p class="text-slate-400">
+                                            <span class="text-green-600 text-lg"><i></i></span>
+                                            <%= item.saran.length> 100 ? item.saran.substring(0, 100) + '...' :
+                                                item.saran %>
+                                        </p>
+                                        <div class="flex gap-2 mt-4">
+                                            <form action="/admin/saran/delete/<%= item._id %>" method="post">
+                                                <button type="submit"
+                                                    class="btn bg-red-600 hover:bg-red-700 text-white rounded-md w-full">Hapus</button>
+                                            </form>
+                                            <button type="button"
+                                                class="btn bg-green-600 hover:bg-green-700 text-white rounded-md w-full cursor-pointer"
+                                                data-nama="<%= item.nama %>" data-email="<%= item.email %>"
+                                                data-saran="<%= item.saran %>"
+                                                data-tanggal="<%= new Date(item.createdAt).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' }) %>"
+                                                onclick="showSaranDetail(this)">Detail</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <% }) %>
+                        </div>
+                        <% } else { %>
+                            <div style="grid-column: span 2; margin-top: 1.5rem;">
+                                <div
+                                    style="background-color: #ef4444; border-radius: 6px; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);">
+                                    <div style="padding: 1.5rem;">
+                                        <h1
+                                            style="color: #fff; text-align: center; font-weight: bold; font-size: 1.5rem;">
+                                            Belum Ada Saran
+                                        </h1>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <% }) %>
+                            <% } %>
                 </div>
 
             </div>
         </main>
+
+        <!-- modal detail -->
+        <div id="modalSaran"
+            style="display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);">
+            <div
+                style="background-color: #fefefe; margin: 10% auto; padding: 25px; border: 1px solid #888; width: 80%; max-width: 600px; font-size: 1.1rem;">
+                <span id="modal-close"
+                    style="color: #aaa; float: right; font-size: 34px; font-weight: bold; cursor: pointer;">&times;</span>
+                <h2 id="modal-title" style="font-size: 1.8rem; margin-bottom: 15px; font-weight: 700;">Detail Saran</h2>
+                <div id="modal-content">
+                    <p id="modal-tanggal" class="text-xl text-gray-500">
+
+                    </p>
+                    <p id="modal-nama" class="text-xl text-gray-500">
+
+                    </p>
+                    <p id="modal-email" class="text-xl text-gray-500">
+
+                    </p>
+                    <p id="modal-saran" class="text-xl text-gray-700" style="white-space: pre-wrap;">
+
+                    </p>
+                </div>
+            </div>
+        </div>
 
         <!-- alert -->
         <div
@@ -186,6 +243,41 @@
             setTimeout(() => {
                 alertError.remove();
             }, 2000);
+        }
+    </script>
+
+    <script>
+        function showSaranDetail(el) {
+            const modal = document.getElementById("modalSaran");
+            const modalNama = document.getElementById("modal-nama");
+            const modalEmail = document.getElementById("modal-email");
+            const modalSaranText = document.getElementById("modal-saran");
+            const modalTanggal = document.getElementById("modal-tanggal");
+
+            const nama = el.getAttribute("data-nama");
+            const email = el.getAttribute("data-email");
+            const saran = el.getAttribute("data-saran");
+            const tanggal = el.getAttribute("data-tanggal");
+
+
+            modalNama.innerHTML = "<b>Nama :</b> " + nama;
+            modalEmail.innerHTML = "<b>Email :</b> " + email;
+            modalSaranText.innerHTML = "<b>Saran :</b> " + saran;
+            modalTanggal.innerHTML = "<b>Tanggal :</b> " + tanggal;
+
+
+
+            modal.style.display = "block";
+        }
+
+        document.getElementById('modal-close').onclick = function () {
+            document.getElementById('modalSaran').style.display = "none";
+        }
+
+        window.onclick = function (event) {
+            if (event.target == document.getElementById('modalSaran')) {
+                document.getElementById('modalSaran').style.display = "none";
+            }
         }
     </script>
 </body>
