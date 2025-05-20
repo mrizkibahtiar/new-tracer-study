@@ -17,6 +17,7 @@ const { flashMessage } = require('./middleware/flash');
 const { validationResult } = require('express-validator');
 const Berita = require('./models/berita');
 const Lowongan = require('./models/lowongan');
+const Saran = require('./models/saran');
 
 // Konfigurasi variabel lingkungan
 const DB_USERNAME = process.env.DB_USERNAME;
