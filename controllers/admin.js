@@ -556,7 +556,7 @@ module.exports = {
             lowongan.content = isiLowongan;
             lowongan.featuredImage = newImageFilename;
 
-            await Lowongan.save();
+            await lowongan.save();
 
             req.flash('success_msg', 'Lowongan berhasil diperbarui!');
             res.redirect('/admin/lowongan');
