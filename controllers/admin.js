@@ -2,7 +2,7 @@ const Admin = require('../models/admin');
 const Alumni = require('../models/alumni');
 const Berita = require('../models/berita');
 const Lowongan = require('../models/lowongan');
-const mongoose = require('mongoose');
+const Saran = require('../models/saran');
 const bcrypt = require('bcrypt');
 const TracerStudy = require('../models/tracerStudy');
 const Kursus = require('../models/kursus');
@@ -332,7 +332,7 @@ module.exports = {
             return res.render('pages/admin/berita', { berita: allBerita });
         } catch (error) {
             console.error(error);
-            req.flash('error', 'Terjadi kesalahan saat mengambil daftar berita.');
+            req.flash('error_msg', 'Terjadi kesalahan saat mengambil daftar berita.');
             res.redirect('/admin/berita'); // Ganti dengan route halaman error
         }
     }, storeBerita: async function (req, res) {
@@ -452,7 +452,7 @@ module.exports = {
             return res.render('pages/admin/lowongan', { lowongan: allLowongan });
         } catch (error) {
             console.error(error);
-            req.flash('error', 'Terjadi kesalahan saat mengambil daftar lowongan.');
+            req.flash('error_msg', 'Terjadi kesalahan saat mengambil daftar lowongan.');
             res.redirect('/admin/lowongan'); // Ganti dengan route halaman error
         }
     }, storeLowongan: async function (req, res) {
@@ -564,6 +564,16 @@ module.exports = {
             console.error(error);
             req.flash('error_msg', 'Terjadi kesalahan saat memperbarui lowongan.');
             res.redirect('/admin/lowongan');
+        }
+    },
+    viewSaran: async function (req, res) {
+        try {
+            const allSaran = await Saran.find().sort({ createdAt: -1 });
+            return res.render('pages/admin/saran', { saran: allSaran });
+        } catch (error) {
+            console.error(error);
+            req.flash('error_msg', 'Terjadi kesalahan saat mengambil daftar Saran.');
+            res.redirect('/admin/saran'); // Ganti dengan route halaman error
         }
     }
 }

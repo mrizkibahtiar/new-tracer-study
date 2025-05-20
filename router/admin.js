@@ -32,10 +32,14 @@ router.get('/admin/lowongan/:lowonganId', isAdmin, adminController.viewLowonganD
 router.post('/admin/lowongan/delete/:lowonganId', isAdmin, adminController.deleteLowongan)
 router.post('/admin/lowongan/edit', isAdmin, upload.single('gambarLowongan'), adminController.lowonganUpdate)
 
+// saran
+router.get('/admin/saran', isAdmin, adminController.viewSaran);
 
 
 
 
+
+// profile
 router.get('/admin/profile', isAdmin, adminController.profile);
 router.put('/admin/profile-edit/:adminId', isAdmin, adminController.profileUpdate);
 router.put('/admin/profile-edit/password/:adminId', isAdmin, adminController.profileUpdatePassword);
