@@ -160,14 +160,14 @@
                                     </a>
                                     <div class="px-6 pb-6 flex justify-end gap-2">
                                         <button id="editLowonganBtn"
-                                            style="background-color: #3b82f6; color: white; font-weight: 700; padding: 0.5rem 1rem; border-radius: 0.375rem; cursor: pointer;"
+                                            style="background-color: #3b82f6; color: white; padding: 0.5rem 1rem; border-radius: 0.375rem; cursor: pointer;"
                                             data-id="<%= item._id %>" data-title="<%= item.title %>"
                                             data-content="<%= item.content %>"
                                             data-featuredImage="<%= item.featuredImage %>">Edit</button>
 
                                         <form action="/admin/lowongan/delete/<%= item._id %>" method="post">
                                             <button
-                                                style="background-color: #dc2626;color: white; font-weight: 700; padding: 0.5rem 1rem; border-radius: 0.375rem; cursor: pointer;">Delete</button>
+                                                style="background-color: #dc2626;color: white; padding: 0.5rem 1rem; border-radius: 0.375rem; cursor: pointer;">Delete</button>
                                         </form>
                                     </div>
                                 </div>
