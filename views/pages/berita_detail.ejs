@@ -101,12 +101,10 @@
                 <div class="container relative">
                     <div class="grid md:grid-cols-12 grid-cols-1 gap-[30px]">
                         <div class="lg:col-span-12 md:col-span-12">
-                            <div class="grid grid-cols-1 relative">
-                                <div class="tiny-one-item">
-                                    <div class="tiny-slide text-center">
-                                        <img src="../uploads/<%= berita.featuredImage %>"
-                                            class="rounded-md shadow-sm dark:shadow-gray-700 mx-auto" alt="">
-                                    </div>
+                            <div class="md:w-1/2 p-1 text-center" style="margin: 0 auto; margin-bottom: 1.5rem;">
+                                <div class="group relative overflow-hidden rounded-md shadow-sm dark:shadow-gray-700">
+                                    <img src="../uploads/<%= berita.featuredImage %>" alt="Gambar Berita"
+                                        style="display: block; margin: 0 auto; height: 370px; object-fit: cover; width: 100%;">
                                 </div>
                             </div>
 
@@ -118,7 +116,7 @@
                                     year: 'numeric' }) %>
                             </span>
 
-                            <p class="text-slate-400 text-center">
+                            <p class="text-slate-400 text-center" style="white-space: pre-wrap;">
                                 <%= berita.content %>
                             </p>
                         </div>
