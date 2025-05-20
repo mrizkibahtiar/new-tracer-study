@@ -9,7 +9,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Tracer Study</title>
+    <title>Tracer Study - Saran</title>
     <meta name="description"
         content="Platform yang memfasilitasi para alumni dalam memperbarui informasi terkait karir dan pendidikan. Data yang dihimpun akan digunakan untuk evaluasi program sekolah dan mendukung keterhubungan antara alumni, sekolah, dan industri." />
 
@@ -25,6 +25,7 @@
     <!-- Css -->
     <link href="assets/landing/libs/tiny-slider/tiny-slider.css" rel="stylesheet">
     <link href="assets/landing/libs/tobii/css/tobii.min.css" rel="stylesheet">
+    <link href="assets/landing/libs/choices.js/public/assets/styles/choices.min.css" rel="stylesheet">
     <!-- Main Css -->
     <link href="assets/landing/libs/%40iconscout/unicons/css/line.css" type="text/css" rel="stylesheet" />
     <link href="assets/landing/libs/%40mdi/font/css/materialdesignicons.min.css" rel="stylesheet" type="text/css">
@@ -36,8 +37,8 @@
         <div class="container relative">
             <!-- Logo container-->
             <a class="logo" href="index.html">
-                <img src="assets/landing/images/logo-dark.png" class="inline-block dark:hidden" alt="" width="170">
-                <img src="assets/landing/images/logo-light.png" class="hidden dark:inline-block" alt="" width="170">
+                <img src="../assets/landing/images/logo-dark.png" class="inline-block dark:hidden" alt="" width="170">
+                <img src="../assets/landing/images/logo-light.png" class="hidden dark:inline-block" alt="" width="170">
             </a>
             <!-- End Logo container-->
 
@@ -74,106 +75,60 @@
                     <li><a href="/lowongan" class="sub-menu-item" style="font-size: 1.5rem;">Lowongan</a></li>
                     <li><a href="/saran" class="sub-menu-item" style="font-size: 1.5rem;">Saran</a></li>
 
-                </ul>
-            </div>
-        </div>
+                </ul><!--end navigation menu-->
+            </div><!--end navigation-->
+        </div><!--end container-->
     </nav>
 
-    <!-- Hero Start -->
-    <section class="relative mt-20">
-        <div class="container-fluid md:mx-4 mx-2">
-            <div class="relative pt-40 pb-52 table w-full rounded-2xl shadow-md overflow-hidden" id="home"
-                style="background-image: url('/assets/landing/images/bg-hero.jpg'); background-size: cover; background-position: center;">
-                <div class="absolute inset-0 bg-black/60"></div>
-                <div class="container relative">
-                    <div class="grid grid-cols-1">
-                        <div class="md:text-start text-center">
-                            <h1 class="font-bold text-white lg:leading-normal leading-normal text-5xl lg:text-6xl mb-6">
-                                Selamat Datang di <br> <span class="text-green-600">TRACER STUDY</span></h1>
-                            <p class="text-white/70 text-2xl max-w-xl">Platform yang memfasilitasi para alumni SMK BP
-                                Subulul
-                                Huda dalam memperbarui
-                                informasi terkait karir dan
-                                pendidikan.</p>
-                            <div class="mt-4">
-                                <a href="/loginPage"
-                                    class="btn bg-green-600 hover:bg-green-700 text-white rounded-md mt-3"
-                                    style="font-size: 1.5rem;">Masuk
-                                </a>
-                            </div>
+    <section class="relative lg:py-24 py-16">
+        <div class="container relative">
+            <div class="grid md:grid-cols-12 grid-cols-1 items-center gap-[30px]">
+                <div class="lg:col-span-7 md:col-span-6">
+                    <img src="assets/landing/images/contact.svg" alt="">
+                </div>
+
+                <div class="lg:col-span-5 md:col-span-6">
+                    <div class="lg:me-5">
+                        <div class="bg-white dark:bg-slate-900 rounded-md shadow-sm dark:shadow-gray-700 p-6">
+                            <h3 class="mb-6 text-2xl leading-normal font-medium">Berikan Saran untuk Kami</h3>
+
+                            <form method="post" name="myForm" id="myForm" onsubmit="return validateForm()">
+                                <p class="mb-0" id="error-msg"></p>
+                                <div id="simple-msg"></div>
+                                <div class="grid lg:grid-cols-12 lg:gap-6">
+                                    <div class="lg:col-span-6 mb-5">
+                                        <label for="name" class="font-medium">Nama Anda:</label>
+                                        <input name="name" id="name" type="text"
+                                            class="form-input border !border-gray-200 dark:!border-gray-800 mt-2"
+                                            placeholder="Nama :">
+                                    </div>
+
+                                    <div class="lg:col-span-6 mb-5">
+                                        <label for="email" class="font-medium">Email Anda:</label>
+                                        <input name="email" id="email" type="email"
+                                            class="form-input border !border-gray-200 dark:!border-gray-800 mt-2"
+                                            placeholder="Email :">
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-1">
+                                    <div class="mb-5">
+                                        <label for="comments" class="font-medium">Saran:</label>
+                                        <textarea name="comments" id="comments"
+                                            class="form-input border !border-gray-200 dark:!border-gray-800 mt-2 textarea"
+                                            placeholder="Saran :"></textarea>
+                                    </div>
+                                </div>
+                                <button type="submit" id="submit" name="send"
+                                    class="btn bg-green-600 hover:bg-green-700 text-white rounded-md">Kirim
+                                    Saran</button>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </div><!--end container-->
     </section>
-
-
-    <div class="container relative lg:mt-24 mt-16">
-        <div class="grid grid-cols-1 pb-8 text-center">
-            <h3 class="mb-4 md:text-4xl md:leading-normal text-2xl leading-normal font-semibold">Tujuan dan Manfaat</h3>
-            <p class="text-slate-400 max-w-xl mx-auto text-xl">Bersama membangun masa depan</p>
-        </div><!--end grid-->
-
-        <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 mt-8 gap-[30px]">
-            <!-- Content -->
-            <div
-                class="group relative lg:px-10 transition-all duration-500 ease-in-out rounded-xl bg-transparent overflow-hidden text-center">
-                <div class="relative overflow-hidden text-transparent -m-3">
-                    <i data-feather="hexagon" class="size-32 fill-green-600/5 mx-auto"></i>
-                    <div
-                        class="absolute top-2/4 -translate-y-2/4 start-0 end-0 mx-auto text-green-600 rounded-xl transition-all duration-500 ease-in-out text-4xl flex align-middle justify-center items-center">
-                        <i class="uil uil-estate"></i>
-                    </div>
-                </div>
-
-                <div class="mt-6">
-                    <h5 class="text-3xl font-medium">Jejak Langkah Alumni</h5>
-                    <p class="text-slate-400 mt-3">Kami ingin memetakan perjalanan karir Anda setelah lulus sebagai
-                        bahan evaluasi dan pengembangan program studi.</p>
-                </div>
-            </div>
-            <!-- Content -->
-
-            <!-- Content -->
-            <div
-                class="group relative lg:px-10 transition-all duration-500 ease-in-out rounded-xl bg-transparent overflow-hidden text-center">
-                <div class="relative overflow-hidden text-transparent -m-3">
-                    <i data-feather="hexagon" class="size-32 fill-green-600/5 mx-auto"></i>
-                    <div
-                        class="absolute top-2/4 -translate-y-2/4 start-0 end-0 mx-auto text-green-600 rounded-xl transition-all duration-500 ease-in-out text-4xl flex align-middle justify-center items-center">
-                        <i class="uil uil-bag"></i>
-                    </div>
-                </div>
-
-                <div class="mt-6">
-                    <h5 class="text-3xl font-medium">Dukungan<br>Karir</h5>
-                    <p class="text-slate-400 mt-3">Tracer Study membantu mendapatkan pekerjaan dengan fitur lowongan</p>
-                </div>
-            </div>
-            <!-- Content -->
-
-            <!-- Content -->
-            <div
-                class="group relative lg:px-10 transition-all duration-500 ease-in-out rounded-xl bg-transparent overflow-hidden text-center">
-                <div class="relative overflow-hidden text-transparent -m-3">
-                    <i data-feather="hexagon" class="size-32 fill-green-600/5 mx-auto"></i>
-                    <div
-                        class="absolute top-2/4 -translate-y-2/4 start-0 end-0 mx-auto text-green-600 rounded-xl transition-all duration-500 ease-in-out text-4xl flex align-middle justify-center items-center">
-                        <i class="uil uil-key-skeleton"></i>
-                    </div>
-                </div>
-
-                <div class="mt-6">
-                    <h5 class="text-3xl font-medium">Peningkatan Mutu Pendidikan</h5>
-                    <p class="text-slate-400 mt-3">Umpan balik Anda
-                        menjadi dasar perbaikan dan inovasi pendidikan di institusi kami.
-                    </p>
-                </div>
-            </div>
-            <!-- Content -->
-        </div><!--end grid-->
-    </div><!--end container-->
 
     <footer class="relative bg-slate-900 dark:bg-slate-800 mt-24">
         <div class="container relative">

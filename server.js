@@ -150,12 +150,12 @@ app.get('/lowongan/:lowonganId', async function (req, res) {
         req.flash('error_msg', 'Terjadi kesalahan saat memuat detail lowongan');
         return res.redirect('/lowongan');
     }
+});
+
+app.get('/saran', async function (req, res) {
+    res.render('pages/saran');
 })
 
-// Halaman login
-app.get('/loginPage', checkLogin, (req, res) => {
-    res.render('pages/login');
-});
 
 // Tambahkan router
 app.use(authRouter);
