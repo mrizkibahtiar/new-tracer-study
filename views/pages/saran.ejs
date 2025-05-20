@@ -92,13 +92,13 @@
                         <div class="bg-white dark:bg-slate-900 rounded-md shadow-sm dark:shadow-gray-700 p-6">
                             <h3 class="mb-6 text-2xl leading-normal font-medium">Berikan Saran untuk Kami</h3>
 
-                            <form method="post" name="myForm" id="myForm" onsubmit="return validateForm()">
+                            <form method="post" name="myForm" id="myForm" action="/saran">
                                 <p class="mb-0" id="error-msg"></p>
                                 <div id="simple-msg"></div>
                                 <div class="grid lg:grid-cols-12 lg:gap-6">
                                     <div class="lg:col-span-6 mb-5">
-                                        <label for="name" class="font-medium">Nama Anda:</label>
-                                        <input name="name" id="name" type="text"
+                                        <label for="nama" class="font-medium">Nama Anda:</label>
+                                        <input name="nama" id="nama" type="text"
                                             class="form-input border !border-gray-200 dark:!border-gray-800 mt-2"
                                             placeholder="Nama :">
                                     </div>
@@ -113,8 +113,8 @@
 
                                 <div class="grid grid-cols-1">
                                     <div class="mb-5">
-                                        <label for="comments" class="font-medium">Saran:</label>
-                                        <textarea name="comments" id="comments"
+                                        <label for="saran" class="font-medium">Saran:</label>
+                                        <textarea name="saran" id="saran"
                                             class="form-input border !border-gray-200 dark:!border-gray-800 mt-2 textarea"
                                             placeholder="Saran :"></textarea>
                                     </div>

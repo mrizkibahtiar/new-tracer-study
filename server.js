@@ -13,8 +13,8 @@ const app = express();
 const alumniRouter = require('./router/alumni');
 const authRouter = require('./router/auth');
 const adminRouter = require('./router/admin');
-const { checkLogin } = require('./middleware/auth');
 const { flashMessage } = require('./middleware/flash');
+const { validationResult } = require('express-validator');
 const Berita = require('./models/berita');
 const Lowongan = require('./models/lowongan');
 
@@ -154,6 +154,36 @@ app.get('/lowongan/:lowonganId', async function (req, res) {
 
 app.get('/saran', async function (req, res) {
     res.render('pages/saran');
+})
+
+app.post('/saran', async function (req, res) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        // Jika ada error validasi, kirimkan kembali ke form dengan pesan error
+        req.flash('error_msg', 'Terdapat kesalahan dalam pengisian form.'); // Gunakan flash message
+        return res.redirect('/saran'); // Redirect ke halaman form saran
+    }
+
+    try {
+        // Buat objek Saran baru
+        const saranBaru = new Saran({
+            nama: req.body.nama,
+            email: req.body.email,
+            saran: req.body.saran,
+        });
+
+        // Simpan saran ke database
+        await saranBaru.save();
+
+        // Jika berhasil disimpan, kirimkan flash message sukses dan redirect
+        req.flash('success_msg', 'Terima kasih! Saran Anda telah kami terima.');
+        res.redirect('/saran');
+
+    } catch (error) {
+        console.error("Error saving saran:", error);
+        req.flash('error_msg', 'Maaf, terjadi kesalahan. Saran Anda gagal dikirim.');
+        res.redirect('/saran'); // Redirect ke halaman form saran
+    }
 })
 
 
