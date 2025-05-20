@@ -35,10 +35,13 @@
 <body>
     <nav id="topnav" class="defaultscroll is-sticky">
         <div class="container relative">
-            <!-- Logo container-->
+            <!-- Start Logo container-->
             <a class="logo" href="index.html">
-                <img src="assets/landing/images/logo-dark.png" class="inline-block dark:hidden" alt="" width="170">
-                <img src="assets/landing/images/logo-light.png" class="hidden dark:inline-block" alt="" width="170">
+                <span class="inline-block dark:hidden">
+                    <img src="assets/landing/images/logo-dark.png" class="l-dark" width="170">
+                    <img src="assets/landing/images/logo-light.png" class="l-light" width="170">
+                </span>
+                <img src="assets/landing/images/logo-light.png" width="170" class="hidden dark:inline-block" alt="">
             </a>
             <!-- End Logo container-->
 
@@ -60,38 +63,38 @@
             <ul class="buy-button list-none mb-0">
                 <li class="sm:inline ps-1 mb-0 hidden">
                     <a href="/loginPage"
-                        class="btn bg-green-600 hover:bg-green-700 border-green-600 dark:border-green-600 text-white !rounded-full">Masuk</a>
+                        class="btn bg-green-600 hover:bg-green-700 border-green-600 dark:border-green-600 text-white !rounded-full"
+                        style="font-size: 1.5rem;">Masuk</a>
                 </li>
             </ul>
             <!--Login button End-->
 
             <div id="navigation">
                 <!-- Navigation Menu-->
-                <ul class="navigation-menu !justify-end">
+                <ul class="navigation-menu !justify-end nav-light">
                     <li><a href="/" class="sub-menu-item" style="font-size: 1.5rem;">Home</a></li>
 
                     <li><a href="/berita" class="sub-menu-item" style="font-size: 1.5rem;">Berita</a></li>
                     <li><a href="/lowongan" class="sub-menu-item" style="font-size: 1.5rem;">Lowongan</a></li>
                     <li><a href="/saran" class="sub-menu-item" style="font-size: 1.5rem;">Saran</a></li>
-
                 </ul><!--end navigation menu-->
             </div><!--end navigation-->
         </div><!--end container-->
-    </nav><!--end header-->
-    <!-- End Navbar -->
+    </nav>
 
 
-    <section
-        class="relative table w-full py-32 lg:py-36 bg-[url('../../assets/images/bg/01.html')] bg-no-repeat bg-center bg-cover">
+
+    <section class="relative table w-full py-32 lg:py-36"
+        style="background-image: url('assets/landing/images/bg-lowongan.jpg'); background-size: cover; background-position: center 60%;">
         <div class="absolute inset-0 bg-slate-900 opacity-80"></div>
         <div class="container relative">
-            <div class="grid grid-cols-1 text-center mt-10">
-                <h3 class="md:text-4xl text-3xl md:leading-normal leading-normal font-medium text-white">Lowongan
-                    Terbuka
+            <div class="grid grid-cols-1 text-center mt-2">
+                <h3 class="md:text-4xl text-3xl md:leading-normal leading-normal font-medium text-white">Informasi
+                    Lowongan
                 </h3>
             </div><!--end grid-->
         </div><!--end container-->
-    </section><!--end section-->
+    </section>
     <div class="relative">
         <div class="shape overflow-hidden z-1 text-white dark:text-slate-900">
             <svg viewBox="0 0 2880 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -99,7 +102,6 @@
             </svg>
         </div>
     </div>
-
     <!-- Start -->
     <section class="relative lg:py-24 py-16">
         <div class="container relative">
