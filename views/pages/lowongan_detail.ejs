@@ -239,6 +239,20 @@
             <script src="../assets/landing/libs/feather-icons/feather.min.js"></script>
             <script src="../assets/landing/js/plugins.init.js"></script>
             <script src="../assets/landing/js/app.js"></script>
+            <script>
+                const alertSuccess = document.querySelector('.alert-success');
+                if (alertSuccess) {
+                    setTimeout(() => {
+                        alertSuccess.remove();
+                    }, 2000);
+                }
+                const alertError = document.querySelector('.alert-error');
+                if (alertError) {
+                    setTimeout(() => {
+                        alertError.remove();
+                    }, 2000);
+                }
+            </script>
             <!-- JAVASCRIPTS -->
 
 </body>
