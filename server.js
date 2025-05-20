@@ -114,7 +114,7 @@ app.get('/berita/:beritaId', async function (req, res) {
         req.flash('error_msg', 'Terjadi kesalahan saat memuat detail berita');
         return res.redirect('/berita');
     }
-})
+});
 
 app.get('/lowongan', async (req, res) => {
     try {
@@ -124,6 +124,30 @@ app.get('/lowongan', async (req, res) => {
         });
     } catch (error) {
         req.flash('error_msh', 'Gagal mengambil Lowongan');
+        return res.redirect('/lowongan');
+    }
+});
+
+app.get('/lowongan/:lowonganId', async function (req, res) {
+    try {
+        const { lowonganId } = req.params;
+
+        // Ambil berita berdasarkan ID
+        const lowongan = await Lowongan.findById(lowonganId);
+
+        // Jika tidak ditemukan
+        if (!lowongan) {
+            req.flash('error_msg', 'lowongan tidak ditemukan');
+            return res.redirect('/lowongan'); // arahkan kembali ke daftar berita
+        }
+
+        // Kirim data ke view
+        res.render('pages/lowongan_detail', {
+            lowongan,
+        });
+    } catch (err) {
+        console.error(err);
+        req.flash('error_msg', 'Terjadi kesalahan saat memuat detail lowongan');
         return res.redirect('/lowongan');
     }
 })

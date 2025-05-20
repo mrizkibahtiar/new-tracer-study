@@ -9,7 +9,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Tracer Study - Berita</title>
+    <title>Tracer Study - lowongan</title>
     <meta name="description"
         content="Platform yang memfasilitasi para alumni dalam memperbarui informasi terkait karir dan pendidikan. Data yang dihimpun akan digunakan untuk evaluasi program sekolah dan mendukung keterhubungan antara alumni, sekolah, dan industri." />
 
@@ -104,22 +104,22 @@
                             <div class="grid grid-cols-1 relative">
                                 <div class="tiny-one-item">
                                     <div class="tiny-slide text-center">
-                                        <img src="../uploads/<%= berita.featuredImage %>"
+                                        <img src="../uploads/<%= lowongan.featuredImage %>"
                                             class="rounded-md shadow-sm dark:shadow-gray-700 mx-auto" alt="">
                                     </div>
                                 </div>
                             </div>
 
                             <h4 class="text-2xl font-medium mt-6 mb-3 text-center">
-                                <%= berita.title %>
+                                <%= lowongan.title %>
                             </h4>
                             <span class="text-slate-400 flex items-center justify-center">
-                                <%= berita.createdAt.toLocaleDateString('id-ID', { day: 'numeric' , month: 'long' ,
+                                <%= lowongan.createdAt.toLocaleDateString('id-ID', { day: 'numeric' , month: 'long' ,
                                     year: 'numeric' }) %>
                             </span>
 
                             <p class="text-slate-400 text-center">
-                                <%= berita.content %>
+                                <%= lowongan.content %>
                             </p>
                         </div>
                     </div>
@@ -151,9 +151,9 @@
                                             <li><a href="/"
                                                     class="text-slate-300 hover:text-slate-400 duration-500 ease-in-out"><i
                                                         class="uil uil-angle-right-b me-1"></i>Home</a></li>
-                                            <li class="mt-[10px]"><a href="/berita"
+                                            <li class="mt-[10px]"><a href="/lowongan"
                                                     class="text-slate-300 hover:text-slate-400 duration-500 ease-in-out"><i
-                                                        class="uil uil-angle-right-b me-1"></i>Berita</a></li>
+                                                        class="uil uil-angle-right-b me-1"></i>lowongan</a></li>
                                             <li class="mt-[10px]"><a href="/lowongan"
                                                     class="text-slate-300 hover:text-slate-400 duration-500 ease-in-out"><i
                                                         class="uil uil-angle-right-b me-1"></i>Lowongan</a></li>

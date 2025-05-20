@@ -34,13 +34,10 @@
 <body>
     <nav id="topnav" class="defaultscroll is-sticky">
         <div class="container relative">
-            <!-- Start Logo container-->
-            <a class="logo" href="/">
-                <span class="inline-block dark:hidden">
-                    <img src="assets/landing/images/logo-dark.png" class="l-dark" width="170" alt="">
-                    <img src="assets/landing/images/logo-light.png" class="l-light" width="170" alt="">
-                </span>
-                <img src="assets/landing/images/logo-light.png" width="170" class="hidden dark:inline-block" alt="">
+            <!-- Logo container-->
+            <a class="logo" href="index.html">
+                <img src="assets/landing/images/logo-dark.png" class="inline-block dark:hidden" alt="" width="170">
+                <img src="assets/landing/images/logo-light.png" class="hidden dark:inline-block" alt="" width="170">
             </a>
             <!-- End Logo container-->
 
@@ -62,21 +59,21 @@
             <ul class="buy-button list-none mb-0">
                 <li class="sm:inline ps-1 mb-0 hidden">
                     <a href="/loginPage"
-                        class="btn bg-green-600 hover:bg-green-700 border-green-600 dark:border-green-600 text-white !rounded-full"
-                        style="font-size: 1.3rem;">Masuk</a>
+                        class="btn bg-green-600 hover:bg-green-700 border-green-600 dark:border-green-600 text-white !rounded-md"
+                        style="font-size: 1.5rem;">Masuk</a>
                 </li>
             </ul>
             <!--Login button End-->
 
             <div id="navigation">
                 <!-- Navigation Menu-->
-                <ul class="navigation-menu !justify-end nav-light">
-                    <li class="has-submenu parent-parent-menu-item">
-                        <a href="/" style="font-size: 1.5rem;">Home</a>
-                    </li>
+                <ul class="navigation-menu !justify-end">
+                    <li><a href="/" class="sub-menu-item" style="font-size: 1.5rem;">Home</a></li>
+
                     <li><a href="/berita" class="sub-menu-item" style="font-size: 1.5rem;">Berita</a></li>
                     <li><a href="/lowongan" class="sub-menu-item" style="font-size: 1.5rem;">Lowongan</a></li>
                     <li><a href="/saran" class="sub-menu-item" style="font-size: 1.5rem;">Saran</a></li>
+
                 </ul><!--end navigation menu-->
             </div><!--end navigation-->
         </div><!--end container-->
@@ -85,29 +82,34 @@
     <!-- End Navbar -->
 
     <!-- Hero Start -->
-    <section class="relative table w-full py-36 md:py-44 lg:py-56 bg-no-repeat bg-center bg-cover"
-        style="background-image: url('/assets/landing/images/bg-hero.jpg');">
-        <div class="absolute inset-0 bg-black/50"></div>
-        <div class="container relative z-3">
-            <div class="grid md:grid-cols-12 mt-1">
-                <div class="lg:col-span-8 md:col-span-6">
-                    <h1 class="font-semibold text-white lg:leading-normal leading-normal text-4xl lg:text-6xl mb-6">
-                        Selamat Datang di<br>Tracer Study SMK
-                    </h1>
-                    <p class="text-white/70 text-xl max-w-xl">Platform yang memfasilitasi para alumni SMK BP Subulul
-                        Huda dalam memperbarui
-                        informasi terkait karir dan
-                        pendidikan.</p>
-
-                    <div class="mt-4">
-                        <a href="/loginPage" class="btn bg-green-600 hover:bg-green-700 text-white rounded-md mt-3"
-                            style="font-size: 1.3rem;">Masuk
-                        </a>
+    <section class="relative mt-20">
+        <div class="container-fluid md:mx-4 mx-2">
+            <div class="relative pt-40 pb-52 table w-full rounded-2xl shadow-md overflow-hidden" id="home"
+                style="background-image: url('/assets/landing/images/bg-hero.jpg'); background-size: cover; background-position: center;">
+                <div class="absolute inset-0 bg-black/60"></div>
+                <div class="container relative">
+                    <div class="grid grid-cols-1">
+                        <div class="md:text-start text-center">
+                            <h1 class="font-bold text-white lg:leading-normal leading-normal text-5xl lg:text-6xl mb-6">
+                                Selamat Datang di <br> <span class="text-green-600">TRACER STUDY</span></h1>
+                            <p class="text-white/70 text-2xl max-w-xl">Platform yang memfasilitasi para alumni SMK BP
+                                Subulul
+                                Huda dalam memperbarui
+                                informasi terkait karir dan
+                                pendidikan.</p>
+                            <div class="mt-4">
+                                <a href="/loginPage"
+                                    class="btn bg-green-600 hover:bg-green-700 text-white rounded-md mt-3"
+                                    style="font-size: 1.5rem;">Masuk
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div><!--end grid-->
-        </div><!--end container-->
-    </section><!--end section-->
+            </div>
+        </div>
+    </section>
+
 
     <div class="container relative lg:mt-24 mt-16">
         <div class="grid grid-cols-1 pb-8 text-center">
