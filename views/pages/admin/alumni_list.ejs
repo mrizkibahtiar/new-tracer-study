@@ -428,11 +428,12 @@
             document.getElementById('editAlumniModal').style.display = "none";
         }
 
-        window.onclick = function (event) {
-            if (event.target == document.getElementById('editAlumniModal')) {
-                document.getElementById('editAlumniModal').style.display = "none";
+        document.getElementById("editAlumniModal").addEventListener("click", function (e) {
+            // Jika yang diklik adalah latar hitam (overlay), tutup modal
+            if (e.target === this) {
+                this.style.display = "none";
             }
-        }
+        });
     </script>
 
     <!-- logic untuk tambah alumni -->
