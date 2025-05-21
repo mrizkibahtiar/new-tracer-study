@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Admin - Lowongan</title>
+    <title>Admin - Saran</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description">
     <meta content="coderthemes" name="author">
@@ -136,7 +136,7 @@
                                         <h6 class="font-semibold text-gray-700 dark:text-gray-300 mt-2">
                                             Saran :
                                         </h6>
-                                        <p class="text-slate-400">
+                                        <p class="font-normal">
                                             <span class="text-green-600 text-lg"><i></i></span>
                                             <%= item.saran.length> 100 ? item.saran.substring(0, 100) + '...' :
                                                 item.saran %>
@@ -144,7 +144,7 @@
                                         <div class="flex gap-2 mt-4">
                                             <form action="/admin/saran/delete/<%= item._id %>" method="post">
                                                 <button type="submit"
-                                                    class="btn bg-red-600 hover:bg-red-700 text-white rounded-md w-full">Hapus</button>
+                                                    class="btn bg-red-600 hover:bg-red-700 text-white rounded-md w-full cursor-pointer">Hapus</button>
                                             </form>
                                             <button type="button"
                                                 class="btn bg-green-600 hover:bg-green-700 text-white rounded-md w-full cursor-pointer"
