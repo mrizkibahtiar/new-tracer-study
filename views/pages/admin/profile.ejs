@@ -16,6 +16,15 @@
     <link href="../../assets/admin/libs/simplebar/simplebar.min.css" rel="stylesheet">
     <link href="../../assets/admin/libs/%40mdi/font/css/materialdesignicons.min.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="../../assets/admin/css/tailwind.min.css">
+    <style>
+        @media (min-width: 768px) {
+            .profile {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -117,7 +126,7 @@
 
                     <div class="grid gap-6">
                         <div class="grid-container">
-                            <div class="col-span-12 relative rounded-md p-6 overflow-hidden flex justify-between items-center"
+                            <div class="profile col-span-12 relative rounded-md p-6 overflow-hidden flex flex-col gap-4"
                                 style="background-image: linear-gradient(to right, #d4edda, #34d399);">
 
                                 <div>
@@ -133,15 +142,29 @@
                                     </p>
                                 </div>
 
-                                <div style="display: flex; gap: 1rem;">
-                                    <button class="cursor-pointer" id="editProfilBtn"
+                                <!-- Tombol untuk tampilan desktop (md ke atas) -->
+                                <div class="hidden md:flex" style="gap: 1rem;">
+                                    <button class="cursor-pointer editProfilBtn"
                                         style="display: inline-block; background-color: #fff; color: #16a34a; font-weight: 600; padding: 0.5rem 1rem; border-radius: 0.5rem; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.05); transition: background-color 0.3s ease;"
                                         data-id="<%= admin._id %>" data-nama="<%= admin.nama %>"
                                         data-email="<%= admin.email %>">
                                         Edit Profil
                                     </button>
-                                    <button class="cursor-pointer" id="gantiPasswordBtn"
+                                    <button class="cursor-pointer gantiPasswordBtn"
                                         style="display: inline-block; background-color: #fff; color: #16a34a; font-weight: 600; padding: 0.5rem 1rem; border-radius: 0.5rem; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.05); transition: background-color 0.3s ease;">
+                                        Ganti Password
+                                    </button>
+                                </div>
+
+                                <div class="mt-4 flex flex-col gap-3 md:hidden">
+                                    <button class="cursor-pointer w-full editProfilBtn"
+                                        style="background-color: #fff; color: #16a34a; font-weight: 600; padding: 0.6rem 1rem; border-radius: 0.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.05);"
+                                        data-id="<%= admin._id %>" data-nama="<%= admin.nama %>"
+                                        data-email="<%= admin.email %>">
+                                        Edit Profil
+                                    </button>
+                                    <button class="cursor-pointer w-full gantiPasswordBtn"
+                                        style="background-color: #fff; color: #16a34a; font-weight: 600; padding: 0.6rem 1rem; border-radius: 0.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.05);">
                                         Ganti Password
                                     </button>
                                 </div>
@@ -271,7 +294,8 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // --- Elemen untuk Modal Edit Profil ---
-            const editProfilBtn = document.getElementById('editProfilBtn');
+            // Mengubah querySelector menjadi querySelectorAll karena ada potensi banyak elemen dengan kelas ini
+            const editProfilBtns = document.querySelectorAll('.editProfilBtn');
             const modalEditProfil = document.getElementById('modalEditProfil');
             const closeEditProfilModalBtn = document.getElementById('closeEditProfilModalBtn');
             const batalEditProfilModalBtn = document.getElementById('batalEditProfilModalBtn');
@@ -281,25 +305,25 @@
             const editProfilIdInput = document.getElementById('editProfilId'); // Hidden ID input
 
             // --- Elemen untuk Modal Ganti Password ---
-            const gantiPasswordBtn = document.getElementById('gantiPasswordBtn');
+            // Mengubah querySelector menjadi querySelectorAll karena ada potensi banyak elemen dengan kelas ini
+            const gantiPasswordBtns = document.querySelectorAll('.gantiPasswordBtn');
             const modalGantiPassword = document.getElementById('modalGantiPassword');
             const closeGantiPasswordModalBtn = document.getElementById('closeGantiPasswordModalBtn');
             const batalGantiPasswordModalBtn = document.getElementById('batalGantiPasswordModalBtn');
             const formGantiPassword = document.getElementById('formGantiPassword');
 
             // --- Event Listeners untuk Modal Edit Profil ---
-            if (editProfilBtn) {
-                editProfilBtn.addEventListener('click', () => {
-                    // Mengisi form dengan data dari data-attributes tombol
-                    editNamaInput.value = editProfilBtn.dataset.nama || '';
-                    editEmailInput.value = editProfilBtn.dataset.email || '';
-                    // Anda mungkin perlu ID pengguna untuk update di backend
-                    // Asumsi ID pengguna ada di suatu tempat, misalnya di data-id tombol atau dari sesi
-                    editProfilIdInput.value = editProfilBtn.dataset.id || ''; // Pastikan data-id ada di tombol jika diperlukan
+            // Melakukan iterasi untuk setiap tombol edit profil
+            editProfilBtns.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Mengisi form dengan data dari data-attributes tombol yang diklik
+                    editNamaInput.value = button.dataset.nama || '';
+                    editEmailInput.value = button.dataset.email || '';
+                    editProfilIdInput.value = button.dataset.id || ''; // Pastikan data-id ada di tombol jika diperlukan
 
                     modalEditProfil.style.display = 'block';
                 });
-            }
+            });
 
             if (closeEditProfilModalBtn) {
                 closeEditProfilModalBtn.addEventListener('click', () => {
@@ -314,13 +338,14 @@
             }
 
             // --- Event Listeners untuk Modal Ganti Password ---
-            if (gantiPasswordBtn) {
-                gantiPasswordBtn.addEventListener('click', () => {
+            // Melakukan iterasi untuk setiap tombol ganti password
+            gantiPasswordBtns.forEach(button => {
+                button.addEventListener('click', () => {
                     modalGantiPassword.style.display = 'block';
                     // Opsional: reset form password setiap kali modal dibuka
                     formGantiPassword.reset();
                 });
-            }
+            });
 
             if (closeGantiPasswordModalBtn) {
                 closeGantiPasswordModalBtn.addEventListener('click', () => {
@@ -344,6 +369,7 @@
                 }
             });
         });
+
     </script>
 </body>
 

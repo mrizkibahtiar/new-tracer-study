@@ -341,22 +341,65 @@ module.exports = {
         }
     },
     profileUpdatePassword: async function (req, res) {
-        const { email } = req.session.user;
+        const adminId = req.session.user._id;
+
+        // Ambil data dari body request (dari form ganti password)
         const { passwordLama, passwordBaru, confirmPassword } = req.body;
-        const admin = await Admin.findOne({ email: email });
-        const isPasswordValid = await bcrypt.compare(passwordLama.trim(), admin.password);
-        if (!isPasswordValid) {
-            req.flash('error_msg', 'Password lama salah.');
+
+        try {
+            // 2. Cari admin berdasarkan ID yang didapat dari sesi
+            const admin = await Admin.findById(adminId);
+
+            if (!admin) {
+                req.flash('error_msg', 'Admin tidak ditemukan atau sesi tidak valid.');
+                return res.redirect('/admin/profile'); // Redirect ke halaman profil atau login
+            }
+
+            // 3. Verifikasi password lama
+            // Gunakan bcrypt.compare() untuk membandingkan password lama yang diinput
+            // dengan password ter-hash yang tersimpan di database
+            const isPasswordValid = await bcrypt.compare(passwordLama.trim(), admin.password);
+            if (!isPasswordValid) {
+                req.flash('error_msg', 'Password lama salah.');
+                return res.redirect('/admin/profile');
+            }
+
+            // 4. Verifikasi password baru dan konfirmasi password baru
+            if (passwordBaru !== confirmPassword) {
+                req.flash('error_msg', 'Password baru dan konfirmasi password tidak cocok.');
+                return res.redirect('/admin/profile');
+            }
+
+            // minimal panjang karakter
+            if (passwordBaru.trim().length < 6) { // Contoh validasi minimal 6 karakter
+                req.flash('error_msg', 'Password baru minimal 6 karakter.');
+                return res.redirect('/admin/profile');
+            }
+
+            // 5. Hash password baru dan simpan ke database
+            const hashedPassword = await bcrypt.hash(passwordBaru.trim(), 10); // Trim password baru sebelum hash
+
+            const updatedAdmin = await Admin.findOneAndUpdate(
+                { _id: adminId }, // Kriteria pencarian berdasarkan ID dari sesi
+                { password: hashedPassword }, // Data yang akan diupdate
+                { new: true, runValidators: true } // Opsi: kembalikan dokumen yang sudah diupdate, jalankan validator skema
+            );
+
+            if (!updatedAdmin) {
+                req.flash('error_msg', 'Gagal memperbarui password.');
+                return res.redirect('/admin/profile');
+            }
+
+            req.flash('success_msg', 'Password berhasil diperbarui!');
+            // Setelah ganti password, Anda mungkin ingin mengarahkan ulang ke halaman profil
+            // atau bahkan meminta admin untuk login ulang demi keamanan
+            return res.redirect('/admin/profile');
+
+        } catch (error) {
+            console.error("Error changing password:", error);
+            req.flash('error_msg', 'Terjadi kesalahan saat mengganti password.');
             return res.redirect('/admin/profile');
         }
-        if (passwordBaru !== confirmPassword) {
-            req.flash('error_msg', 'Password dan konfirmasi password tidak cocok.');
-            return res.redirect('/admin/profile');
-        }
-        const hashedPassword = await bcrypt.hash(passwordBaru.trim(), 10);
-        await Admin.findOneAndUpdate({ email: email }, { password: hashedPassword }, { new: true });
-        req.flash('success_msg', 'Password berhasil diperbarui!');
-        return res.redirect('/admin/profile');
     },
     viewBerita: async function (req, res) {
         try {

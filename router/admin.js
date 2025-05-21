@@ -40,5 +40,5 @@ router.post('/admin/saran/delete/:saranId', isAdmin, adminController.deleteSaran
 // profile
 router.get('/admin/profile', isAdmin, adminController.profile);
 router.post('/admin/update-profil', isAdmin, adminController.profileUpdate);
-router.put('/admin/profile-edit/password/:adminId', isAdmin, adminController.profileUpdatePassword);
+router.post('/admin/update-password', isAdmin, adminController.profileUpdatePassword);
 module.exports = router;
