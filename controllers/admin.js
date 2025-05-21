@@ -292,21 +292,53 @@ module.exports = {
         const admin = await Admin.findOne({ _id: adminId });
         return res.render('pages/admin/profile', { admin: admin });
     },
+    // Asumsikan Admin model sudah di-require
+    // const Admin = require('../models/Admin');
+
     profileUpdate: async function (req, res) {
-        const { adminId } = req.params;
-        const { nama, email } = req.body;
-        const semuaAdmin = await Admin.find({});
-        // cek jika ada email yang sama maka tampilkan error, tapi jika email sama dengan email sebelumnya maka tidak tampilkan error
-        for (let i = 0; i < semuaAdmin.length; i++) {
-            if (semuaAdmin[i].email === email && semuaAdmin[i]._id != adminId) {
-                req.flash('error_msg', 'Email sudah digunakan oleh admin lain.');
+        // Ambil ID dari hidden input form, bukan dari params
+        const { id, nama, email } = req.body;
+
+        try {
+            // 1. Cari admin yang sedang diupdate untuk mendapatkan email lamanya
+            const currentAdmin = await Admin.findById(id);
+
+            if (!currentAdmin) {
+                req.flash('error_msg', 'Admin tidak ditemukan.');
                 return res.redirect('/admin/profile');
             }
-        }
-        const admin = await Admin.findOneAndUpdate({ _id: adminId }, { nama: nama, email: email }, { new: true });
-        req.flash('success_msg', 'Profil berhasil diperbarui!');
 
-        return res.redirect('/admin/profile');
+            // 2. Cek apakah email baru sudah digunakan oleh admin lain (selain admin yang sedang diupdate)
+            // Hanya lakukan pengecekan jika email yang diinput berbeda dari email saat ini
+            if (email !== currentAdmin.email) {
+                const existingAdminWithNewEmail = await Admin.findOne({ email: email, _id: { $ne: id } });
+                if (existingAdminWithNewEmail) {
+                    req.flash('error_msg', 'Email sudah digunakan oleh admin lain.');
+                    return res.redirect('/admin/profile');
+                }
+            }
+
+            // 3. Lakukan update profil
+            const updatedAdmin = await Admin.findOneAndUpdate(
+                { _id: id }, // Kriteria pencarian
+                { nama: nama, email: email }, // Data yang akan diupdate
+                { new: true, runValidators: true } // Opsi: kembalikan dokumen yang sudah diupdate, jalankan validator skema
+            );
+
+            if (!updatedAdmin) {
+                // Ini seharusnya tidak terjadi jika currentAdmin ditemukan, tapi sebagai fallback
+                req.flash('error_msg', 'Gagal memperbarui profil.');
+                return res.redirect('/admin/profile');
+            }
+
+            req.flash('success_msg', 'Profil berhasil diperbarui!');
+            return res.redirect('/admin/profile');
+
+        } catch (error) {
+            console.error("Error updating profile:", error);
+            req.flash('error_msg', 'Terjadi kesalahan saat memperbarui profil.');
+            return res.redirect('/admin/profile');
+        }
     },
     profileUpdatePassword: async function (req, res) {
         const { email } = req.session.user;
