@@ -145,7 +145,7 @@
             <div id="tambahAlumniModal"
                 style="display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);">
                 <div
-                    style="background-color: #fefefe; margin: 10% auto; padding: 25px; border: 1px solid #888; width: 80%; max-width: 600px; font-size: 1.1rem;">
+                    style="background-color: #fefefe; margin: 10% auto; padding: 25px; border: 1px solid #888; width: 80%; max-width: 600px; font-size: 1.1rem;  border-radius: 5px;">
                     <span id="closeModalBtn"
                         style="color: #aaa; float: right; font-size: 34px; font-weight: bold; cursor: pointer;">&times;</span>
                     <h2 style="font-size: 1.8rem; margin-bottom: 15px;">Tambah Data Alumni</h2>
@@ -159,19 +159,23 @@
                         <div style="margin-bottom: 15px;">
                             <label for="nisn" style="font-size: 1.2rem;">NISN:</label><br>
                             <input type="number" id="nisn" name="nisn"
-                                style="width: 100%; padding: 0.7rem; margin-top: 5px; margin-bottom: 10px; box-sizing: border-box; font-size: 1.1rem; border: 1px solid #888;  border-radius: 10px;"
+                                style="width: 100%; padding: 0.7rem; margin-top: 5px; margin-bottom: 10px; box-sizing: border-box; font-size: 1.1rem; border: 1px solid #888; border-radius: 10px;"
                                 placeholder="masukkan NISN">
                         </div>
-                        <div style=" margin-bottom: 15px;">
+                        <div style="margin-bottom: 15px;">
                             <label for="jenisKelamin" style="font-size: 1.2rem;">Jenis Kelamin:</label><br>
                             <select id="jenisKelamin" name="jenisKelamin"
-                                style="width: 100%; padding: 0.7rem; margin-top: 5px; margin-bottom: 10px; box-sizing: border-box; font-size: 1.1rem; border: 1px solid #888;  border-radius: 10px;">
+                                style="width: 100%; padding: 0.7rem; margin-top: 5px; margin-bottom: 10px; box-sizing: border-box; font-size: 1.1rem; border: 1px solid #888; border-radius: 10px;">
                                 <option value="Laki-laki">Laki-laki</option>
                                 <option value="Perempuan">Perempuan</option>
                             </select>
                         </div>
-                        <button type="submit"
-                            style="background-color: #4CAF50; color: white; border: none; padding: 0.7rem 1.2rem; border-radius: 0.7rem; cursor: pointer; font-size: 1.2rem;">Simpan</button>
+                        <div style="text-align: right;">
+                            <button type="submit"
+                                style="background-color: #4CAF50; color: white; border: none; padding: 0.7rem 1.2rem; border-radius: 0.7rem; cursor: pointer; font-size: 1.2rem;">
+                                Simpan
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -180,7 +184,7 @@
             <div id="editAlumniModal"
                 style="display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);">
                 <div
-                    style="background-color: #fefefe; margin: 10% auto; padding: 25px; border: 1px solid #888; width: 80%; max-width: 600px; font-size: 1.1rem;">
+                    style="background-color: #fefefe; margin: 10% auto; padding: 25px; border: 1px solid #888; width: 80%; max-width: 600px; font-size: 1.1rem; border-radius: 5px;">
                     <span id="closeEditModalBtn"
                         style="color: #aaa; float: right; font-size: 34px; font-weight: bold; cursor: pointer;">&times;</span>
                     <h2 id="editModalTitle" style="font-size: 1.8rem; margin-bottom: 15px;">Edit Data Alumni</h2>
@@ -206,8 +210,10 @@
                                 <option value="Perempuan">Perempuan</option>
                             </select>
                         </div>
-                        <button type="submit"
-                            style="background-color: #007bff; color: white; border: none; padding: 0.7rem 1.2rem; border-radius: 0.7rem; cursor: pointer; font-size: 1.2rem;">Update</button>
+                        <div style="text-align: right;">
+                            <button type="submit"
+                                style="background-color: #007bff; color: white; border: none; padding: 0.7rem 1.2rem; border-radius: 0.7rem; cursor: pointer; font-size: 1.2rem;">Update</button>
+                        </div>
                     </form>
                 </div>
             </div>
