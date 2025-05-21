@@ -271,8 +271,7 @@
                 style="background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 400px; border-radius: 0.7rem; text-align: center;">
                 <h3 style="font-size: 1.5rem; margin-bottom: 15px; font-weight: 700;">Konfirmasi Penghapusan Berita</h3>
                 <p style="margin-bottom: 20px;">Apakah Anda yakin ingin menghapus berita ini?</p>
-                <form id="deleteNewsForm" method="post" action="/admin/berita/delete">
-                    <input type="hidden" name="id" id="deleteNewsIdInput">
+                <form id="deleteNewsForm" method="post" action="">
                     <button type="submit"
                         style="background-color: #f44336; color: white; border: none; padding: 0.7rem 1.2rem; border-radius: 0.7rem; cursor: pointer; font-size: 1.1rem; margin-right: 10px;">Hapus</button>
                     <button type="button" onclick="closeDeleteNewsConfirmModal()"
@@ -280,6 +279,7 @@
                 </form>
             </div>
         </div>
+
 
         <!-- alert -->
         <div
@@ -406,9 +406,11 @@
         // Fungsi untuk menampilkan modal konfirmasi penghapusan berita
         function showDeleteNewsConfirmModal(newsId) {
             const deleteNewsConfirmModal = document.getElementById('deleteNewsConfirmModal');
-            const deleteNewsIdInput = document.getElementById('deleteNewsIdInput');
+            const deleteNewsForm = document.getElementById('deleteNewsForm');
 
-            deleteNewsIdInput.value = newsId; // Set ID berita ke hidden input di form modal
+            // Set action form agar sesuai dengan route /admin/berita/delete/:beritaId
+            deleteNewsForm.action = `/admin/berita/delete/${newsId}`;
+
             deleteNewsConfirmModal.style.display = 'block'; // Tampilkan modal
         }
 

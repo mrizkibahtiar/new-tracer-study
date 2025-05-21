@@ -165,10 +165,11 @@
                                             data-content="<%= item.content %>"
                                             data-featuredImage="<%= item.featuredImage %>">Edit</button>
 
-                                        <form action="/admin/lowongan/delete/<%= item._id %>" method="post">
-                                            <button
-                                                style="background-color: #dc2626;color: white; padding: 0.5rem 1rem; border-radius: 0.375rem; cursor: pointer;">Delete</button>
-                                        </form>
+                                        <button type="button"
+                                            style="background-color: #dc2626; color: white; padding: 0.5rem 1rem; border-radius: 0.375rem; cursor: pointer;"
+                                            onclick="showDeleteLowonganConfirmModal('<%= item._id %>')">
+                                            Delete
+                                        </button>
                                     </div>
                                 </div>
 
@@ -259,6 +260,22 @@
                         <button type="submit"
                             style="background-color: #4CAF50; color: white; border: none; padding: 0.7rem 1.2rem; border-radius: 0.7rem; cursor: pointer; font-size: 1.2rem;">Simpan</button>
                     </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- modal konfirmasi hapus -->
+        <div id="deleteLowonganConfirmModal"
+            style="display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);">
+            <div
+                style="background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 400px; border-radius: 0.7rem; text-align: center;">
+                <h3 style="font-size: 1.5rem; margin-bottom: 15px; font-weight: 700;">Konfirmasi Penghapusan Berita</h3>
+                <p style="margin-bottom: 20px;">Apakah Anda yakin ingin menghapus berita ini?</p>
+                <form id="deleteLowonganForm" method="post" action="">
+                    <button type="submit"
+                        style="background-color: #f44336; color: white; border: none; padding: 0.7rem 1.2rem; border-radius: 0.7rem; cursor: pointer; font-size: 1.1rem; margin-right: 10px;">Hapus</button>
+                    <button type="button" onclick="closeDeleteLowonganConfirmModal()"
+                        style="background-color: #ccc; color: black; border: none; padding: 0.7rem 1.2rem; border-radius: 0.7rem; cursor: pointer; font-size: 1.1rem;">Batal</button>
                 </form>
             </div>
         </div>
@@ -379,6 +396,33 @@
                     modal.style.display = "none";
                 }
             });
+        });
+    </script>
+
+    <!-- modal konfirmasi hapus -->
+    <script>
+        // Fungsi untuk menampilkan modal konfirmasi penghapusan lowongan
+        function showDeleteLowonganConfirmModal(lowonganId) {
+            const deleteLowonganConfirmModal = document.getElementById('deleteLowonganConfirmModal');
+            const deleteLowonganForm = document.getElementById('deleteLowonganForm');
+
+            // Set action form agar sesuai dengan route /admin/lowongan/delete/:lowonganId
+            deleteLowonganForm.action = `/admin/lowongan/delete/${lowonganId}`;
+
+            deleteLowonganConfirmModal.style.display = 'block'; // Tampilkan modal
+        }
+
+        // Fungsi untuk menutup modal konfirmasi penghapusan lowongan
+        function closeDeleteLowonganConfirmModal() {
+            document.getElementById('deleteLowonganConfirmModal').style.display = 'none'; // Sembunyikan modal
+        }
+
+        // Menutup modal konfirmasi lowongan saat klik di luar area modal
+        window.addEventListener('click', (event) => {
+            const deleteLowonganConfirmModal = document.getElementById('deleteLowonganConfirmModal');
+            if (event.target === deleteLowonganConfirmModal) {
+                deleteLowonganConfirmModal.style.display = 'none'; // Sembunyikan modal
+            }
         });
     </script>
 </body>
