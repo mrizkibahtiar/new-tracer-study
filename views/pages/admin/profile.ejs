@@ -133,48 +133,91 @@
                                     </p>
                                 </div>
 
-                                <div class="space-x-4">
-                                    <a href="/admin/edit-profil"
-                                        class="inline-block bg-white text-green-700 font-semibold px-4 py-2 rounded-lg shadow hover:bg-green-100 transition"
-                                        style="margin-right: 1rem;">
+                                <div style="display: flex; gap: 1rem;">
+                                    <button class="cursor-pointer" id="editProfilBtn"
+                                        style="display: inline-block; background-color: #fff; color: #16a34a; font-weight: 600; padding: 0.5rem 1rem; border-radius: 0.5rem; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.05); transition: background-color 0.3s ease;"
+                                        data-nama="<%= admin.nama %>" data-email="<%= admin.email %>">
                                         Edit Profil
-                                    </a>
-                                    <a href="/admin/ganti-password"
-                                        class="inline-block bg-white text-green-700 font-semibold px-4 py-2 rounded-lg shadow hover:bg-green-100 transition">
+                                    </button>
+                                    <button class="cursor-pointer" id="gantiPasswordBtn"
+                                        style="display: inline-block; background-color: #fff; color: #16a34a; font-weight: 600; padding: 0.5rem 1rem; border-radius: 0.5rem; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.05); transition: background-color 0.3s ease;">
                                         Ganti Password
-                                    </a>
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </main>
 
-        <!-- modal detail -->
-        <div id="modalSaran"
+        <!-- modal edit profil -->
+        <div id="modalEditProfil"
             style="display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);">
             <div
-                style="background-color: #fefefe; margin: 10% auto; padding: 25px; border: 1px solid #888; width: 80%; max-width: 600px; font-size: 1.1rem;">
-                <span id="modal-close"
+                style="background-color: #fefefe; margin: 10% auto; padding: 25px; border: 1px solid #888; width: 80%; max-width: 600px; font-size: 1.1rem; border-radius: 0.7rem;">
+                <span id="closeEditProfilModalBtn"
                     style="color: #aaa; float: right; font-size: 34px; font-weight: bold; cursor: pointer;">&times;</span>
-                <h2 id="modal-title" style="font-size: 1.8rem; margin-bottom: 15px; font-weight: 700;">Detail Saran</h2>
-                <div id="modal-content">
-                    <p id="modal-tanggal" class="text-xl text-gray-500">
+                <h2 style="font-size: 1.8rem; margin-bottom: 15px;">Edit Profil</h2>
+                <form id="formEditProfil" method="post" action="/admin/update-profil" style="font-size: 1.1rem;">
+                    <input type="hidden" id="editProfilId" name="id">
+                    <div style="margin-bottom: 15px;">
+                        <label for="editNama" style="font-size: 1.2rem;">Nama:</label><br>
+                        <input type="text" id="editNama" name="nama" required
+                            style="width: 100%; padding: 0.7rem; margin-top: 5px; margin-bottom: 10px; box-sizing: border-box; font-size: 1.1rem; border: 1px solid #888; border-radius: 0.7rem;"
+                            placeholder="Masukkan nama">
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <label for="editEmail" style="font-size: 1.2rem;">Email:</label><br>
+                        <input type="email" id="editEmail" name="email" required
+                            style="width: 100%; padding: 0.7rem; margin-top: 5px; margin-bottom: 10px; box-sizing: border-box; font-size: 1.1rem; border: 1px solid #888; border-radius: 0.7rem;"
+                            placeholder="Masukkan email">
+                    </div>
+                    <div style="text-align: right;">
+                        <button type="submit"
+                            style="background-color: #4CAF50; color: white; border: none; padding: 0.7rem 1.2rem; border-radius: 0.7rem; cursor: pointer; font-size: 1.2rem;">Simpan</button>
+                        <button type="button" id="batalEditProfilModalBtn"
+                            style="background-color: #f44336; color: white; border: none; padding: 0.7rem 1.2rem; border-radius: 0.7rem; cursor: pointer; font-size: 1.2rem; margin-left: 0.5rem;">Batal</button>
+                    </div>
+                </form>
+            </div>
+        </div>
 
-                    </p>
-                    <p id="modal-nama" class="text-xl text-gray-500">
-
-                    </p>
-                    <p id="modal-email" class="text-xl text-gray-500">
-
-                    </p>
-                    <p id="modal-saran" class="text-xl text-gray-700" style="white-space: pre-wrap;">
-
-                    </p>
-                </div>
+        <!-- modal ganti password -->
+        <div id="modalGantiPassword"
+            style="display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);">
+            <div
+                style="background-color: #fefefe; margin: 10% auto; padding: 25px; border: 1px solid #888; width: 80%; max-width: 600px; font-size: 1.1rem; border-radius: 0.7rem;">
+                <span id="closeGantiPasswordModalBtn"
+                    style="color: #aaa; float: right; font-size: 34px; font-weight: bold; cursor: pointer;">&times;</span>
+                <h2 style="font-size: 1.8rem; margin-bottom: 15px;">Ganti Password</h2>
+                <form id="formGantiPassword" method="post" action="/admin/update-password" style="font-size: 1.1rem;">
+                    <div style="margin-bottom: 15px;">
+                        <label for="oldPassword" style="font-size: 1.2rem;">Password Lama:</label><br>
+                        <input type="password" id="oldPassword" name="oldPassword" required
+                            style="width: 100%; padding: 0.7rem; margin-top: 5px; margin-bottom: 10px; box-sizing: border-box; font-size: 1.1rem; border: 1px solid #888; border-radius: 0.7rem;"
+                            placeholder="Masukkan password lama">
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <label for="newPassword" style="font-size: 1.2rem;">Password Baru:</label><br>
+                        <input type="password" id="newPassword" name="newPassword" required
+                            style="width: 100%; padding: 0.7rem; margin-top: 5px; margin-bottom: 10px; box-sizing: border-box; font-size: 1.1rem; border: 1px solid #888; border-radius: 0.7rem;"
+                            placeholder="Masukkan password baru">
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <label for="confirmNewPassword" style="font-size: 1.2rem;">Konfirmasi Password Baru:</label><br>
+                        <input type="password" id="confirmNewPassword" name="confirmNewPassword" required
+                            style="width: 100%; padding: 0.7rem; margin-top: 5px; margin-bottom: 10px; box-sizing: border-box; font-size: 1.1rem; border: 1px solid #888; border-radius: 0.7rem;"
+                            placeholder="Konfirmasi password baru">
+                    </div>
+                    <div style="text-align: right;">
+                        <button type="submit"
+                            style="background-color: #4CAF50; color: white; border: none; padding: 0.7rem 1.2rem; border-radius: 0.7rem; cursor: pointer; font-size: 1.2rem;">Ganti
+                            Password</button>
+                        <button type="button" id="batalGantiPasswordModalBtn"
+                            style="background-color: #f44336; color: white; border: none; padding: 0.7rem 1.2rem; border-radius: 0.7rem; cursor: pointer; font-size: 1.2rem; margin-left: 0.5rem;">Batal</button>
+                    </div>
+                </form>
             </div>
         </div>
 
@@ -225,38 +268,81 @@
     </script>
 
     <script>
-        function showSaranDetail(el) {
-            const modal = document.getElementById("modalSaran");
-            const modalNama = document.getElementById("modal-nama");
-            const modalEmail = document.getElementById("modal-email");
-            const modalSaranText = document.getElementById("modal-saran");
-            const modalTanggal = document.getElementById("modal-tanggal");
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Elemen untuk Modal Edit Profil ---
+            const editProfilBtn = document.getElementById('editProfilBtn');
+            const modalEditProfil = document.getElementById('modalEditProfil');
+            const closeEditProfilModalBtn = document.getElementById('closeEditProfilModalBtn');
+            const batalEditProfilModalBtn = document.getElementById('batalEditProfilModalBtn');
+            const formEditProfil = document.getElementById('formEditProfil');
+            const editNamaInput = document.getElementById('editNama');
+            const editEmailInput = document.getElementById('editEmail');
+            const editProfilIdInput = document.getElementById('editProfilId'); // Hidden ID input
 
-            const nama = el.getAttribute("data-nama");
-            const email = el.getAttribute("data-email");
-            const saran = el.getAttribute("data-saran");
-            const tanggal = el.getAttribute("data-tanggal");
+            // --- Elemen untuk Modal Ganti Password ---
+            const gantiPasswordBtn = document.getElementById('gantiPasswordBtn');
+            const modalGantiPassword = document.getElementById('modalGantiPassword');
+            const closeGantiPasswordModalBtn = document.getElementById('closeGantiPasswordModalBtn');
+            const batalGantiPasswordModalBtn = document.getElementById('batalGantiPasswordModalBtn');
+            const formGantiPassword = document.getElementById('formGantiPassword');
 
+            // --- Event Listeners untuk Modal Edit Profil ---
+            if (editProfilBtn) {
+                editProfilBtn.addEventListener('click', () => {
+                    // Mengisi form dengan data dari data-attributes tombol
+                    editNamaInput.value = editProfilBtn.dataset.nama || '';
+                    editEmailInput.value = editProfilBtn.dataset.email || '';
+                    // Anda mungkin perlu ID pengguna untuk update di backend
+                    // Asumsi ID pengguna ada di suatu tempat, misalnya di data-id tombol atau dari sesi
+                    editProfilIdInput.value = editProfilBtn.dataset.id || ''; // Pastikan data-id ada di tombol jika diperlukan
 
-            modalNama.innerHTML = "<b>Nama :</b> " + nama;
-            modalEmail.innerHTML = "<b>Email :</b> " + email;
-            modalSaranText.innerHTML = "<b>Saran :</b> " + saran;
-            modalTanggal.innerHTML = "<b>Tanggal :</b> " + tanggal;
-
-
-
-            modal.style.display = "block";
-        }
-
-        document.getElementById('modal-close').onclick = function () {
-            document.getElementById('modalSaran').style.display = "none";
-        }
-
-        window.onclick = function (event) {
-            if (event.target == document.getElementById('modalSaran')) {
-                document.getElementById('modalSaran').style.display = "none";
+                    modalEditProfil.style.display = 'block';
+                });
             }
-        }
+
+            if (closeEditProfilModalBtn) {
+                closeEditProfilModalBtn.addEventListener('click', () => {
+                    modalEditProfil.style.display = 'none';
+                });
+            }
+
+            if (batalEditProfilModalBtn) {
+                batalEditProfilModalBtn.addEventListener('click', () => {
+                    modalEditProfil.style.display = 'none';
+                });
+            }
+
+            // --- Event Listeners untuk Modal Ganti Password ---
+            if (gantiPasswordBtn) {
+                gantiPasswordBtn.addEventListener('click', () => {
+                    modalGantiPassword.style.display = 'block';
+                    // Opsional: reset form password setiap kali modal dibuka
+                    formGantiPassword.reset();
+                });
+            }
+
+            if (closeGantiPasswordModalBtn) {
+                closeGantiPasswordModalBtn.addEventListener('click', () => {
+                    modalGantiPassword.style.display = 'none';
+                });
+            }
+
+            if (batalGantiPasswordModalBtn) {
+                batalGantiPasswordModalBtn.addEventListener('click', () => {
+                    modalGantiPassword.style.display = 'none';
+                });
+            }
+
+            // --- Event Listener untuk menutup modal saat klik di luar area modal ---
+            window.addEventListener('click', (event) => {
+                if (event.target === modalEditProfil) {
+                    modalEditProfil.style.display = 'none';
+                }
+                if (event.target === modalGantiPassword) {
+                    modalGantiPassword.style.display = 'none';
+                }
+            });
+        });
     </script>
 </body>
 
