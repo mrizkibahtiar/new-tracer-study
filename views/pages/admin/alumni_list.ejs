@@ -218,6 +218,24 @@
                 </div>
             </div>
 
+            <!-- modal konfirmasi hapus -->
+            <div id="deleteConfirmModal"
+                style="display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);">
+                <div
+                    style="background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 400px; border-radius: 0.7rem; text-align: center;">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 15px; font-weight: 700;">Konfirmasi Penghapusan</h3>
+                    <p style="margin-bottom: 20px;">Apakah Anda yakin ingin menghapus alumni ini?</p>
+                    <form id="deleteForm" method="post" action="/admin/alumni-list/delete">
+                        <input type="hidden" name="nisn" id="deleteNisnInput">
+                        <button type="submit"
+                            style="background-color: #f44336; color: white; border: none; padding: 0.7rem 1.2rem; border-radius: 0.7rem; cursor: pointer; font-size: 1.1rem; margin-right: 10px;">Hapus</button>
+                        <button type="button" onclick="closeDeleteConfirmModal()"
+                            style="background-color: #ccc; color: black; border: none; padding: 0.7rem 1.2rem; border-radius: 0.7rem; cursor: pointer; font-size: 1.1rem;">Batal</button>
+                    </form>
+                </div>
+            </div>
+
+
             <!-- alert -->
             <div
                 style="position: fixed; top: 5rem; right: 0; left: 0; z-index: 50; display: flex; align-items: center; justify-content: center;">
@@ -355,12 +373,11 @@
                                                     >
                                                         Edit
                                                     </button>
-                                                    <form method="post" action="/admin/alumni-list/delete" style="display: inline-block;">
-                                                        <input type="hidden" name="nisn" value="${nisn}">
-                                                        <button type="submit" style="background-color: #f44336; color: white; border: none; padding: 0.2rem 0.5rem; border-radius: 10px; cursor: pointer; font-size: 1.2rem;">
-                                                            Delete
-                                                        </button>
-                                                    </form>
+                                                    <button type="button" 
+                                                        style="background-color: #f44336; color: white; border: none; padding: 0.2rem 0.5rem; border-radius: 10px; cursor: pointer; font-size: 1.2rem;"
+                                                        onclick="showDeleteConfirmModal('${nisn}')">
+                                                        Delete
+                                                    </button>
                                                 </div>
                                             `);
                                         },
@@ -456,6 +473,29 @@
                 alertError.remove();
             }, 2000);
         }
+    </script>
+    <script>
+        // Fungsi untuk menampilkan modal konfirmasi penghapusan
+        function showDeleteConfirmModal(nisn) {
+            const deleteConfirmModal = document.getElementById('deleteConfirmModal');
+            const deleteNisnInput = document.getElementById('deleteNisnInput');
+
+            deleteNisnInput.value = nisn; // Set NISN ke hidden input di form modal
+            deleteConfirmModal.style.display = 'block'; // Tampilkan modal
+        }
+
+        // Fungsi untuk menutup modal konfirmasi penghapusan
+        function closeDeleteConfirmModal() {
+            document.getElementById('deleteConfirmModal').style.display = 'none'; // Sembunyikan modal
+        }
+
+        // Menutup modal konfirmasi saat klik di luar area modal
+        window.addEventListener('click', (event) => {
+            const deleteConfirmModal = document.getElementById('deleteConfirmModal');
+            if (event.target === deleteConfirmModal) {
+                deleteConfirmModal.style.display = 'none'; // Sembunyikan modal
+            }
+        });
     </script>
 
 </body>
