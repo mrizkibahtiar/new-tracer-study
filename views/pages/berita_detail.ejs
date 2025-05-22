@@ -26,6 +26,18 @@
     <link href="../assets/landing/libs/%40iconscout/unicons/css/line.css" type="text/css" rel="stylesheet" />
     <link href="../assets/landing/libs/%40mdi/font/css/materialdesignicons.min.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="../assets/landing/css/tailwind.min.css" />
+
+    <style>
+        @media (min-width: 768px) {
+            .footer-flex {
+                flex-direction: row;
+            }
+
+            .footer-menu {
+                margin-left: 200px;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -123,105 +135,103 @@
 
             <footer class="relative bg-slate-900 dark:bg-slate-800 mt-24">
                 <div class="container relative">
-                    <div class="grid grid-cols-1">
-                        <div class="relative py-16">
-                            <div class="relative w-full">
+                    <div class="relative py-16">
+                        <!-- Subscribe -->
+                        <div class="relative w-full">
 
-                                <div class="grid md:grid-cols-12 grid-cols-1 gap-[30px] mt-14">
-                                    <div class="lg:col-span-4 md:col-span-12">
-                                        <a href="#" class="text-[22px] focus:outline-none">
-                                            <img src="../assets/landing/images/logo-light.png" alt="">
-                                        </a>
-                                        <p class="mt-6 text-gray-300">Platform yang memfasilitasi para alumni dalam
-                                            memperbarui
-                                            informasi terkait karir dan
-                                            pendidikan.</p>
+                            <div class="flex flex-col footer-flex gap-[30px] mt-14">
+                                <!-- Logo & Deskripsi -->
+                                <div style="flex: 1;">
+                                    <a href="#" class="text-[22px] focus:outline-none">
+                                        <img src="assets/landing/images/logo-light.png" alt="Logo" class="w-32">
+                                    </a>
+                                    <p class="mt-6 text-gray-300">
+                                        Platform yang memfasilitasi para alumni dalam memperbarui informasi terkait
+                                        karir dan
+                                        pendidikan.
+                                    </p>
+                                </div>
 
+                                <!-- Menu -->
+                                <div style="flex: 1;" class="footer-menu">
+                                    <h5 class="tracking-[1px] text-gray-100 font-semibold ">Menu</h5>
+                                    <ul class="list-none footer-list mt-6">
+                                        <li><a href="/"
+                                                class="text-slate-300 hover:text-slate-400 duration-500 ease-in-out">
+                                                <i class="uil uil-angle-right-b me-1"></i>Home</a></li>
+                                        <li class="mt-[10px]"><a href="/berita"
+                                                class="text-slate-300 hover:text-slate-400 duration-500 ease-in-out">
+                                                <i class="uil uil-angle-right-b me-1"></i>Berita</a></li>
+                                        <li class="mt-[10px]"><a href="/lowongan"
+                                                class="text-slate-300 hover:text-slate-400 duration-500 ease-in-out">
+                                                <i class="uil uil-angle-right-b me-1"></i>Lowongan</a></li>
+                                        <li class="mt-[10px]"><a href="/saran"
+                                                class="text-slate-300 hover:text-slate-400 duration-500 ease-in-out">
+                                                <i class="uil uil-angle-right-b me-1"></i>Saran</a></li>
+                                    </ul>
+                                </div>
+
+                                <!-- Kontak -->
+                                <div style="flex: 1;">
+                                    <h5 class="tracking-[1px] text-gray-100 font-semibold">Contact Details</h5>
+
+                                    <div class="flex mt-6">
+                                        <i data-feather="map-pin" class="size-5 text-green-600 me-3"></i>
+                                        <div>
+                                            <h6 class="text-gray-300 mb-2">Jalan Anggur, RT.8/RW.2,<br> Kembangsawit,
+                                                Rejosari,<br>Kebon Sari, Madiun Regency, East Java 63173</h6>
+                                            <a href="https://www.google.com/maps/embed?pb=..." data-type="iframe"
+                                                class="text-green-600 hover:text-green-700 duration-500 ease-in-out lightbox">View
+                                                on Google map</a>
+                                        </div>
                                     </div>
 
-                                    <div class="lg:col-span-4 md:col-span-4">
-                                        <h5 class="tracking-[1px] text-gray-100 font-semibold">Menu</h5>
-                                        <ul class="list-none footer-list mt-6">
-                                            <li><a href="/"
-                                                    class="text-slate-300 hover:text-slate-400 duration-500 ease-in-out"><i
-                                                        class="uil uil-angle-right-b me-1"></i>Home</a></li>
-                                            <li class="mt-[10px]"><a href="/berita"
-                                                    class="text-slate-300 hover:text-slate-400 duration-500 ease-in-out"><i
-                                                        class="uil uil-angle-right-b me-1"></i>Berita</a></li>
-                                            <li class="mt-[10px]"><a href="/lowongan"
-                                                    class="text-slate-300 hover:text-slate-400 duration-500 ease-in-out"><i
-                                                        class="uil uil-angle-right-b me-1"></i>Lowongan</a></li>
-                                            <li class="mt-[10px]"><a href="/saran"
-                                                    class="text-slate-300 hover:text-slate-400 duration-500 ease-in-out"><i
-                                                        class="uil uil-angle-right-b me-1"></i> Saran</a></li>
-                                        </ul>
-                                    </div><!--end col-->
-
-                                    <div class="lg:col-span-4 md:col-span-4">
-                                        <h5 class="tracking-[1px] text-gray-100 font-semibold">Contact Details</h5>
-
-
-                                        <div class="flex mt-6">
-                                            <i data-feather="map-pin" class="size-5 text-green-600 me-3"></i>
-                                            <div class="">
-                                                <h6 class="text-gray-300 mb-2">Jalan Anggur, RT.8/RW.2,<br>
-                                                    Kembangsawit,
-                                                    Rejosari,<br>
-                                                    Kebon Sari, Madiun Regency, East Java 63173</h6>
-                                                <a href="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3953.60992800336!2d111.4765123750043!3d-7.72493229229321!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e79981ca25d32a5%3A0xece99a71c6c89e69!2sPondok%20Pesantren%20Subulul%20Huda!5e0!3m2!1sid!2sid!4v1747219372907!5m2!1sid!2sid"
-                                                    data-type="iframe"
-                                                    class="text-green-600 hover:text-green-700 duration-500 ease-in-out lightbox">View
-                                                    on Google map</a>
-                                            </div>
+                                    <div class="flex mt-6">
+                                        <i data-feather="mail" class="size-5 text-green-600 me-3"></i>
+                                        <div>
+                                            <a href="mailto:smkbpsubululhuda@gmail.com"
+                                                class="text-slate-300 hover:text-slate-400 duration-500 ease-in-out">smkbpsubululhuda@gmail.com</a>
                                         </div>
+                                    </div>
 
-                                        <div class="flex mt-6">
-                                            <i data-feather="mail" class="size-5 text-green-600 me-3"></i>
-                                            <div class="">
-                                                <a href="mailto:smkbpsubululhuda@gmail.com"
-                                                    class="text-slate-300 hover:text-slate-400 duration-500 ease-in-out">smkbpsubululhuda@gmail.com</a>
-                                            </div>
+                                    <div class="flex mt-6">
+                                        <i data-feather="phone" class="size-5 text-green-600 me-3"></i>
+                                        <div>
+                                            <a href="tel:+152534-468-854"
+                                                class="text-slate-300 hover:text-slate-400 duration-500 ease-in-out">(0351)
+                                                366704</a>
                                         </div>
-
-                                        <div class="flex mt-6">
-                                            <i data-feather="phone" class="size-5 text-green-600 me-3"></i>
-                                            <div class="">
-                                                <a href="tel:+152534-468-854"
-                                                    class="text-slate-300 hover:text-slate-400 duration-500 ease-in-out">(0351)
-                                                    366704</a>
-                                            </div>
-                                        </div>
-                                    </div><!--end col-->
-                                </div><!--end grid-->
-                            </div>
-                            <!-- Subscribe -->
+                                    </div>
+                                </div>
+                            </div><!-- end flex -->
                         </div>
+                        <!-- Subscribe -->
                     </div>
                 </div>
 
-
                 <div class="py-[30px] px-0 border-t border-gray-800 dark:border-gray-700">
                     <div class="container relative text-center">
-                        <div class="grid md:grid-cols-2 items-center gap-6">
+                        <div class="flex flex-col footer-flex items-center justify-between gap-6">
                             <div class="md:text-start text-center">
                                 <p class="mb-0 text-gray-300">©
                                     <script>document.write(new Date().getFullYear())</script> SMK BP Subulul Huda
                                 </p>
                             </div>
 
-                            <ul class="list-none md:text-end text-center">
-                                <li class="inline"><a href="https://www.facebook.com/shreethemes" target="_blank"
-                                        class="btn btn-icon btn-sm text-gray-400 hover:text-white border border-gray-800 dark:border-gray-700 rounded-md hover:border-green-600 dark:hover:border-green-600 hover:bg-green-600 dark:hover:bg-green-600"><i
-                                            data-feather="facebook" class="size-4"></i></a></li>
-                                <li class="inline"><a href="https://www.instagram.com/shreethemes/" target="_blank"
-                                        class="btn btn-icon btn-sm text-gray-400 hover:text-white border border-gray-800 dark:border-gray-700 rounded-md hover:border-green-600 dark:hover:border-green-600 hover:bg-green-600 dark:hover:bg-green-600"><i
-                                            data-feather="instagram" class="size-4"></i></a></li>
-                                <li class="inline"><a href="mailto:support@shreethemes.in"
-                                        class="btn btn-icon btn-sm text-gray-400 hover:text-white border border-gray-800 dark:border-gray-700 rounded-md hover:border-green-600 dark:hover:border-green-600 hover:bg-green-600 dark:hover:bg-green-600"><i
-                                            data-feather="mail" class="size-4"></i></a></li>
-                            </ul><!--end icon-->
-                        </div><!--end grid-->
-                    </div><!--end container-->
+                            <ul class="list-none flex justify-center md:justify-end gap-2">
+                                <li><a href="https://www.facebook.com/SMKBPSubululHudaKembangsawit/?locale=id_ID"
+                                        target="_blank"
+                                        class="btn btn-icon btn-sm text-gray-400 hover:text-white border border-gray-800 dark:border-gray-700 rounded-md hover:border-green-600 dark:hover:border-green-600 hover:bg-green-600 dark:hover:bg-green-600">
+                                        <i data-feather="facebook" class="size-4"></i></a></li>
+                                <li><a href="https://www.instagram.com/smksubululhuda" target="_blank"
+                                        class="btn btn-icon btn-sm text-gray-400 hover:text-white border border-gray-800 dark:border-gray-700 rounded-md hover:border-green-600 dark:hover:border-green-600 hover:bg-green-600 dark:hover:bg-green-600">
+                                        <i data-feather="instagram" class="size-4"></i></a></li>
+                                <li><a href="mailto:smkbpsubululhuda@gmail.com"
+                                        class="btn btn-icon btn-sm text-gray-400 hover:text-white border border-gray-800 dark:border-gray-700 rounded-md hover:border-green-600 dark:hover:border-green-600 hover:bg-green-600 dark:hover:bg-green-600">
+                                        <i data-feather="mail" class="size-4"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </footer>
 
