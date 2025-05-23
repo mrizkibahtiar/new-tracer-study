@@ -34,6 +34,52 @@
             .footer-menu {
                 margin-left: 200px;
             }
+
+            /* md breakpoint */
+            .md-text-start {
+                text-align: left !important;
+            }
+
+            .container-custom {
+                padding-right: 1rem;
+                /* md:mx-4 */
+                padding-left: 1rem;
+                /* md:mx-4 */
+            }
+
+            .container-custom h1,
+            .container-custom p,
+            .container-custom a {
+                margin-left: 150px;
+            }
+        }
+
+        .container-custom {
+            width: 100%;
+            margin-right: auto;
+            margin-left: auto;
+            padding-right: 1rem;
+            /* md:mx-4 mx-2 */
+            padding-left: 1rem;
+            /* md:mx-4 mx-2 */
+        }
+
+        @media (min-width: 1024px) {
+
+            /* lg breakpoint */
+            .lg-text-6xl {
+                font-size: 3.75rem !important;
+                /* Tailwind text-6xl */
+            }
+
+            .lg-leading-normal {
+                line-height: normal !important;
+            }
+        }
+
+        .btn-green-hover:hover {
+            background-color: #047857 !important;
+            /* green-700 hex */
         }
     </style>
 </head>
@@ -89,24 +135,29 @@
     <!-- Hero Start -->
     <section class="relative mt-20">
         <div class="container-fluid md:mx-4 mx-2">
-            <div class="relative pt-40 pb-52 table w-full rounded-2xl shadow-md overflow-hidden" id="home"
-                style="background-image: url('/assets/landing/images/bg-hero.jpg'); background-size: cover; background-position: center;">
-                <div class="absolute inset-0 bg-black/60"></div>
-                <div class="container relative">
-                    <div class="grid grid-cols-1">
-                        <div class="md:text-start text-center">
-                            <h1 class="font-bold text-white lg:leading-normal leading-normal text-5xl lg:text-6xl mb-6">
-                                Selamat Datang di <br> <span class="text-green-600">TRACER STUDY</span></h1>
-                            <p class="text-white/70 text-2xl max-w-xl">Platform yang memfasilitasi para alumni SMK BP
-                                Subulul
-                                Huda dalam memperbarui
-                                informasi terkait karir dan
-                                pendidikan.</p>
-                            <div class="mt-4">
-                                <a href="/loginPage"
-                                    class="btn bg-green-600 hover:bg-green-700 text-white rounded-md mt-3"
-                                    style="font-size: 1.5rem;">Masuk
-                                </a>
+            <div class="relative" style="margin-top: 5rem;">
+                <div class="container-custom" style="margin-right: auto; margin-left: auto;">
+                    <div style="position: relative; padding-top: 10rem; padding-bottom: 13rem; display: table; width: 100%; border-radius: 1rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); overflow: hidden; background-image: url('/assets/landing/images/bg-hero.jpg'); background-size: cover; background-position: center;"
+                        id="home">
+                        <div
+                            style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; background-color: rgba(0, 0, 0, 0.6);">
+                        </div>
+                        <div class="container-custom" style="position: relative;">
+                            <div style="display: grid; grid-template-columns: repeat(1, minmax(0, 1fr));">
+                                <div class="text-center md-text-start">
+                                    <h1 class="font-bold text-white lg-leading-normal leading-normal lg-text-6xl"
+                                        style="font-size: 3rem; color: #fff; line-height: normal; margin-bottom: 1.5rem;">
+                                        Selamat Datang <br>di <span style="color: #16a34a;">TRACER STUDY</span>
+                                    </h1>
+                                    <p style="color: rgba(255, 255, 255, 0.7); font-size: 1.5rem; max-width: 36rem;">
+                                        Platform yang memfasilitasi para alumni SMK BP
+                                        Subulul Huda dalam memperbarui informasi terkait karir dan pendidikan.</p>
+                                    <div style="margin-top: 1rem;">
+                                        <a href="/loginPage" class="btn-green-hover"
+                                            style="display: inline-block; background-color: #16a34a; color: #fff; padding: 0.75rem 1.25rem; border-radius: 0.375rem; margin-top: 0.75rem; font-size: 1.5rem; text-decoration: none;">Masuk
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
