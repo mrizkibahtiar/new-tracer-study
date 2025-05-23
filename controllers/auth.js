@@ -1,44 +1,42 @@
 const Alumni = require('../models/alumni'); // Pastikan path model Alumni benar
 const Admin = require('../models/admin');   // Pastikan path model Admin benar
 const bcrypt = require('bcrypt');
-const request = require('request');
-const RECAPTCHA_SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY;
 
 module.exports = {
     login: async (req, res) => {
-        const { nisn, 'g-recaptcha-response': recaptchaResponse } = req.body;
+        const { nisn, password } = req.body;
 
-        // Verifikasi reCAPTCHA
-        if (!recaptchaResponse) {
-            return res.render('pages/login', { error: 'Mohon verifikasi bahwa Anda bukan robot.' });
+        // Pastikan NISN dan Password tidak kosong
+        if (!nisn || !password) {
+            return res.render('pages/login', { error: 'NISN dan Password harus diisi.' });
         }
 
-        const verificationUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${RECAPTCHA_SECRET_KEY}&response=${recaptchaResponse}&remoteip=${req.ip}`;
+        try {
+            // Cari alumni berdasarkan NISN
+            const alumni = await Alumni.findOne({ nisn: nisn.trim() });
 
-        request(verificationUrl, async (error, response, body) => {
-            if (error) {
-                console.error('reCAPTCHA verification error:', error);
-                return res.render('pages/login', { error: 'Terjadi kesalahan saat memverifikasi reCAPTCHA.' });
+            // Jika alumni tidak ditemukan
+            if (!alumni) {
+                return res.render('pages/login', { error: 'NISN atau password salah.' });
             }
 
-            const verificationData = JSON.parse(body);
+            // Jika alumni ditemukan, bandingkan password yang diinput dengan password terenkripsi di database
+            // Asumsi di model Alumni, field password adalah 'password' dan sudah terenkripsi
+            const isMatch = await bcrypt.compare(password, alumni.password);
 
-            if (verificationData.success) {
-                // CAPTCHA valid, lanjutkan dengan logika login alumni
-                const alumni = await Alumni.findOne({ nisn: nisn.trim() });
-
-                if (alumni) {
-                    req.session.user = { ...alumni.toObject(), role: 'alumni' };
-                    req.session.save();
-                    return res.redirect('/alumni');
-                } else {
-                    return res.render('pages/login', { error: 'Alumni dengan NISN tersebut tidak ditemukan.' });
-                }
+            if (isMatch) {
+                // Password cocok, login berhasil
+                req.session.user = { ...alumni.toObject(), role: 'alumni' };
+                req.session.save(); // Pastikan session disimpan
+                return res.redirect('/alumni');
             } else {
-                // CAPTCHA tidak valid
-                return res.render('pages/login', { error: 'Verifikasi reCAPTCHA gagal. Mohon coba lagi.' });
+                // Password tidak cocok
+                return res.render('pages/login', { error: 'NISN atau password salah.' });
             }
-        });
+        } catch (error) {
+            console.error('Login error:', error);
+            return res.render('pages/login', { error: 'Terjadi kesalahan pada server saat mencoba login.' });
+        }
     },
     AdminLogin: async (req, res) => {
         const { email, password } = req.body;
