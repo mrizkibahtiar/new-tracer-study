@@ -418,7 +418,11 @@
             modalTitle.textContent = "Edit Data Alumni";
             namaInput.value = nama;
             nisnInput.value = nisn;
-            jenisKelaminSelect.value = jenisKelamin;
+            if (jenisKelamin.includes("Laki") || jenisKelamin === "Laki-laki") {
+                jenisKelaminSelect.value = "Laki-laki";
+            } else if (jenisKelamin.includes("Perempuan") || jenisKelamin === "Perempuan") {
+                jenisKelaminSelect.value = "Perempuan";
+            }
             editNisnHidden.value = nisn; // Set nilai input hidden untuk update (NISN lama)
 
             modal.style.display = "block";
