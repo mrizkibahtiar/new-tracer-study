@@ -18,6 +18,28 @@
 
     <!-- grid cdn -->
     <link href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css" rel="stylesheet" />
+
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <style>
+        /* Internal CSS untuk ikon mata */
+        .password-input-container {
+            position: relative;
+        }
+
+        .eye-icon {
+            position: absolute;
+            right: 1rem;
+            /* Sesuaikan posisi horizontal ikon */
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #6b7280;
+            /* Warna abu-abu */
+            font-size: 1.5rem;
+            /* Ukuran ikon */
+        }
+    </style>
 </head>
 
 <body>
@@ -144,12 +166,13 @@
             <!-- modal tambah -->
             <div id="tambahAlumniModal"
                 style="display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);">
-                <div
-                    style="background-color: #fefefe; margin: 10% auto; padding: 25px; border: 1px solid #888; width: 80%; max-width: 600px; font-size: 1.1rem;  border-radius: 0.7rem;">
+                <div id="tambahAlumniModalContent"
+                    style="background-color: #fefefe; margin: 10% auto; padding: 25px; border: 1px solid #888; width: 80%; max-width: 600px; font-size: 1.1rem; border-radius: 0.7rem;">
                     <span id="closeModalBtn"
                         style="color: #aaa; float: right; font-size: 34px; font-weight: bold; cursor: pointer;">&times;</span>
-                    <h2 style="font-size: 1.8rem; margin-bottom: 15px;">Tambah Data Alumni</h2>
+                    <h2 id="modalTitle" style="font-size: 1.8rem; margin-bottom: 15px;">Tambah Data Alumni</h2>
                     <form id="formTambahAlumni" style="font-size: 1.1rem;" method="post" action="/admin/alumni-list">
+                        <input type="hidden" id="editNisn" name="editNisn">
                         <div style="margin-bottom: 15px;">
                             <label for="nama" style="font-size: 1.2rem;">Nama:</label><br>
                             <input type="text" id="nama" name="nama"
@@ -170,6 +193,19 @@
                                 <option value="Perempuan">Perempuan</option>
                             </select>
                         </div>
+
+                        <div style="margin-bottom: 15px;">
+                            <label for="tambahPassword" style="font-size: 1.2rem;">Password:</label><br>
+                            <div class="password-input-container">
+                                <input type="password" id="tambahPassword" name="password"
+                                    style="width: 100%; padding: 0.7rem; margin-top: 5px; margin-bottom: 10px; box-sizing: border-box; font-size: 1.1rem; border: 1px solid #888; border-radius: 10px;"
+                                    placeholder="Masukkan password">
+                                <span class="material-symbols-rounded eye-icon" id="toggleTambahPasswordBtn">
+                                    visibility
+                                </span>
+                            </div>
+                        </div>
+
                         <div style="text-align: right;">
                             <button type="submit"
                                 style="background-color: #4CAF50; color: white; border: none; padding: 0.7rem 1.2rem; border-radius: 0.7rem; cursor: pointer; font-size: 1.2rem;">
@@ -464,6 +500,29 @@
                 tambahAlumniModal.style.display = "none";
             }
         }
+
+        // untuk icon mata di modal tambah
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggleTambahPasswordBtn = document.getElementById('toggleTambahPasswordBtn');
+            const tambahPasswordInput = document.getElementById('tambahPassword');
+
+            if (toggleTambahPasswordBtn && tambahPasswordInput) {
+                toggleTambahPasswordBtn.addEventListener('click', () => {
+                    // Toggle the type attribute
+                    const type = tambahPasswordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                    tambahPasswordInput.setAttribute('type', type);
+
+                    // Toggle the eye icon
+                    if (type === 'password') {
+                        toggleTambahPasswordBtn.textContent = 'visibility'; // Ikon untuk password tersembunyi
+                    } else {
+                        toggleTambahPasswordBtn.textContent = 'visibility_off'; // Ikon untuk password terlihat
+                    }
+                });
+            } else {
+                console.warn("Input password atau tombol toggle tidak ditemukan di modal tambah alumni.");
+            }
+        });
     </script>
     <script>
         const alertSuccess = document.querySelector('.alert-success');
