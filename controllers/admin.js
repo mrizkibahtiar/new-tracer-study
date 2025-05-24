@@ -93,9 +93,23 @@ module.exports = {
         }
     },
     storeAlumni: async function (req, res) {
-        const { nama, nisn, jenisKelamin } = req.body;
+        const { nama, nisn, jenisKelamin, password } = req.body; // Ambil password dari req.body
         console.log(req.body);
+
         try {
+            // Validasi input dasar
+            if (!nama || !nisn || !jenisKelamin || !password) {
+                const allAlumni = await Alumni.find({});
+                const allTracerStudy = await TracerStudy.find({});
+                return res.render('pages/admin/alumni_list', {
+                    error: 'Semua field (Nama, NISN, Jenis Kelamin, Password) harus diisi.',
+                    nama,
+                    nisn,
+                    alumni: allAlumni,
+                    tracerStudy: allTracerStudy
+                });
+            }
+
             // Validasi panjang NISN
             if (nisn.length < 10) {
                 const allAlumni = await Alumni.find({});
@@ -109,15 +123,21 @@ module.exports = {
                 });
             }
 
-            // Membuat objek untuk alumni
-            const alumniData = {
-                nisn: nisn.trim(),
-                nama: nama.trim(),
-                jenisKelamin: jenisKelamin.trim(),
-            };
+            // Validasi panjang Password (contoh minimal 6 karakter)
+            if (password.length < 6) {
+                const allAlumni = await Alumni.find({});
+                const allTracerStudy = await TracerStudy.find({});
+                return res.render('pages/admin/alumni_list', {
+                    error: 'Password harus terdiri dari minimal 6 karakter.',
+                    nama,
+                    nisn,
+                    alumni: allAlumni,
+                    tracerStudy: allTracerStudy
+                });
+            }
 
             // Mengecek apakah NISN sudah terdaftar
-            const existingAlumni = await Alumni.findOne({ nisn: alumniData.nisn });
+            const existingAlumni = await Alumni.findOne({ nisn: nisn.trim() });
             if (existingAlumni) {
                 const allAlumni = await Alumni.find({});
                 const allTracerStudy = await TracerStudy.find({});
@@ -129,6 +149,18 @@ module.exports = {
                     tracerStudy: allTracerStudy
                 });
             }
+
+            // Enkripsi password sebelum menyimpan
+            const salt = await bcrypt.genSalt(10);
+            const hashedPassword = await bcrypt.hash(password, salt);
+
+            // Membuat objek untuk alumni
+            const alumniData = {
+                nisn: nisn.trim(),
+                nama: nama.trim(),
+                jenisKelamin: jenisKelamin.trim(),
+                password: hashedPassword, // Tambahkan password yang sudah dienkripsi
+            };
 
             // Membuat alumni
             const newAlumni = await Alumni.create(alumniData);
@@ -165,7 +197,7 @@ module.exports = {
             console.error("Error creating alumni:", err); // Tambahkan logging error
             return res.render('pages/admin/alumni_list', {
                 alumni: allAlumni,
-                tracerStudy: dataTracerStudy,
+                tracerStudy: allTracerStudy, // Menggunakan allTracerStudy di sini
                 error: 'Terjadi kesalahan. Mohon coba lagi.',
                 nama,
                 nisn
