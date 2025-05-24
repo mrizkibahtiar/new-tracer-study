@@ -219,7 +219,7 @@
             <!-- modal edit -->
             <div id="editAlumniModal"
                 style="display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);">
-                <div
+                <div id="editAlumniModalContent"
                     style="background-color: #fefefe; margin: 10% auto; padding: 25px; border: 1px solid #888; width: 80%; max-width: 600px; font-size: 1.1rem; border-radius: 0.7rem;">
                     <span id="closeEditModalBtn"
                         style="color: #aaa; float: right; font-size: 34px; font-weight: bold; cursor: pointer;">&times;</span>
@@ -235,17 +235,31 @@
                         <div style="margin-bottom: 15px;">
                             <label for="editNisnInput" style="font-size: 1.2rem;">NISN:</label><br>
                             <input type="number" id="editNisnInput" name="nisn"
-                                style="width: 100%; padding: 0.7rem; margin-top: 5px; margin-bottom: 10px; box-sizing: border-box; font-size: 1.1rem; border: 1px solid #888;  border-radius: 10px;"
+                                style="width: 100%; padding: 0.7rem; margin-top: 5px; margin-bottom: 10px; box-sizing: border-box; font-size: 1.1rem; border: 1px solid #888; border-radius: 10px;"
                                 placeholder="masukkan NISN">
                         </div>
                         <div style=" margin-bottom: 15px;">
                             <label for="editJenisKelamin" style="font-size: 1.2rem;">Jenis Kelamin:</label><br>
                             <select id="editJenisKelamin" name="jenisKelamin"
-                                style="width: 100%; padding: 0.7rem; margin-top: 5px; margin-bottom: 10px; box-sizing: border-box; font-size: 1.1rem; border: 1px solid #888;  border-radius: 10px;">
+                                style="width: 100%; padding: 0.7rem; margin-top: 5px; margin-bottom: 10px; box-sizing: border-box; font-size: 1.1rem; border: 1px solid #888; border-radius: 10px;">
                                 <option value="Laki-laki">Laki-laki</option>
                                 <option value="Perempuan">Perempuan</option>
                             </select>
                         </div>
+
+                        <div style="margin-bottom: 15px;">
+                            <label for="editPassword" style="font-size: 1.2rem;">Password Baru (Kosongkan jika tidak
+                                ingin mengubah):</label><br>
+                            <div class="password-input-container">
+                                <input type="password" id="editPassword" name="password"
+                                    style="width: 100%; padding: 0.7rem; margin-top: 5px; margin-bottom: 10px; box-sizing: border-box; font-size: 1.1rem; border: 1px solid #888; border-radius: 10px;"
+                                    placeholder="Masukkan password baru">
+                                <span class="material-symbols-rounded eye-icon" id="toggleEditPasswordBtn">
+                                    visibility
+                                </span>
+                            </div>
+                        </div>
+
                         <div style="text-align: right;">
                             <button type="submit"
                                 style="background-color: #007bff; color: white; border: none; padding: 0.7rem 1.2rem; border-radius: 0.7rem; cursor: pointer; font-size: 1.2rem;">Update</button>
@@ -442,36 +456,72 @@
 
     <!-- logic button edit -->
     <script>
+        // Function to open the edit modal and populate it with alumni data
         function openEditModal(nisn, nama, jenisKelamin) {
             const modal = document.getElementById("editAlumniModal");
             const modalTitle = document.getElementById("editModalTitle");
             const namaInput = document.getElementById("editNama");
-            const nisnInput = document.getElementById("editNisnInput"); // Dapatkan elemen input NISN yang benar
+            const nisnInput = document.getElementById("editNisnInput");
             const jenisKelaminSelect = document.getElementById("editJenisKelamin");
-            const form = document.getElementById("formEditAlumni");
             const editNisnHidden = document.getElementById("editNisn");
+            const editPasswordInput = document.getElementById("editPassword"); // Ambil elemen password baru
 
             modalTitle.textContent = "Edit Data Alumni";
             namaInput.value = nama;
             nisnInput.value = nisn;
+            editNisnHidden.value = nisn; // Set the value of the hidden input for update (old NISN)
+
+            // Reset password field saat modal dibuka
+            if (editPasswordInput) {
+                editPasswordInput.value = '';
+                editPasswordInput.setAttribute('type', 'password'); // Pastikan type kembali ke password
+                const toggleBtn = document.getElementById('toggleEditPasswordBtn');
+                if (toggleBtn) toggleBtn.textContent = 'visibility'; // Pastikan ikon kembali ke visibility
+            }
+
+            // Pastikan nilai jenisKelamin sesuai persis dengan value di option, hilangkan spasi ekstra
             if (jenisKelamin.includes("Laki") || jenisKelamin === "Laki-laki") {
                 jenisKelaminSelect.value = "Laki-laki";
             } else if (jenisKelamin.includes("Perempuan") || jenisKelamin === "Perempuan") {
                 jenisKelaminSelect.value = "Perempuan";
             }
-            editNisnHidden.value = nisn; // Set nilai input hidden untuk update (NISN lama)
 
-            modal.style.display = "block";
+            modal.style.display = "block"; // Display the modal
         }
 
+        // Event listener for the close button inside the modal
         document.getElementById('closeEditModalBtn').onclick = function () {
-            document.getElementById('editAlumniModal').style.display = "none";
+            document.getElementById('editAlumniModal').style.display = "none"; // Hide the modal
         }
 
+        // Event listener for clicks outside the modal content
         document.getElementById("editAlumniModal").addEventListener("click", function (e) {
-            // Jika yang diklik adalah latar hitam (overlay), tutup modal
-            if (e.target === this) {
+            const modalContent = document.getElementById('editAlumniModalContent');
+            if (e.target === this || (modalContent && !modalContent.contains(e.target))) {
                 this.style.display = "none";
+            }
+        });
+
+        // *** SCRIPT BARU UNTUK TOGGLE PASSWORD DI MODAL EDIT ALUMNI ***
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggleEditPasswordBtn = document.getElementById('toggleEditPasswordBtn');
+            const editPasswordInput = document.getElementById('editPassword');
+
+            if (toggleEditPasswordBtn && editPasswordInput) {
+                toggleEditPasswordBtn.addEventListener('click', () => {
+                    // Toggle the type attribute
+                    const type = editPasswordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                    editPasswordInput.setAttribute('type', type);
+
+                    // Toggle the eye icon
+                    if (type === 'password') {
+                        toggleEditPasswordBtn.textContent = 'visibility'; // Ikon untuk password tersembunyi
+                    } else {
+                        toggleEditPasswordBtn.textContent = 'visibility_off'; // Ikon untuk password terlihat
+                    }
+                });
+            } else {
+                console.warn("Input password atau tombol toggle tidak ditemukan di modal edit alumni.");
             }
         });
     </script>
