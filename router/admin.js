@@ -14,7 +14,7 @@ router.route('/admin/alumni-list')
 
 router.get('/admin/alumni-list/:nisn', isAdmin, adminController.viewAlumniDetail);
 router.post('/admin/alumni-list/delete', isAdmin, adminController.deleteAlumni);
-router.post('/admin/alumni-list/edit', isAdmin, adminController.alumniUpdate);
+router.post('/admin/alumni-list/edit/:nisnLama', isAdmin, adminController.alumniUpdate);
 
 // Berita 
 router.route('/admin/berita')

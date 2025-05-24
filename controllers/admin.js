@@ -269,44 +269,64 @@ module.exports = {
             return res.redirect('/admin/alumni-list');
         }
     },
-
     alumniUpdate: async function (req, res) {
-        const { editNisn, nama, jenisKelamin, nisn: nisnBaru } = req.body; // Data dari form, termasuk editNisn sebagai NISN lama dan nisn sebagai NISN baru
+        const { nisnLama } = req.params; // Ambil NISN lama dari parameter URL
+        const { nama, jenisKelamin, nisn: nisnBaru, password } = req.body; // Ambil data lain dari req.body
 
         try {
+            // Trim spasi pada NISN baru untuk konsistensi
+            const trimmedNisnBaru = nisnBaru.trim();
+
             // Validasi panjang NISN baru
-            if (nisnBaru.length < 10) {
+            if (trimmedNisnBaru.length < 10) {
                 req.flash('error_msg', 'NISN harus terdiri dari minimal 10 angka.');
-                return res.redirect('/admin/alumni-list'); // Redirect ke daftar alumni
+                return res.redirect('/admin/alumni-list');
             }
 
-            // Validasi apakah NISN baru sudah ada di database (jika diubah)
-            if (nisnBaru !== editNisn) {
-                const existingAlumni = await Alumni.findOne({ nisn: nisnBaru });
-                if (existingAlumni) {
-                    req.flash('error_msg', 'NISN baru sudah digunakan.');
-                    return res.redirect('/admin/alumni-list'); // Redirect ke daftar alumni
+            // Cari alumni yang sedang diupdate berdasarkan NISN lama (nisnLama)
+            const currentAlumniDoc = await Alumni.findOne({ nisn: nisnLama });
+
+            if (!currentAlumniDoc) {
+                req.flash('error_msg', 'Alumni yang akan diperbarui tidak ditemukan.');
+                return res.redirect('/admin/alumni-list');
+            }
+
+            // Validasi apakah NISN baru sudah ada di database (jika diubah dan bukan NISN alumni saat ini)
+            if (trimmedNisnBaru !== nisnLama) { // Hanya cek jika NISN memang diubah
+                const conflictingAlumni = await Alumni.findOne({
+                    nisn: trimmedNisnBaru,
+                    _id: { $ne: currentAlumniDoc._id } // Pastikan bukan dokumen yang sedang diupdate
+                });
+                if (conflictingAlumni) {
+                    req.flash('error_msg', 'NISN baru sudah digunakan oleh alumni lain.');
+                    return res.redirect('/admin/alumni-list');
                 }
             }
 
-            // Data yang akan diperbarui
+            // Data yang akan diperbarui (default tanpa password)
             const updateData = {
-                nisn: nisnBaru,
-                nama: nama,
-                jenisKelamin: jenisKelamin
+                nisn: trimmedNisnBaru, // Gunakan NISN yang sudah di-trim
+                nama: nama.trim(), // Trim nama juga
+                jenisKelamin: jenisKelamin.trim() // Trim jenis kelamin juga
             };
 
-            // Update data alumni berdasarkan NISN lama (editNisn)
-            const alumni = await Alumni.findOneAndUpdate(
-                { nisn: editNisn }, // Kondisi pencarian menggunakan NISN lama dari input hidden
+            // Jika password baru diisi, enkripsi dan tambahkan ke updateData
+            if (password && password.trim() !== '') {
+                // Opsional: Validasi panjang password baru jika diisi
+                if (password.length < 6) { // Contoh: minimal 6 karakter
+                    req.flash('error_msg', 'Password baru harus terdiri dari minimal 6 karakter.');
+                    return res.redirect('/admin/alumni-list');
+                }
+                const salt = await bcrypt.genSalt(10);
+                updateData.password = await bcrypt.hash(password, salt);
+            }
+
+            // Update data alumni berdasarkan _id dokumen yang ditemukan
+            const alumni = await Alumni.findByIdAndUpdate(
+                currentAlumniDoc._id, // Gunakan _id untuk update yang lebih akurat
                 updateData, // Data yang diperbarui
                 { new: true, runValidators: true } // Mengembalikan data terbaru setelah update dan menjalankan validasi skema
             );
-
-            if (!alumni) {
-                req.flash('error_msg', 'Alumni dengan NISN tersebut tidak ditemukan.');
-                return res.redirect('/admin/alumni-list');
-            }
 
             // Flash pesan sukses
             req.flash('success_msg', 'Alumni berhasil diperbarui!');

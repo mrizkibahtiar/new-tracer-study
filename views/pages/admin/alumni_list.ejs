@@ -224,8 +224,7 @@
                     <span id="closeEditModalBtn"
                         style="color: #aaa; float: right; font-size: 34px; font-weight: bold; cursor: pointer;">&times;</span>
                     <h2 id="editModalTitle" style="font-size: 1.8rem; margin-bottom: 15px;">Edit Data Alumni</h2>
-                    <form id="formEditAlumni" style="font-size: 1.1rem;" method="post" action="/admin/alumni-list/edit">
-                        <input type="hidden" id="editNisn" name="editNisn">
+                    <form id="formEditAlumni" style="font-size: 1.1rem;" method="post" action="">
                         <div style="margin-bottom: 15px;">
                             <label for="editNama" style="font-size: 1.2rem;">Nama:</label><br>
                             <input type="text" id="editNama" name="nama"
@@ -419,7 +418,7 @@
                                                     </button>
                                                     <button
                                                         style="background-color: #ffc107; border: none; padding: 0.2rem 0.5rem; border-radius: 10px; cursor: pointer; font-size: 1.2rem; color: white;"
-                                                        onclick="openEditModal('${nisn}', '${nama}', '$edit{jenisKelamin}')"
+                                                        onclick="openEditModal('${nisn}', '${nama}', '${jenisKelamin}')"
                                                     >
                                                         Edit
                                                     </button>
@@ -463,15 +462,19 @@
             const namaInput = document.getElementById("editNama");
             const nisnInput = document.getElementById("editNisnInput");
             const jenisKelaminSelect = document.getElementById("editJenisKelamin");
-            const editNisnHidden = document.getElementById("editNisn");
-            const editPasswordInput = document.getElementById("editPassword"); // Ambil elemen password baru
+            // const editNisnHidden = document.getElementById("editNisn"); // Dihapus
+
+            // Set action form untuk menyertakan NISN lama di URL
+            const form = document.getElementById("formEditAlumni");
+            form.action = `/admin/alumni-list/edit/${nisn}`; // NISN lama dikirim via URL
 
             modalTitle.textContent = "Edit Data Alumni";
             namaInput.value = nama;
             nisnInput.value = nisn;
-            editNisnHidden.value = nisn; // Set the value of the hidden input for update (old NISN)
+            // editNisnHidden.value = nisn; // Dihapus
 
             // Reset password field saat modal dibuka
+            const editPasswordInput = document.getElementById("editPassword");
             if (editPasswordInput) {
                 editPasswordInput.value = '';
                 editPasswordInput.setAttribute('type', 'password'); // Pastikan type kembali ke password
@@ -480,10 +483,10 @@
             }
 
             // Pastikan nilai jenisKelamin sesuai persis dengan value di option, hilangkan spasi ekstra
-            if (jenisKelamin.includes("Laki") || jenisKelamin === "Laki-laki") {
-                jenisKelaminSelect.value = "Laki-laki";
-            } else if (jenisKelamin.includes("Perempuan") || jenisKelamin === "Perempuan") {
-                jenisKelaminSelect.value = "Perempuan";
+            if (jenisKelaminSelect) {
+                jenisKelaminSelect.value = jenisKelamin.trim();
+            } else {
+                console.error("Elemen 'editJenisKelamin' tidak ditemukan.");
             }
 
             modal.style.display = "block"; // Display the modal
@@ -496,12 +499,16 @@
 
         // Event listener for clicks outside the modal content
         document.getElementById("editAlumniModal").addEventListener("click", function (e) {
-            const modalContent = document.getElementById('editAlumniModalContent');
+            const modalContent = document.getElementById('editAlumniModalContent'); // Get the modal content element
+            // Jika yang diklik adalah latar hitam (overlay), tutup modal
+            // Pastikan event.target adalah modal itu sendiri, bukan elemen anak di dalamnya
             if (e.target === this || (modalContent && !modalContent.contains(e.target))) {
                 this.style.display = "none";
             }
         });
+    </script>
 
+    <script>
         // *** SCRIPT BARU UNTUK TOGGLE PASSWORD DI MODAL EDIT ALUMNI ***
         document.addEventListener('DOMContentLoaded', () => {
             const toggleEditPasswordBtn = document.getElementById('toggleEditPasswordBtn');
