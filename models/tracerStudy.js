@@ -39,7 +39,7 @@ const tracerStudySchema = new mongoose.Schema({
         ref: 'Feedback',
         required: false
     }
-});
+}, { timestamps: true });
 
 
 

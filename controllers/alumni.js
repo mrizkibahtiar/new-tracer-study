@@ -16,6 +16,7 @@ module.exports = {
         } else {
             const { nisn } = req.session.user;
             const alumni = await Alumni.findOne({ nisn: nisn });
+            // --- Baris ini yang perlu sedikit penyesuaian ---
             const tracerStudy = await TracerStudy.find({ alumniId: alumni._id }).populate('kegiatanDetail').populate('feedback');
             return res.render('pages/alumni/dashboard', { alumni: alumni, tracerStudy: tracerStudy });
         }
@@ -54,24 +55,20 @@ module.exports = {
         req.flash('success_msg', 'Password berhasil diperbarui!');
         return res.redirect('/alumni/profile');
     },
-    showForm: async function (req, res) {
-        if (!req.session.user) {
-            return res.redirect('/loginPage');
-        } else {
-            const { nisn } = req.session.user;
-            const alumni = await Alumni.findOne({ nisn: nisn });
-            return res.render('pages/alumni/alumni_form', { alumni: alumni });
-        }
-    },
-
     saveForm: async function (req, res) {
         try {
             const validRefs = {
-                "Bekerja": "Pekerjaan",
+                "Bekerja": "Pekerjaan", // Pastikan nama model sesuai (huruf besar/kecil)
                 "Melanjutkan Studi": "StudiLanjutan",
                 "Berwirausaha": "Berwirausaha",
                 "Kursus": "Kursus"
             };
+
+            // Pastikan req.session.user ada dan memiliki nisn (validasi login)
+            if (!req.session.user || !req.session.user.nisn) {
+                req.flash('error_msg', 'Anda harus login untuk mengisi form.');
+                return res.redirect('/login'); // Atau halaman login Anda
+            }
 
             const { nisn } = req.session.user;
             const { email, tahunLulus, kegiatan, feedbackDetail } = req.body;
@@ -79,20 +76,22 @@ module.exports = {
             // Cari data alumni berdasarkan NISN
             const alumni = await Alumni.findOne({ nisn: nisn });
 
+            if (!alumni) {
+                req.flash('error_msg', 'Data alumni tidak ditemukan.');
+                return res.redirect('/alumni'); // Atau halaman error/beranda alumni
+            }
+
             let kegiatanRef = null;
             let kegiatanDetailId = null;
             let feedbackId = null;
+            let belumAdaKegiatanText = null;
 
             // Proses penyimpanan berdasarkan jenis kegiatan
             if (kegiatan in validRefs) {
                 kegiatanRef = validRefs[kegiatan];
-
-                // Dapatkan model berdasarkan kegiatanRef
                 const KegiatanModel = mongoose.model(kegiatanRef);
-
                 let kegiatanData;
 
-                // Pengkondisian untuk setiap kegiatan
                 if (kegiatan === "Bekerja") {
                     const { namaPerusahaan, alamatPerusahaan, teleponPerusahaan, sektorPerusahaan, posisi, tanggalMasukBekerja } = req.body;
                     kegiatanData = new KegiatanModel({
@@ -137,14 +136,13 @@ module.exports = {
                     });
                 }
 
-                // Simpan detail kegiatan
                 const savedKegiatan = await kegiatanData.save();
                 kegiatanDetailId = savedKegiatan._id;
             } else if (kegiatan === "Belum Ada Kegiatan") {
-                kegiatanDetailId = null; // Tidak ada model untuk "Belum Ada Kegiatan"
+                kegiatanDetailId = null;
+                belumAdaKegiatanText = req.body.kegiatanDetail;
             }
 
-            // Simpan data feedback
             const feedbackData = new Feedback({
                 alumniId: alumni._id,
                 pesan: feedbackDetail
@@ -153,7 +151,6 @@ module.exports = {
             const savedFeedback = await feedbackData.save();
             feedbackId = savedFeedback._id;
 
-            // Simpan data tracer study
             const tracerStudyData = new TracerStudy({
                 alumniId: alumni._id,
                 email: email.trim(),
@@ -161,17 +158,53 @@ module.exports = {
                 kegiatan: kegiatan.trim(),
                 kegiatanRef: kegiatanRef,
                 kegiatanDetail: kegiatanDetailId,
-                belumAdaKegiatanDetail: kegiatan === "Belum Ada Kegiatan" ? req.body.kegiatanDetail : null,
+                belumAdaKegiatanDetail: belumAdaKegiatanText,
                 feedback: feedbackId
             });
 
             const savedTracerStudy = await tracerStudyData.save();
 
-            req.flash('success_msg', 'Data berhasil disimpan.');
-            return res.redirect('/alumni');
+            // --- BAGIAN PERUBAHAN UTAMA DI SINI ---
+            // Setelah sukses menyimpan, kita ingin me-render ulang halaman '/alumni'
+            // namun dengan data tracer study yang sudah di-populate.
+            const populatedTracerStudy = await TracerStudy.findById(savedTracerStudy._id)
+                .populate('alumniId') // Opsional, jika Anda butuh data alumni di ringkasan
+                .populate({
+                    path: 'kegiatanDetail',
+                    // Mongoose akan otomatis menggunakan 'kegiatanRef' dari dokumen tracerStudy
+                    // sebagai nama model karena Anda sudah menggunakan refPath di skema.
+                })
+                .populate('feedback');
+
+            req.flash('success_msg', 'Form Tracer Study Anda telah berhasil dikirim!');
+
+            // Render halaman alumni utama Anda, dan kirimkan data tracer study
+            return res.render('pages/alumni/dashboard', { // Ganti 'pages/alumni/dashboard' dengan path template utama alumni Anda
+                tracerStudy: populatedTracerStudy,
+                alumni: alumni, // Kirim juga data alumni jika diperlukan di template
+                messages: req.flash() // Pastikan Anda meneruskan flash messages ke template
+            });
+
         } catch (error) {
-            req.flash('error_msg', 'Gagal menyimpan data.');
-            return res.redirect('/alumni');
+            console.error("Error saving tracer study form:", error);
+            req.flash('error_msg', 'Gagal menyimpan data. Silakan coba lagi.');
+            // Jika gagal, coba render ulang halaman alumni tanpa data tracer study yang baru,
+            // sehingga form tetap muncul atau bisa diisi ulang.
+            // Anda juga bisa mencoba mengambil data tracer study yang mungkin sudah ada sebelumnya.
+            const { nisn } = req.session.user; // Ambil lagi NISN
+            const alumni = await Alumni.findOne({ nisn: nisn });
+            let existingTracerStudy = null;
+            if (alumni) {
+                existingTracerStudy = await TracerStudy.findOne({ alumniId: alumni._id })
+                    .populate({ path: 'kegiatanDetail' })
+                    .populate('feedback');
+            }
+
+            return res.render('pages/alumni/dashboard', {
+                tracerStudy: existingTracerStudy, // Mungkin ada data lama jika error bukan karena penyimpanan pertama
+                alumni: alumni,
+                messages: req.flash()
+            });
         }
     },
     editForm: async function (req, res) {
