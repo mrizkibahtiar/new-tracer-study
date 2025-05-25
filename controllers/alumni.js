@@ -78,7 +78,7 @@ module.exports = {
 
             if (!alumni) {
                 req.flash('error_msg', 'Data alumni tidak ditemukan.');
-                return res.redirect('/alumni'); // Atau halaman error/beranda alumni
+                return res.redirect('/alumni');
             }
 
             let kegiatanRef = null;
@@ -179,11 +179,7 @@ module.exports = {
             req.flash('success_msg', 'Form Tracer Study Anda telah berhasil dikirim!');
 
             // Render halaman alumni utama Anda, dan kirimkan data tracer study
-            return res.render('pages/alumni/dashboard', { // Ganti 'pages/alumni/dashboard' dengan path template utama alumni Anda
-                tracerStudy: populatedTracerStudy,
-                alumni: alumni, // Kirim juga data alumni jika diperlukan di template
-                messages: req.flash() // Pastikan Anda meneruskan flash messages ke template
-            });
+            return res.redirect('/alumni');
 
         } catch (error) {
             console.error("Error saving tracer study form:", error);
@@ -200,11 +196,7 @@ module.exports = {
                     .populate('feedback');
             }
 
-            return res.render('pages/alumni/dashboard', {
-                tracerStudy: existingTracerStudy, // Mungkin ada data lama jika error bukan karena penyimpanan pertama
-                alumni: alumni,
-                messages: req.flash()
-            });
+            return res.redirect('/alumni');
         }
     },
     editForm: async function (req, res) {

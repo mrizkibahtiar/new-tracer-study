@@ -12,7 +12,6 @@ router.put('/alumni/profile-edit/:nisn', isAlumni, userController.profileUpdate)
 router.put('/alumni/profile-edit/password/:nisn', isAlumni, userController.profileUpdatePassword);
 
 router.post('/alumni/submit-tracer-study', isAlumni, userController.saveForm)
-
 router.get('/alumni/alumni-form/edit/:alumniId', isAlumni, userController.editForm)
 router.put('/alumni/alumni-form/edit/:alumniId', isAlumni, userController.updateForm)
 
