@@ -122,7 +122,7 @@
         }
 
         .form-label {
-            font-size: 1.2rem;
+            font-size: 1.5rem;
             display: block;
             margin-bottom: 5px;
             color: #333;
@@ -192,7 +192,7 @@
             padding: 0.7rem 1.2rem;
             border-radius: 0.7rem;
             cursor: pointer;
-            font-size: 1.2rem;
+            font-size: 1.5rem;
             margin-top: 1rem;
             /* mt-4 */
             display: block;
@@ -205,134 +205,6 @@
         .btn-submit:hover {
             background-color: #45a049;
             /* Slightly darker green on hover */
-        }
-
-        .detail-card {
-            background-color: #fcfdff;
-            /* Very light background for the card */
-            border: 1px solid #e0e7ee;
-            /* Subtle border */
-            border-radius: 10px;
-            padding: 30px;
-            margin-bottom: 30px;
-            /* Space between detail cards */
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            /* Soft shadow */
-            transition: transform 0.2s ease-in-out;
-        }
-
-        .detail-card:hover {
-            transform: translateY(-3px);
-            /* Slight lift on hover */
-        }
-
-        /* Override inline style for H3 within detail-card */
-        .detail-card h3 {
-            font-size: 1.8rem !important;
-            /* Make it slightly larger */
-            font-weight: 700 !important;
-            /* Bolder font */
-            margin-bottom: 2rem !important;
-            /* More space below */
-            color: #1a3a6b !important;
-            /* Darker, more prominent color */
-            text-align: center !important;
-            border-bottom: 2px solid #e0e7ee;
-            /* Stronger underline */
-            padding-bottom: 15px;
-        }
-
-        .detail-grid {
-            display: grid;
-            /* Two columns, responsive layout */
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            /* Space between grid items */
-        }
-
-        .detail-item {
-            display: flex;
-            /* Use flexbox for label and value */
-            flex-direction: column;
-            /* Stack label and value vertically */
-            gap: 5px;
-            /* Space between label and value */
-            padding: 15px;
-            background-color: #ffffff;
-            /* White background for each item */
-            border: 1px solid #e9f0f6;
-            /* Light border */
-            border-radius: 8px;
-            transition: all 0.2s ease-in-out;
-        }
-
-        .detail-item:hover {
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.07);
-            border-color: #a4d2ff;
-            /* Highlight border on hover */
-        }
-
-        .detail-label {
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: #4a5a6b;
-            /* Slightly darker gray for labels */
-            display: flex;
-            /* Allow icon and text to be on one line */
-            align-items: center;
-            /* Vertically align icon and text */
-            margin-bottom: 5px;
-            /* Space below label */
-        }
-
-        .detail-value {
-            font-size: 1.05rem;
-            color: #212529;
-            /* Darker color for values */
-            font-weight: 500;
-            line-height: 1.5;
-            /* For feedback, allow wrapping but maintain formatting */
-            white-space: pre-wrap;
-            /* Mempertahankan spasi dan baris baru dari input textarea */
-            word-wrap: break-word;
-            /* Memastikan teks panjang pecah kata */
-        }
-
-        /* Specific adjustment for feedback detail-item to span full width */
-        .detail-item[style="grid-column: 1 / -1;"] {
-            grid-column: 1 / -1;
-            /* Make it span all columns */
-        }
-
-        /* Responsive adjustments for smaller screens */
-        @media (max-width: 768px) {
-            .detail-card {
-                padding: 20px;
-                margin-bottom: 20px;
-            }
-
-            .detail-card h3 {
-                font-size: 1.6rem !important;
-                margin-bottom: 1.5rem !important;
-            }
-
-            .detail-grid {
-                grid-template-columns: 1fr;
-                /* Single column layout on small screens */
-                gap: 20px;
-            }
-
-            .detail-item {
-                padding: 12px;
-            }
-
-            .detail-label {
-                font-size: 0.9rem;
-            }
-
-            .detail-value {
-                font-size: 1rem;
-            }
         }
     </style>
 </head>
@@ -368,7 +240,7 @@
                                 onclick="event.stopPropagation();">
                                 <ul class="py-2 text-start">
                                     <li>
-                                        <a href="/admin/profile"
+                                        <a href="/alumni/profile"
                                             class="block py-1 px-4 dark:text-white/70 hover:text-green-600 dark:hover:text-white"><i
                                                 class="mdi mdi-account-outline me-2"></i>Profile</a>
                                     </li>
@@ -387,8 +259,8 @@
             <div class="container-fluid relative px-3">
                 <div class="layout-specing">
                     <div
-                        style="display: flex; justify-content: space-between; align-items: center; margin-inline: 1rem;">
-                        <h2 class="text-2xl font-bold text-gray-800">
+                        style="display: flex; justify-content: space-between; align-items: center; margin-inline: 1rem; font-size: 2rem;">
+                        <h2 class=" font-bold text-gray-800">
                             <span class="font-normal">Selamat Datang</span>, <%= alumni.nama %><span
                                     class="inline-block">👋</span>
                         </h2>
@@ -419,10 +291,8 @@
                         <div class="grid grid-cols-1 md:grid-cols-2" style="gap: 2rem;">
                             <div>
                                 <div class="flex items-center gap-2 mb-2">
-                                    <span style="font-size: 28px; margin-bottom: 10px; display: block;"
-                                        class="mdi mdi-mail"></span>
                                     <p
-                                        style="color: navy; font-size: 1.2rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
+                                        style="color: navy; font-size: 1.5rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
                                         Email</p>
                                 </div>
                                 <h2 class="text-black" style="font-size: 1.5rem;">
@@ -432,10 +302,8 @@
 
                             <div>
                                 <div class="flex items-center gap-2 mb-2">
-                                    <span style="font-size: 28px; margin-bottom: 10px; display: block;"
-                                        class="mdi mdi-calendar-text"></span>
                                     <p
-                                        style="color: navy; font-size: 1.2rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
+                                        style="color: navy; font-size: 1.5rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
                                         Tahun
                                         Lulus
                                     </p>
@@ -447,10 +315,8 @@
 
                             <div>
                                 <div class="flex items-center gap-2 mb-2">
-                                    <span style="font-size: 28px; margin-bottom: 10px; display: block;"
-                                        class="mdi mdi-run"></span>
                                     <p
-                                        style="color: navy; font-size: 1.2rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
+                                        style="color: navy; font-size: 1.5rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
                                         Kegiatan
                                         setelah Lulus</p>
                                 </div>
@@ -469,11 +335,8 @@
                                 <div>
                                     <div class="flex items-center gap-2 mb-2"
                                         style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-                                        <span style="font-size: 28px; margin-bottom: 10px; display: block;"
-                                            class="mdi mdi-domain">
-                                        </span>
                                         <p
-                                            style="color: navy; font-size: 1.2rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
+                                            style="color: navy; font-size: 1.5rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
                                             Nama
                                             Perusahaan</p>
                                     </div>
@@ -484,10 +347,7 @@
                                 <div>
                                     <div class="flex items-center gap-2 mb-2"
                                         style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-                                        <span style="font-size: 28px; margin-bottom: 10px; display: block;"
-                                            class="mdi mdi-view-dashboard ">
-                                        </span>
-                                        <p style=" color: navy; font-size: 1.2rem; font-weight: bold; display:
+                                        <p style=" color: navy; font-size: 1.5rem; font-weight: bold; display:
                                                     block; margin-bottom: 0.7rem;">
                                             Alamat
                                             Perusahaan</p>
@@ -499,10 +359,7 @@
                                 <div>
                                     <div class="flex items-center gap-2 mb-2"
                                         style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-                                        <span style="font-size: 28px; margin-bottom: 10px; display: block;"
-                                            class="mdi mdi-phone">
-                                        </span>
-                                        <label style=" color: navy; font-size: 1.2rem; font-weight: bold; display:
+                                        <label style=" color: navy; font-size: 1.5rem; font-weight: bold; display:
                                                     block; margin-bottom: 0.7rem;">Telepon
                                             Perusahaan</label>
                                     </div>
@@ -513,10 +370,7 @@
                                 <div>
                                     <div class="flex items-center gap-2 mb-2"
                                         style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-                                        <span style="font-size: 28px; margin-bottom: 10px; display: block;"
-                                            class="mdi mdi-shape-plus">
-                                        </span>
-                                        <label style=" color: navy; font-size: 1.2rem; font-weight: bold; display:
+                                        <label style=" color: navy; font-size: 1.5rem; font-weight: bold; display:
                                                     block; margin-bottom: 0.7rem;">Sektor
                                             Perusahaan</label>
                                     </div>
@@ -527,10 +381,7 @@
                                 <div>
                                     <div class="flex items-center gap-2 mb-2"
                                         style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-                                        <span style="font-size: 28px; margin-bottom: 10px; display: block;"
-                                            class="mdi mdi-bag-checked">
-                                        </span>
-                                        <label style=" color: navy; font-size: 1.2rem; font-weight: bold; display:
+                                        <label style=" color: navy; font-size: 1.5rem; font-weight: bold; display:
                                                     block; margin-bottom: 0.7rem;">Posisi</label>
                                     </div>
                                     <h2 style="font-size: 1.5rem; color: black;">
@@ -540,10 +391,7 @@
                                 <div>
                                     <div class="flex items-center gap-2 mb-2"
                                         style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-                                        <span style="font-size: 28px; margin-bottom: 10px; display: block;"
-                                            class="mdi mdi-calendar-range">
-                                        </span>
-                                        <label style=" color: navy; font-size: 1.2rem; font-weight: bold; display:
+                                        <label style=" color: navy; font-size: 1.5rem; font-weight: bold; display:
                                                     block; margin-bottom: 0.7rem;">Tanggal
                                             Masuk</label>
                                     </div>
@@ -563,10 +411,8 @@
                                 <div class="grid grid-cols-1 md:grid-cols-2" style="gap: 2rem;">
                                     <div>
                                         <div class="flex items-center gap-2 mb-2">
-                                            <span style="font-size: 28px; margin-bottom: 10px; display: block;"
-                                                class="mdi mdi-domain"></span>
                                             <p
-                                                style="color: navy; font-size: 1.2rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
+                                                style="color: navy; font-size: 1.5rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
                                                 Nama Universitas</p>
                                         </div>
                                         <h2 style="font-size: 1.5rem; color: black;">
@@ -575,10 +421,8 @@
                                     </div>
                                     <div>
                                         <div class="flex items-center gap-2 mb-2">
-                                            <span style="font-size: 28px; margin-bottom: 10px; display: block;"
-                                                class="mdi mdi-view-stream"></span>
                                             <p
-                                                style="color: navy; font-size: 1.2rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
+                                                style="color: navy; font-size: 1.5rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
                                                 Alamat Universitas</p>
                                         </div>
                                         <h2 style="font-size: 1.5rem; color: black;">
@@ -587,10 +431,8 @@
                                     </div>
                                     <div>
                                         <div class="flex items-center gap-2 mb-2">
-                                            <span style="font-size: 28px; margin-bottom: 10px; display: block;"
-                                                class="mdi mdi-backpack"></span>
                                             <p
-                                                style="color: navy; font-size: 1.2rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
+                                                style="color: navy; font-size: 1.5rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
                                                 Fakultas</p>
                                         </div>
                                         <h2 style="font-size: 1.5rem; color: black;">
@@ -599,10 +441,8 @@
                                     </div>
                                     <div>
                                         <div class="flex items-center gap-2 mb-2">
-                                            <span style="font-size: 28px; margin-bottom: 10px; display: block;"
-                                                class="mdi mdi-memory"></span>
                                             <p
-                                                style="color: navy; font-size: 1.2rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
+                                                style="color: navy; font-size: 1.5rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
                                                 Program Studi</p>
                                         </div>
                                         <h2 style="font-size: 1.5rem; color: black;">
@@ -611,10 +451,8 @@
                                     </div>
                                     <div>
                                         <div class="flex items-center gap-2 mb-2">
-                                            <span style="font-size: 28px; margin-bottom: 10px; display: block;"
-                                                class="mdi mdi-calendar-range"></span>
                                             <p
-                                                style="color: navy; font-size: 1.2rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
+                                                style="color: navy; font-size: 1.5rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
                                                 Tanggal Masuk</p>
                                         </div>
                                         <h2 style="font-size: 1.5rem; color: black;">
@@ -635,10 +473,8 @@
 
                                         <div>
                                             <div class="flex items-center gap-2 mb-2">
-                                                <span class="mdi mdi-domain"
-                                                    style="font-size: 28px; margin-bottom: 10px; display: block;"></span>
                                                 <p
-                                                    style="color: navy; font-size: 1.2rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
+                                                    style="color: navy; font-size: 1.5rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
                                                     Nama Usaha</p>
                                             </div>
                                             <h2 style="font-size: 1.5rem; color: black;">
@@ -648,10 +484,8 @@
 
                                         <div>
                                             <div class="flex items-center gap-2 mb-2">
-                                                <span class="mdi mdi-view-stream"
-                                                    style="font-size: 28px; margin-bottom: 10px; display: block;"></span>
                                                 <p
-                                                    style="color: navy; font-size: 1.2rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
+                                                    style="color: navy; font-size: 1.5rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
                                                     Alamat Usaha</p>
                                             </div>
                                             <h2 style="font-size: 1.5rem; color: black;">
@@ -661,10 +495,8 @@
 
                                         <div>
                                             <div class="flex items-center gap-2 mb-2">
-                                                <span class="mdi mdi-phone"
-                                                    style="font-size: 28px; margin-bottom: 10px; display: block;"></span>
                                                 <p
-                                                    style="color: navy; font-size: 1.2rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
+                                                    style="color: navy; font-size: 1.5rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
                                                     Telepon Usaha</p>
                                             </div>
                                             <h2 style="font-size: 1.5rem; color: black;">
@@ -674,10 +506,8 @@
 
                                         <div>
                                             <div class="flex items-center gap-2 mb-2">
-                                                <span class="mdi mdi-briefcase-variant"
-                                                    style="font-size: 28px; margin-bottom: 10px; display: block;"></span>
                                                 <p
-                                                    style="color: navy; font-size: 1.2rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
+                                                    style="color: navy; font-size: 1.5rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
                                                     Bidang Usaha</p>
                                             </div>
                                             <h2 style="font-size: 1.5rem; color: black;">
@@ -687,10 +517,8 @@
 
                                         <div>
                                             <div class="flex items-center gap-2 mb-2">
-                                                <span class="mdi mdi-account-group"
-                                                    style="font-size: 28px; margin-bottom: 10px; display: block;"></span>
                                                 <p
-                                                    style="color: navy; font-size: 1.2rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
+                                                    style="color: navy; font-size: 1.5rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
                                                     Jumlah Karyawan</p>
                                             </div>
                                             <h2 style="font-size: 1.5rem; color: black;">
@@ -700,10 +528,8 @@
 
                                         <div>
                                             <div class="flex items-center gap-2 mb-2">
-                                                <span class="mdi mdi-calendar-start"
-                                                    style="font-size: 28px; margin-bottom: 10px; display: block;"></span>
                                                 <p
-                                                    style="color: navy; font-size: 1.2rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
+                                                    style="color: navy; font-size: 1.5rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
                                                     Tanggal Mulai Usaha</p>
                                             </div>
                                             <h2 style="font-size: 1.5rem; color: black;">
@@ -724,10 +550,8 @@
                                         <div class="grid grid-cols-1 md:grid-cols-2" style="gap: 2rem;">
                                             <div>
                                                 <div class="flex items-center gap-2 mb-2">
-                                                    <span class="mdi mdi-domain"
-                                                        style="font-size: 28px; margin-bottom: 10px; display: block;"></span>
                                                     <p
-                                                        style="color: navy; font-size: 1.2rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
+                                                        style="color: navy; font-size: 1.5rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
                                                         Nama Kursus</p>
                                                 </div>
                                                 <h2 style="font-size: 1.5rem; color: black;">
@@ -736,10 +560,8 @@
                                             </div>
                                             <div>
                                                 <div class="flex items-center gap-2 mb-2">
-                                                    <span class="mdi mdi-view-stream"
-                                                        style="font-size: 28px; margin-bottom: 10px; display: block;"></span>
                                                     <p
-                                                        style="color: navy; font-size: 1.2rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
+                                                        style="color: navy; font-size: 1.5rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
                                                         Alamat Kursus</p>
                                                 </div>
                                                 <h2 style="font-size: 1.5rem; color: black;">
@@ -748,10 +570,8 @@
                                             </div>
                                             <div>
                                                 <div class="flex items-center gap-2 mb-2">
-                                                    <span class="mdi mdi-backpack"
-                                                        style="font-size: 28px; margin-bottom: 10px; display: block;"></span>
                                                     <p
-                                                        style="color: navy; font-size: 1.2rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
+                                                        style="color: navy; font-size: 1.5rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
                                                         Bidang Kursus</p>
                                                 </div>
                                                 <h2 style="font-size: 1.5rem; color: black;">
@@ -760,10 +580,8 @@
                                             </div>
                                             <div>
                                                 <div class="flex items-center gap-2 mb-2">
-                                                    <span class="mdi mdi-calendar-start"
-                                                        style="font-size: 28px; margin-bottom: 10px; display: block;"></span>
                                                     <p
-                                                        style="color: navy; font-size: 1.2rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
+                                                        style="color: navy; font-size: 1.5rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
                                                         Tanggal Mulai Kursus</p>
                                                 </div>
                                                 <h2 style="font-size: 1.5rem; color: black;">
@@ -775,10 +593,8 @@
                                             </div>
                                             <div>
                                                 <div class="flex items-center gap-2 mb-2">
-                                                    <span class="mdi mdi-calendar-end"
-                                                        style="font-size: 28px; margin-bottom: 10px; display: block;"></span>
                                                     <p
-                                                        style="color: navy; font-size: 1.2rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
+                                                        style="color: navy; font-size: 1.5rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
                                                         Tanggal Selesai Kursus</p>
                                                 </div>
                                                 <h2 style="font-size: 1.5rem; color: black;">
@@ -798,10 +614,8 @@
                                             <div class="grid grid-cols-1" style="gap: 2rem;">
                                                 <div>
                                                     <div class="flex items-center gap-2 mb-2">
-                                                        <span class="mdi mdi-calendar-clock"
-                                                            style="font-size: 28px; margin-bottom: 10px; display: block;"></span>
                                                         <p
-                                                            style="color: navy; font-size: 1.2rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
+                                                            style="color: navy; font-size: 1.5rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
                                                             Kegiatan Yang Dilakukan Sekarang
                                                         </p>
                                                     </div>
@@ -821,10 +635,8 @@
                                                 <div class="grid grid-cols-1" style="gap: 2rem;">
                                                     <div>
                                                         <div class="flex items-center gap-2 mb-2">
-                                                            <span class="mdi mdi-forum"
-                                                                style="font-size: 28px; margin-bottom: 10px; display: block;"></span>
                                                             <p
-                                                                style="color: navy; font-size: 1.2rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
+                                                                style="color: navy; font-size: 1.5rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
                                                                 Feedback
                                                             </p>
                                                         </div>
