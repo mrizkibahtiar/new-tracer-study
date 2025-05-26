@@ -267,17 +267,19 @@
                         <% if(tracerStudy.length> 0) { %>
                             <div class="button-form" style="display: flex; gap: 10px; flex-direction: column;">
                                 <button id="editFormBtn"
-                                    style="background-color: #007bff; color: white; border: 1px solid #007bff; padding: 0.8rem 1.5rem; border-radius: 8px; cursor: pointer; font-size: 1.1rem; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; white-space: nowrap; transition: background-color 0.2s ease, border-color 0.2s ease;">
-                                    Edit Form
+                                    style="background-color: #007bff; color: white; border: 1px solid #007bff; padding: 0.8rem 1rem; border-radius: 8px; cursor: pointer; font-size: 1.1rem; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; white-space: nowrap; transition: background-color 0.2s ease, border-color 0.2s ease;"
+                                    data-tracer-study='<%= JSON.stringify(tracerStudy) %>'
+                                    data-alumni-id='<%= alumni._id %>'>
+                                    Edit
                                 </button>
                                 <button disabled
-                                    style="background-color: #a0a0a0; color: #e0e0e0; border: 1px solid #a0a0a0; padding: 0.8rem 1.5rem; border-radius: 8px; cursor: not-allowed; font-size: 1.1rem; opacity: 0.6; box-shadow: none; white-space: nowrap;">
+                                    style="background-color: #a0a0a0; color: #e0e0e0; border: 1px solid #a0a0a0; padding: 0.8rem 1rem; border-radius: 8px; cursor: not-allowed; font-size: 1.1rem; opacity: 0.6; box-shadow: none; white-space: nowrap;">
                                     Isi Form
                                 </button>
                             </div>
                             <% } else { %>
                                 <button id="isiFormBtn"
-                                    style="background-color: #4CAF50; color: white; border: none; padding: 0.5rem 1rem; border-radius: 10px; cursor: pointer; font-size: 1.3rem;">
+                                    style="background-color: #4CAF50; color: white; border: none; padding: 0.8rem 1rem; border-radius: 10px; cursor: pointer; font-size: 1.3rem;">
                                     Isi Form
                                 </button>
                                 <% } %>
@@ -289,6 +291,16 @@
                     style="margin-inline: 1rem;">
                     <div class="p-6">
                         <div class="grid grid-cols-1 md:grid-cols-2" style="gap: 2rem;">
+                            <div>
+                                <div class="flex items-center gap-2 mb-2">
+                                    <p
+                                        style="color: navy; font-size: 1.5rem; font-weight: bold; display: block; margin-bottom: 0.7rem;">
+                                        NISN</p>
+                                </div>
+                                <h2 class="text-black" style="font-size: 1.5rem;">
+                                    <%= alumni.nisn %>
+                                </h2>
+                            </div>
                             <div>
                                 <div class="flex items-center gap-2 mb-2">
                                     <p
@@ -668,284 +680,541 @@
                                             <% } %>
 
         </main>
-        <!-- modal tambah -->
-        <div id="tracerStudyModal" class="modal-overlay">
-            <div class="modal-content">
-                <span id="closeTracerStudyModalBtn" class="close-button"
-                    style="margin-top: 1.6rem; margin-right: 0.8rem;">&times;</span>
-                <h2 style="font-size: 1.8rem; margin-bottom: 15px;">Isi Form Tracer
-                    Study</h2>
-                <form id="formTracerStudy" style="font-size: 1.1rem;" method="post"
-                    action="/alumni/submit-tracer-study">
-                    <div class="form-group">
-                        <div class="flex-items-center-gap-2">
-                            <label for="inputEmail4" class="form-label">Email</label>
-                        </div>
-                        <input type="email" class="form-input" id="inputEmail4" placeholder="Email" name="email"
-                            required>
-                    </div>
 
-                    <div class="form-group">
-                        <div class="flex-items-center-gap-2">
-                            <label for="tahunLulus" class="form-label">Tahun
-                                Lulus</label>
-                        </div>
-                        <select id="tahunLulus" class="form-select" name="tahunLulus" required>
-                            <option value="" disabled selected>Pilih Tahun</option>
-                            <% const tahunMulai=2000; const tahunTerbaru=new Date().getFullYear(); for (let
-                                i=tahunTerbaru; i>=
-                                tahunMulai;i--) { %>
-                                <option value="<%= i %>" style="color: black;">
-                                    <%= i %>
-                                </option>
-                                <% } %>
-                        </select>
+    </div>
+    <!-- modal tambah -->
+    <div id="tracerStudyModal" class="modal-overlay">
+        <div class="modal-content">
+            <span id="closeTracerStudyModalBtn" class="close-button"
+                style="margin-top: 1.6rem; margin-right: 0.8rem;">&times;</span>
+            <h2 style="font-size: 1.8rem; margin-bottom: 15px;">Isi Form Tracer
+                Study</h2>
+            <form id="formTracerStudy" style="font-size: 1.1rem;" method="post" action="/alumni/submit-tracer-study">
+                <div class="form-group">
+                    <div class="flex-items-center-gap-2">
+                        <label for="inputEmail4" class="form-label">Email</label>
                     </div>
+                    <input type="email" class="form-input" id="inputEmail4" placeholder="Email" name="email" required>
+                </div>
 
-                    <div class="form-group">
-                        <div class="flex-items-center-gap-2">
-                            <label for="kegiatanLulus" class="form-label">Kegiatan
-                                setelah Lulus</label>
-                        </div>
-                        <select id="kegiatanLulus" class="form-select" name="kegiatan" required>
-                            <option value="" disabled selected>Pilih Kegiatan</option>
-                            <option value="Bekerja">Bekerja</option>
-                            <option value="Melanjutkan Studi">Melanjutkan Studi</option>
-                            <option value="Berwirausaha">Berwirausaha</option>
-                            <option value="Kursus">Kursus</option>
-                            <option value="Belum Ada Kegiatan">Belum Ada Kegiatan
+                <div class="form-group">
+                    <div class="flex-items-center-gap-2">
+                        <label for="tahunLulus" class="form-label">Tahun
+                            Lulus</label>
+                    </div>
+                    <select id="tahunLulus" class="form-select" name="tahunLulus" required>
+                        <option value="" disabled selected>Pilih Tahun</option>
+                        <% const tahunMulai=2000; const tahunTerbaru=new Date().getFullYear(); for (let i=tahunTerbaru;
+                            i>=
+                            tahunMulai;i--) { %>
+                            <option value="<%= i %>" style="color: black;">
+                                <%= i %>
                             </option>
-                        </select>
-                    </div>
+                            <% } %>
+                    </select>
+                </div>
 
-                    <div id="bekerjaSection" class="dynamic-section">
-                        <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: #333;">
-                            Detail Pekerjaan</h3>
-                        <div class="dynamic-grid">
-                            <div class="form-group">
-                                <div class="flex-items-center-gap-2">
-                                    <label for="namaPerusahaan" class="form-label">Nama
-                                        Perusahaan</label>
-                                </div>
-                                <input type="text" class="form-input" id="namaPerusahaan" placeholder="PT. ABC"
-                                    name="namaPerusahaan">
+                <div class="form-group">
+                    <div class="flex-items-center-gap-2">
+                        <label for="kegiatanLulus" class="form-label">Kegiatan
+                            setelah Lulus</label>
+                    </div>
+                    <select id="kegiatanLulus" class="form-select" name="kegiatan" required>
+                        <option value="" disabled selected>Pilih Kegiatan</option>
+                        <option value="Bekerja">Bekerja</option>
+                        <option value="Melanjutkan Studi">Melanjutkan Studi</option>
+                        <option value="Berwirausaha">Berwirausaha</option>
+                        <option value="Kursus">Kursus</option>
+                        <option value="Belum Ada Kegiatan">Belum Ada Kegiatan
+                        </option>
+                    </select>
+                </div>
+
+                <div id="bekerjaSection" class="dynamic-section">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: #333;">
+                        Detail Pekerjaan</h3>
+                    <div class="dynamic-grid">
+                        <div class="form-group">
+                            <div class="flex-items-center-gap-2">
+                                <label for="namaPerusahaan" class="form-label">Nama
+                                    Perusahaan</label>
                             </div>
-                            <div class="form-group">
-                                <div class="flex-items-center-gap-2">
-                                    <label for="alamatPerusahaan" class="form-label">Alamat Perusahaan</label>
-                                </div>
-                                <input type="text" class="form-input" id="alamatPerusahaan"
-                                    placeholder="Jl. ABC, No. 123, Jakarta" name="alamatPerusahaan">
+                            <input type="text" class="form-input" id="namaPerusahaan" placeholder="PT. ABC"
+                                name="namaPerusahaan">
+                        </div>
+                        <div class="form-group">
+                            <div class="flex-items-center-gap-2">
+                                <label for="alamatPerusahaan" class="form-label">Alamat Perusahaan</label>
                             </div>
-                            <div class="form-group">
-                                <div class="flex-items-center-gap-2">
-                                    <label for="teleponPerusahaan" class="form-label">Telepon Perusahaan</label>
-                                </div>
-                                <input type="number" class="form-input" id="teleponPerusahaan"
-                                    placeholder="08123456789 (masukkan nomor saja)" name="teleponPerusahaan">
+                            <input type="text" class="form-input" id="alamatPerusahaan"
+                                placeholder="Jl. ABC, No. 123, Jakarta" name="alamatPerusahaan">
+                        </div>
+                        <div class="form-group">
+                            <div class="flex-items-center-gap-2">
+                                <label for="teleponPerusahaan" class="form-label">Telepon Perusahaan</label>
                             </div>
-                            <div class="form-group">
-                                <div class="flex-items-center-gap-2">
-                                    <label for="sektorPerusahaan" class="form-label">Sektor Perusahaan</label>
-                                </div>
-                                <input type="text" class="form-input" id="sektorPerusahaan" placeholder="Teknologi"
-                                    name="sektorPerusahaan">
+                            <input type="number" class="form-input" id="teleponPerusahaan"
+                                placeholder="08123456789 (masukkan nomor saja)" name="teleponPerusahaan">
+                        </div>
+                        <div class="form-group">
+                            <div class="flex-items-center-gap-2">
+                                <label for="sektorPerusahaan" class="form-label">Sektor Perusahaan</label>
                             </div>
-                            <div class="form-group">
-                                <div class="flex-items-center-gap-2">
-                                    <label for="posisi" class="form-label">Posisi</label>
-                                </div>
-                                <input type="text" class="form-input" id="posisi" placeholder="IT-Support"
-                                    name="posisi">
+                            <input type="text" class="form-input" id="sektorPerusahaan" placeholder="Teknologi"
+                                name="sektorPerusahaan">
+                        </div>
+                        <div class="form-group">
+                            <div class="flex-items-center-gap-2">
+                                <label for="posisi" class="form-label">Posisi</label>
                             </div>
-                            <div class="form-group">
-                                <div class="flex-items-center-gap-2">
-                                    <label for="tanggalMasukBekerja" class="form-label">Tanggal Masuk</label>
-                                </div>
-                                <input type="date" class="form-input" id="tanggalMasukBekerja"
-                                    name="tanggalMasukBekerja">
+                            <input type="text" class="form-input" id="posisi" placeholder="IT-Support" name="posisi">
+                        </div>
+                        <div class="form-group">
+                            <div class="flex-items-center-gap-2">
+                                <label for="tanggalMasukBekerja" class="form-label">Tanggal Masuk</label>
                             </div>
+                            <input type="date" class="form-input" id="tanggalMasukBekerja" name="tanggalMasukBekerja">
                         </div>
                     </div>
+                </div>
 
-                    <div id="melanjutkanStudiSection" class="dynamic-section">
-                        <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: #333;">
-                            Detail Studi</h3>
-                        <div class="dynamic-grid">
-                            <div class="form-group">
-                                <div class="flex-items-center-gap-2">
-                                    <label for="namaUniversitas" class="form-label">Nama
-                                        Universitas</label>
-                                </div>
-                                <input type="text" class="form-input" id="namaUniversitas" placeholder="Universitas ABC"
-                                    name="namaUniversitas">
+                <div id="melanjutkanStudiSection" class="dynamic-section">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: #333;">
+                        Detail Studi</h3>
+                    <div class="dynamic-grid">
+                        <div class="form-group">
+                            <div class="flex-items-center-gap-2">
+                                <label for="namaUniversitas" class="form-label">Nama
+                                    Universitas</label>
                             </div>
-                            <div class="form-group">
-                                <div class="flex-items-center-gap-2">
-                                    <label for="alamatUniversitas" class="form-label">Alamat Universitas</label>
-                                </div>
-                                <input type="text" class="form-input" id="alamatUniversitas"
-                                    placeholder="Jl. ABC, No. 123, Jakarta" name="alamatUniversitas">
+                            <input type="text" class="form-input" id="namaUniversitas" placeholder="Universitas ABC"
+                                name="namaUniversitas">
+                        </div>
+                        <div class="form-group">
+                            <div class="flex-items-center-gap-2">
+                                <label for="alamatUniversitas" class="form-label">Alamat Universitas</label>
                             </div>
-                            <div class="form-group">
-                                <div class="flex-items-center-gap-2">
-                                    <label for="fakultas" class="form-label">Fakultas</label>
-                                </div>
-                                <input type="text" class="form-input" id="fakultas" placeholder="Ekonomi dan Bisnis"
-                                    name="fakultas">
+                            <input type="text" class="form-input" id="alamatUniversitas"
+                                placeholder="Jl. ABC, No. 123, Jakarta" name="alamatUniversitas">
+                        </div>
+                        <div class="form-group">
+                            <div class="flex-items-center-gap-2">
+                                <label for="fakultas" class="form-label">Fakultas</label>
                             </div>
-                            <div class="form-group">
-                                <div class="flex-items-center-gap-2">
-                                    <label for="programStudi" class="form-label">Program
-                                        Studi</label>
-                                </div>
-                                <input type="text" class="form-input" id="programStudi"
-                                    placeholder="Akuntansi Keuangan Publik" name="programStudi">
+                            <input type="text" class="form-input" id="fakultas" placeholder="Ekonomi dan Bisnis"
+                                name="fakultas">
+                        </div>
+                        <div class="form-group">
+                            <div class="flex-items-center-gap-2">
+                                <label for="programStudi" class="form-label">Program
+                                    Studi</label>
                             </div>
-                            <div class="form-group">
-                                <div class="flex-items-center-gap-2">
-                                    <label for="tanggalMasukUniversitas" class="form-label">Tanggal Masuk</label>
-                                </div>
-                                <input type="date" class="form-input" id="tanggalMasukUniversitas"
-                                    name="tanggalMasukUniversitas">
+                            <input type="text" class="form-input" id="programStudi"
+                                placeholder="Akuntansi Keuangan Publik" name="programStudi">
+                        </div>
+                        <div class="form-group">
+                            <div class="flex-items-center-gap-2">
+                                <label for="tanggalMasukUniversitas" class="form-label">Tanggal Masuk</label>
                             </div>
+                            <input type="date" class="form-input" id="tanggalMasukUniversitas"
+                                name="tanggalMasukUniversitas">
                         </div>
                     </div>
+                </div>
 
-                    <div id="berwirausahaSection" class="dynamic-section">
-                        <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: #333;">
-                            Detail Wirausaha</h3>
-                        <div class="dynamic-grid">
-                            <div class="form-group">
-                                <div class="flex-items-center-gap-2">
-                                    <label for="namaUsaha" class="form-label">Nama
-                                        Usaha</label>
-                                </div>
-                                <input type="text" class="form-input" id="namaUsaha" placeholder="Ayam Geprek ABC"
-                                    name="namaUsaha">
+                <div id="berwirausahaSection" class="dynamic-section">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: #333;">
+                        Detail Wirausaha</h3>
+                    <div class="dynamic-grid">
+                        <div class="form-group">
+                            <div class="flex-items-center-gap-2">
+                                <label for="namaUsaha" class="form-label">Nama
+                                    Usaha</label>
                             </div>
-                            <div class="form-group">
-                                <div class="flex-items-center-gap-2">
-                                    <label for="alamatUsaha" class="form-label">Alamat
-                                        Usaha</label>
-                                </div>
-                                <input type="text" class="form-input" id="alamatUsaha"
-                                    placeholder="Jl. ABC, No. 123, Jakarta" name="alamatUsaha">
+                            <input type="text" class="form-input" id="namaUsaha" placeholder="Ayam Geprek ABC"
+                                name="namaUsaha">
+                        </div>
+                        <div class="form-group">
+                            <div class="flex-items-center-gap-2">
+                                <label for="alamatUsaha" class="form-label">Alamat
+                                    Usaha</label>
                             </div>
-                            <div class="form-group">
-                                <div class="flex-items-center-gap-2">
-                                    <label for="teleponUsaha" class="form-label">Telepon
-                                        Usaha</label>
-                                </div>
-                                <input type="number" class="form-input" id="teleponUsaha"
-                                    placeholder="08123456789 (masukkan nomor saja)" name="teleponUsaha">
+                            <input type="text" class="form-input" id="alamatUsaha"
+                                placeholder="Jl. ABC, No. 123, Jakarta" name="alamatUsaha">
+                        </div>
+                        <div class="form-group">
+                            <div class="flex-items-center-gap-2">
+                                <label for="teleponUsaha" class="form-label">Telepon
+                                    Usaha</label>
                             </div>
-                            <div class="form-group">
-                                <div class="flex-items-center-gap-2">
-                                    <label for="bidangUsaha" class="form-label">Bidang
-                                        Usaha</label>
-                                </div>
-                                <input type="text" class="form-input" id="bidangUsaha" placeholder="Makanan"
-                                    name="bidangUsaha">
+                            <input type="number" class="form-input" id="teleponUsaha"
+                                placeholder="08123456789 (masukkan nomor saja)" name="teleponUsaha">
+                        </div>
+                        <div class="form-group">
+                            <div class="flex-items-center-gap-2">
+                                <label for="bidangUsaha" class="form-label">Bidang
+                                    Usaha</label>
                             </div>
-                            <div class="form-group">
-                                <div class="flex-items-center-gap-2">
-                                    <label for="jumlahKaryawan" class="form-label">Jumlah Karyawan</label>
-                                </div>
-                                <input type="number" class="form-input" id="jumlahKaryawan"
-                                    placeholder="isi 1 jika belum ada" name="jumlahKaryawan">
+                            <input type="text" class="form-input" id="bidangUsaha" placeholder="Makanan"
+                                name="bidangUsaha">
+                        </div>
+                        <div class="form-group">
+                            <div class="flex-items-center-gap-2">
+                                <label for="jumlahKaryawan" class="form-label">Jumlah Karyawan</label>
                             </div>
-                            <div class="form-group">
-                                <div class="flex-items-center-gap-2">
-                                    <label for="tanggalMulaiUsaha" class="form-label">Tanggal Mulai Usaha</label>
-                                </div>
-                                <input type="date" class="form-input" id="tanggalMulaiUsaha" name="tanggalMulaiUsaha">
+                            <input type="number" class="form-input" id="jumlahKaryawan"
+                                placeholder="isi 1 jika belum ada" name="jumlahKaryawan">
+                        </div>
+                        <div class="form-group">
+                            <div class="flex-items-center-gap-2">
+                                <label for="tanggalMulaiUsaha" class="form-label">Tanggal Mulai Usaha</label>
                             </div>
+                            <input type="date" class="form-input" id="tanggalMulaiUsaha" name="tanggalMulaiUsaha">
                         </div>
                     </div>
+                </div>
 
-                    <div id="kursusSection" class="dynamic-section">
-                        <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: #333;">
-                            Detail Kursus</h3>
-                        <div class="dynamic-grid">
-                            <div class="form-group">
-                                <div class="flex-items-center-gap-2">
-                                    <label for="namaKursus" class="form-label">Nama
-                                        Kursus</label>
-                                </div>
-                                <input type="text" class="form-input" id="namaKursus" placeholder="Pemrograman Web"
-                                    name="namaKursus">
+                <div id="kursusSection" class="dynamic-section">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: #333;">
+                        Detail Kursus</h3>
+                    <div class="dynamic-grid">
+                        <div class="form-group">
+                            <div class="flex-items-center-gap-2">
+                                <label for="namaKursus" class="form-label">Nama
+                                    Kursus</label>
                             </div>
-                            <div class="form-group">
-                                <div class="flex-items-center-gap-2">
-                                    <label for="alamatKursus" class="form-label">Alamat
-                                        Kursus</label>
-                                </div>
-                                <input type="text" class="form-input" id="alamatKursus"
-                                    placeholder="Jl. ABC, No. 123, Jakarta" name="alamatKursus">
+                            <input type="text" class="form-input" id="namaKursus" placeholder="Pemrograman Web"
+                                name="namaKursus">
+                        </div>
+                        <div class="form-group">
+                            <div class="flex-items-center-gap-2">
+                                <label for="alamatKursus" class="form-label">Alamat
+                                    Kursus</label>
                             </div>
-                            <div class="form-group">
-                                <div class="flex-items-center-gap-2">
-                                    <label for="bidangKursus" class="form-label">Bidang
-                                        Kursus</label>
-                                </div>
-                                <input type="text" class="form-input" id="bidangKursus" placeholder="LPK Neptune Madiun"
-                                    name="bidangKursus">
+                            <input type="text" class="form-input" id="alamatKursus"
+                                placeholder="Jl. ABC, No. 123, Jakarta" name="alamatKursus">
+                        </div>
+                        <div class="form-group">
+                            <div class="flex-items-center-gap-2">
+                                <label for="bidangKursus" class="form-label">Bidang
+                                    Kursus</label>
                             </div>
-                            <div class="form-group">
-                                <div class="flex-items-center-gap-2">
-                                    <label for="tanggalMulaiKursus" class="form-label">Tanggal Mulai</label>
-                                </div>
-                                <input type="date" class="form-input" id="tanggalMulaiKursus" name="tanggalMulaiKursus">
+                            <input type="text" class="form-input" id="bidangKursus" placeholder="LPK Neptune Madiun"
+                                name="bidangKursus">
+                        </div>
+                        <div class="form-group">
+                            <div class="flex-items-center-gap-2">
+                                <label for="tanggalMulaiKursus" class="form-label">Tanggal Mulai</label>
                             </div>
-                            <div class="form-group">
-                                <div class="flex-items-center-gap-2">
-                                    <label for="tanggalSelesaiKursus" class="form-label">Tanggal Selesai</label>
-                                </div>
-                                <input type="date" class="form-input" id="tanggalSelesaiKursus"
-                                    name="tanggalSelesaiKursus">
+                            <input type="date" class="form-input" id="tanggalMulaiKursus" name="tanggalMulaiKursus">
+                        </div>
+                        <div class="form-group">
+                            <div class="flex-items-center-gap-2">
+                                <label for="tanggalSelesaiKursus" class="form-label">Tanggal Selesai</label>
                             </div>
+                            <input type="date" class="form-input" id="tanggalSelesaiKursus" name="tanggalSelesaiKursus">
                         </div>
                     </div>
+                </div>
 
-                    <div id="belumAdaKegiatanSection" class="dynamic-section">
-                        <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: #333;">
-                            Detail Kegiatan</h3>
-                        <div class="dynamic-grid">
-                            <div class="form-group">
-                                <div class="flex-items-center-gap-2">
-                                    <label for="belumAdaKegiatanDetail" class="form-label">Kegiatan Yang Dilakukan
-                                        Sekarang</label>
-                                </div>
-                                <textarea class="form-textarea" rows="5" id="belumAdaKegiatanDetail"
-                                    placeholder="Mempersiapkan pendaftaran perkuliahan"
-                                    name="belumAdaKegiatanDetail"></textarea>
+                <div id="belumAdaKegiatanSection" class="dynamic-section">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: #333;">
+                        Detail Kegiatan</h3>
+                    <div class="dynamic-grid">
+                        <div class="form-group">
+                            <div class="flex-items-center-gap-2">
+                                <label for="belumAdaKegiatanDetail" class="form-label">Kegiatan Yang Dilakukan
+                                    Sekarang</label>
                             </div>
+                            <textarea class="form-textarea" rows="5" id="belumAdaKegiatanDetail"
+                                placeholder="Mempersiapkan pendaftaran perkuliahan"
+                                name="belumAdaKegiatanDetail"></textarea>
                         </div>
                     </div>
+                </div>
 
-                    <div id="feedbackSection" class="dynamic-section" style="display: block;">
-                        <!-- <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: #333;">Feedback</h3> -->
-                        <div class="dynamic-grid">
-                            <div class="form-group">
-                                <div class="flex-items-center-gap-2">
-                                    <label for="feedbackDetail" class="form-label">Feedback</label>
-                                </div>
-                                <textarea class="form-textarea" rows="5" id="feedbackDetail" name="feedbackDetail"
-                                    placeholder="Ceritakan pengalamanmu selama bersekolah di SMK BP Subulul Huda"
-                                    required></textarea>
+                <div id="feedbackSection" class="dynamic-section" style="display: block;">
+                    <!-- <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: #333;">Feedback</h3> -->
+                    <div class="dynamic-grid">
+                        <div class="form-group">
+                            <div class="flex-items-center-gap-2">
+                                <label for="feedbackDetail" class="form-label">Feedback</label>
                             </div>
+                            <textarea class="form-textarea" rows="5" id="feedbackDetail" name="feedbackDetail"
+                                placeholder="Ceritakan pengalamanmu selama bersekolah di SMK BP Subulul Huda"
+                                required></textarea>
                         </div>
                     </div>
+                </div>
 
-                    <div style="text-align: center;">
-                        <button type="submit" class="btn-submit">Simpan</button>
-                    </div>
-                </form>
-            </div>
+                <div style="text-align: center;">
+                    <button type="submit" class="btn-submit">Simpan</button>
+                </div>
+            </form>
         </div>
     </div>
 
+    <!-- modal edit -->
+    <div id="editTracerStudyModal" class="modal-overlay">
+        <div class="modal-content">
+            <span id="closeEditTracerStudyModalBtn" class="close-button"
+                style="margin-top: 1.6rem; margin-right: 0.8rem;">&times;</span>
+            <h2 style="font-size: 1.8rem; margin-bottom: 15px;">Edit Form Tracer Study</h2>
+            <form id="formEditTracerStudy" style="font-size: 1.1rem;" method="post"
+                action="/alumni/update-tracer-study">
+                <input type="hidden" id="editModalTracerStudyId" name="tracerStudyId">
+                <input type="hidden" id="editModalAlumniId" name="alumniId">
+
+                <div class="form-group">
+                    <div class="flex-items-center-gap-2">
+                        <label for="editInputEmail4" class="form-label">Email</label>
+                    </div>
+                    <input type="email" class="form-input" id="editInputEmail4" placeholder="Email" name="email"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <div class="flex-items-center-gap-2">
+                        <label for="editTahunLulus" class="form-label">Tahun Lulus</label>
+                    </div>
+                    <select id="editTahunLulus" class="form-select" name="tahunLulus" required>
+                        <option value="" disabled selected>Pilih Tahun</option>
+                        <% const tahunMulaiEdit=2000; const tahunTerbaruEdit=new Date().getFullYear(); for (let
+                            i=tahunTerbaruEdit; i>= tahunMulaiEdit; i--) { %>
+                            <option value="<%= i %>" style="color: black;">
+                                <%= i %>
+                            </option>
+                            <% } %>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <div class="flex-items-center-gap-2">
+                        <label for="editKegiatanLulus" class="form-label">Kegiatan setelah Lulus</label>
+                    </div>
+                    <select id="editKegiatanLulus" class="form-select" name="kegiatan" required>
+                        <option value="" disabled selected>Pilih Kegiatan</option>
+                        <option value="Bekerja">Bekerja</option>
+                        <option value="Melanjutkan Studi">Melanjutkan Studi</option>
+                        <option value="Berwirausaha">Berwirausaha</option>
+                        <option value="Kursus">Kursus</option>
+                        <option value="Belum Ada Kegiatan">Belum Ada Kegiatan</option>
+                    </select>
+                </div>
+
+                <div id="editBekerjaSection" class="dynamic-section">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: #333;">Detail Pekerjaan</h3>
+                    <div class="dynamic-grid">
+                        <div class="form-group">
+                            <div class="flex-items-center-gap-2">
+                                <label for="editNamaPerusahaan" class="form-label">Nama Perusahaan</label>
+                            </div>
+                            <input type="text" class="form-input" id="editNamaPerusahaan" placeholder="PT. ABC"
+                                name="namaPerusahaan">
+                        </div>
+                        <div class="form-group">
+                            <div class="flex-items-center-gap-2">
+                                <label for="editAlamatPerusahaan" class="form-label">Alamat Perusahaan</label>
+                            </div>
+                            <input type="text" class="form-input" id="editAlamatPerusahaan"
+                                placeholder="Jl. ABC, No. 123, Jakarta" name="alamatPerusahaan">
+                        </div>
+                        <div class="form-group">
+                            <div class="flex-items-center-gap-2">
+                                <label for="editTeleponPerusahaan" class="form-label">Telepon Perusahaan</label>
+                            </div>
+                            <input type="number" class="form-input" id="editTeleponPerusahaan"
+                                placeholder="08123456789 (masukkan nomor saja)" name="teleponPerusahaan">
+                        </div>
+                        <div class="form-group">
+                            <div class="flex-items-center-gap-2">
+                                <label for="editSektorPerusahaan" class="form-label">Sektor Perusahaan</label>
+                            </div>
+                            <input type="text" class="form-input" id="editSektorPerusahaan" placeholder="Teknologi"
+                                name="sektorPerusahaan">
+                        </div>
+                        <div class="form-group">
+                            <div class="flex-items-center-gap-2">
+                                <label for="editPosisi" class="form-label">Posisi</label>
+                            </div>
+                            <input type="text" class="form-input" id="editPosisi" placeholder="IT-Support"
+                                name="posisi">
+                        </div>
+                        <div class="form-group">
+                            <div class="flex-items-center-gap-2">
+                                <label for="editTanggalMasukBekerja" class="form-label">Tanggal Masuk</label>
+                            </div>
+                            <input type="date" class="form-input" id="editTanggalMasukBekerja"
+                                name="tanggalMasukBekerja">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="editMelanjutkanStudiSection" class="dynamic-section">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: #333;">Detail Studi</h3>
+                    <div class="dynamic-grid">
+                        <div class="form-group">
+                            <div class="flex-items-center-gap-2">
+                                <label for="editNamaUniversitas" class="form-label">Nama Universitas</label>
+                            </div>
+                            <input type="text" class="form-input" id="editNamaUniversitas" placeholder="Universitas ABC"
+                                name="namaUniversitas">
+                        </div>
+                        <div class="form-group">
+                            <div class="flex-items-center-gap-2">
+                                <label for="editAlamatUniversitas" class="form-label">Alamat Universitas</label>
+                            </div>
+                            <input type="text" class="form-input" id="editAlamatUniversitas"
+                                placeholder="Jl. ABC, No. 123, Jakarta" name="alamatUniversitas">
+                        </div>
+                        <div class="form-group">
+                            <div class="flex-items-center-gap-2">
+                                <label for="editFakultas" class="form-label">Fakultas</label>
+                            </div>
+                            <input type="text" class="form-input" id="editFakultas" placeholder="Ekonomi dan Bisnis"
+                                name="fakultas">
+                        </div>
+                        <div class="form-group">
+                            <div class="flex-items-center-gap-2">
+                                <label for="editProgramStudi" class="form-label">Program Studi</label>
+                            </div>
+                            <input type="text" class="form-input" id="editProgramStudi"
+                                placeholder="Akuntansi Keuangan Publik" name="programStudi">
+                        </div>
+                        <div class="form-group">
+                            <div class="flex-items-center-gap-2">
+                                <label for="editTanggalMasukUniversitas" class="form-label">Tanggal Masuk</label>
+                            </div>
+                            <input type="date" class="form-input" id="editTanggalMasukUniversitas"
+                                name="tanggalMasukUniversitas">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="editBerwirausahaSection" class="dynamic-section">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: #333;">Detail Wirausaha</h3>
+                    <div class="dynamic-grid">
+                        <div class="form-group">
+                            <div class="flex-items-center-gap-2">
+                                <label for="editNamaUsaha" class="form-label">Nama Usaha</label>
+                            </div>
+                            <input type="text" class="form-input" id="editNamaUsaha" placeholder="Ayam Geprek ABC"
+                                name="namaUsaha">
+                        </div>
+                        <div class="form-group">
+                            <div class="flex-items-center-gap-2">
+                                <label for="editAlamatUsaha" class="form-label">Alamat Usaha</label>
+                            </div>
+                            <input type="text" class="form-input" id="editAlamatUsaha"
+                                placeholder="Jl. ABC, No. 123, Jakarta" name="alamatUsaha">
+                        </div>
+                        <div class="form-group">
+                            <div class="flex-items-center-gap-2">
+                                <label for="editTeleponUsaha" class="form-label">Telepon Usaha</label>
+                            </div>
+                            <input type="number" class="form-input" id="editTeleponUsaha"
+                                placeholder="08123456789 (masukkan nomor saja)" name="teleponUsaha">
+                        </div>
+                        <div class="form-group">
+                            <div class="flex-items-center-gap-2">
+                                <label for="editBidangUsaha" class="form-label">Bidang Usaha</label>
+                            </div>
+                            <input type="text" class="form-input" id="editBidangUsaha" placeholder="Makanan"
+                                name="bidangUsaha">
+                        </div>
+                        <div class="form-group">
+                            <div class="flex-items-center-gap-2">
+                                <label for="editJumlahKaryawan" class="form-label">Jumlah Karyawan</label>
+                            </div>
+                            <input type="number" class="form-input" id="editJumlahKaryawan"
+                                placeholder="isi 1 jika belum ada" name="jumlahKaryawan">
+                        </div>
+                        <div class="form-group">
+                            <div class="flex-items-center-gap-2">
+                                <label for="editTanggalMulaiUsaha" class="form-label">Tanggal Mulai Usaha</label>
+                            </div>
+                            <input type="date" class="form-input" id="editTanggalMulaiUsaha" name="tanggalMulaiUsaha">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="editKursusSection" class="dynamic-section">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: #333;">Detail Kursus</h3>
+                    <div class="dynamic-grid">
+                        <div class="form-group">
+                            <div class="flex-items-center-gap-2">
+                                <label for="editNamaKursus" class="form-label">Nama Kursus</label>
+                            </div>
+                            <input type="text" class="form-input" id="editNamaKursus" placeholder="Pemrograman Web"
+                                name="namaKursus">
+                        </div>
+                        <div class="form-group">
+                            <div class="flex-items-center-gap-2">
+                                <label for="editAlamatKursus" class="form-label">Alamat Kursus</label>
+                            </div>
+                            <input type="text" class="form-input" id="editAlamatKursus"
+                                placeholder="Jl. ABC, No. 123, Jakarta" name="alamatKursus">
+                        </div>
+                        <div class="form-group">
+                            <div class="flex-items-center-gap-2">
+                                <label for="editBidangKursus" class="form-label">Bidang Kursus</label>
+                            </div>
+                            <input type="text" class="form-input" id="editBidangKursus" placeholder="LPK Neptune Madiun"
+                                name="bidangKursus">
+                        </div>
+                        <div class="form-group">
+                            <div class="flex-items-center-gap-2">
+                                <label for="editTanggalMulaiKursus" class="form-label">Tanggal Mulai</label>
+                            </div>
+                            <input type="date" class="form-input" id="editTanggalMulaiKursus" name="tanggalMulaiKursus">
+                        </div>
+                        <div class="form-group">
+                            <div class="flex-items-center-gap-2">
+                                <label for="editTanggalSelesaiKursus" class="form-label">Tanggal Selesai</label>
+                            </div>
+                            <input type="date" class="form-input" id="editTanggalSelesaiKursus"
+                                name="tanggalSelesaiKursus">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="editBelumAdaKegiatanSection" class="dynamic-section">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: #333;">Detail Kegiatan</h3>
+                    <div class="dynamic-grid">
+                        <div class="form-group">
+                            <div class="flex-items-center-gap-2">
+                                <label for="editBelumAdaKegiatanDetail" class="form-label">Kegiatan Yang Dilakukan
+                                    Sekarang</label>
+                            </div>
+                            <textarea class="form-textarea" rows="5" id="editBelumAdaKegiatanDetail"
+                                placeholder="Mempersiapkan pendaftaran perkuliahan"
+                                name="belumAdaKegiatanDetail"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="editFeedbackSection" class="dynamic-section" style="display: block;">
+                    <div class="dynamic-grid">
+                        <div class="form-group">
+                            <div class="flex-items-center-gap-2">
+                                <label for="editFeedbackDetail" class="form-label">Feedback</label>
+                            </div>
+                            <textarea class="form-textarea" rows="5" id="editFeedbackDetail" name="feedbackDetail"
+                                placeholder="Ceritakan pengalamanmu selama bersekolah di SMK BP Subulul Huda"
+                                required></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="text-align: center;">
+                    <button type="submit" class="btn-submit">Simpan Perubahan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- alert -->
     <div
         style="position: fixed; top: 5rem; right: 0; left: 0; z-index: 50; display: flex; align-items: center; justify-content: center;">
         <% if (success_msg && success_msg.length> 0) { %>
@@ -972,6 +1241,7 @@
     <script src="assets/admin/js/plugins.init.js"></script>
     <script src="assets/admin/js/app.js"></script>
 
+    <!-- modal tambah -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const isiFormBtn = document.getElementById('isiFormBtn');
@@ -1059,6 +1329,166 @@
             showRelevantSection();
         });
     </script>
+
+    <!-- modal edit -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // --- Elemen untuk Modal ISI FORM (Form Awal) ---
+            const editFormBtn = document.getElementById('editFormBtn');
+            const editTracerStudyModal = document.getElementById('editTracerStudyModal');
+            const closeEditTracerStudyModalBtn = document.getElementById('closeEditTracerStudyModalBtn');
+            const editKegiatanLulusSelect = document.getElementById('editKegiatanLulus');
+
+            const editBekerjaSection = document.getElementById('editBekerjaSection');
+            const editMelanjutkanStudiSection = document.getElementById('editMelanjutkanStudiSection');
+            const editBerwirausahaSection = document.getElementById('editBerwirausahaSection');
+            const editKursusSection = document.getElementById('editKursusSection');
+            const editBelumAdaKegiatanSection = document.getElementById('editBelumAdaKegiatanSection');
+
+            function toggleEditSections(selectedActivity) {
+                console.log('Toggling sections for:', selectedActivity);
+                editBekerjaSection.style.display = 'none';
+                editMelanjutkanStudiSection.style.display = 'none';
+                editBerwirausahaSection.style.display = 'none';
+                editKursusSection.style.display = 'none';
+                editBelumAdaKegiatanSection.style.display = 'none';
+
+                if (selectedActivity === 'Bekerja') {
+                    editBekerjaSection.style.display = 'block';
+                } else if (selectedActivity === 'Melanjutkan Studi') {
+                    editMelanjutkanStudiSection.style.display = 'block';
+                } else if (selectedActivity === 'Berwirausaha') {
+                    editBerwirausahaSection.style.display = 'block';
+                } else if (selectedActivity === 'Kursus') {
+                    editKursusSection.style.display = 'block';
+                } else if (selectedActivity === 'Belum Ada Kegiatan') {
+                    editBelumAdaKegiatanSection.style.display = 'block';
+                }
+            }
+
+            function fillEditModalFormWithData() {
+                const tracerStudyDataString = editFormBtn.dataset.tracerStudy;
+                const alumniId = editFormBtn.dataset.alumniId;
+
+                console.log('Raw data-tracer-study string:', tracerStudyDataString);
+                console.log('Raw data-alumni-id:', alumniId);
+
+                let tracerStudyDataArray = [];
+                if (tracerStudyDataString) {
+                    try {
+                        tracerStudyDataArray = JSON.parse(tracerStudyDataString);
+                    } catch (e) {
+                        console.error("Error parsing tracerStudyData from data attribute:", e);
+                        tracerStudyDataArray = [];
+                    }
+                }
+
+                const tracerStudyData = tracerStudyDataArray.length > 0 ? tracerStudyDataArray[0] : {};
+
+                console.log('Parsed tracerStudyData (Object to fill form):', tracerStudyData);
+
+                if (Object.keys(tracerStudyData).length > 0) {
+                    document.getElementById('editModalTracerStudyId').value = tracerStudyData._id || '';
+                    document.getElementById('editModalAlumniId').value = alumniId || '';
+                    document.getElementById('editInputEmail4').value = tracerStudyData.email || '';
+                    document.getElementById('editTahunLulus').value = tracerStudyData.tahunLulus || '';
+
+                    const kegiatanValueFromData = tracerStudyData.kegiatan; // Sudah diperbaiki di sini sebelumnya
+
+                    editKegiatanLulusSelect.value = kegiatanValueFromData || '';
+
+                    console.log('Value from data (kegiatan):', kegiatanValueFromData);
+                    console.log('editKegiatanLulusSelect.value after setting:', editKegiatanLulusSelect.value);
+
+                    const optionExists = Array.from(editKegiatanLulusSelect.options).some(option => option.value === kegiatanValueFromData);
+                    console.log('Does option value exist in HTML select?', optionExists);
+
+                    toggleEditSections(editKegiatanLulusSelect.value);
+
+                    const kegiatanDetail = tracerStudyData.kegiatanDetail;
+                    if (kegiatanDetail) {
+                        if (kegiatanValueFromData === 'Bekerja') {
+                            document.getElementById('editNamaPerusahaan').value = kegiatanDetail.namaPerusahaan || '';
+                            document.getElementById('editAlamatPerusahaan').value = kegiatanDetail.alamatPerusahaan || '';
+                            document.getElementById('editTeleponPerusahaan').value = kegiatanDetail.teleponPerusahaan || '';
+                            document.getElementById('editSektorPerusahaan').value = kegiatanDetail.sektorPerusahaan || '';
+                            document.getElementById('editPosisi').value = kegiatanDetail.posisi || '';
+                            if (kegiatanDetail.tanggalMasuk) {
+                                document.getElementById('editTanggalMasukBekerja').value = new Date(kegiatanDetail.tanggalMasuk).toISOString().split('T')[0];
+                            }
+                        } else if (kegiatanValueFromData === 'Melanjutkan Studi') {
+                            document.getElementById('editNamaUniversitas').value = kegiatanDetail.namaUniversitas || '';
+                            document.getElementById('editAlamatUniversitas').value = kegiatanDetail.alamatUniversitas || '';
+                            document.getElementById('editFakultas').value = kegiatanDetail.fakultas || '';
+                            document.getElementById('editProgramStudi').value = kegiatanDetail.programStudi || '';
+
+                            if (kegiatanDetail.tanggalMasuk) {
+                                document.getElementById('editTanggalMasukUniversitas').value = new Date(kegiatanDetail.tanggalMasuk).toISOString().split('T')[0];
+                            }
+                        } else if (kegiatanValueFromData === 'Berwirausaha') {
+                            document.getElementById('editNamaUsaha').value = kegiatanDetail.namaUsaha || '';
+                            document.getElementById('editAlamatUsaha').value = kegiatanDetail.alamatUsaha || '';
+                            document.getElementById('editTeleponUsaha').value = kegiatanDetail.teleponUsaha || '';
+                            document.getElementById('editBidangUsaha').value = kegiatanDetail.bidangUsaha || '';
+                            document.getElementById('editJumlahKaryawan').value = kegiatanDetail.jumlahKaryawan || '';
+
+                            if (kegiatanDetail.tanggalMulai) {
+                                document.getElementById('editTanggalMulaiUsaha').value = new Date(kegiatanDetail.tanggalMulai).toISOString().split('T')[0];
+                            }
+
+                        } else if (kegiatanValueFromData === 'Kursus') {
+                            document.getElementById('editNamaKursus').value = kegiatanDetail.namaKursus || '';
+                            document.getElementById('editAlamatKursus').value = kegiatanDetail.alamatKursus || '';
+                            document.getElementById('editBidangKursus').value = kegiatanDetail.bidangKursus || '';
+                            if (kegiatanDetail.tanggalMulai) {
+                                document.getElementById('editTanggalMulaiKursus').value = new Date(kegiatanDetail.tanggalMulai).toISOString().split('T')[0];
+                            }
+                            if (kegiatanDetail.tanggalSelesai) {
+                                document.getElementById('editTanggalSelesaiKursus').value = new Date(kegiatanDetail.tanggalSelesai).toISOString().split('T')[0];
+                            }
+                        } else if (kegiatanValueFromData === 'Belum Ada Kegiatan') {
+                            document.getElementById('editBelumAdaKegiatanDetail').value = kegiatanDetail.belumAdaKegiatanDetail || '';
+                        }
+                    }
+
+                    if (tracerStudyData.feedback) {
+                        document.getElementById('editFeedbackDetail').value = tracerStudyData.feedback.pesan || '';
+                    }
+                } else {
+                    console.log('No tracerStudyData found or parsed. Resetting edit form.');
+                    document.getElementById('formEditTracerStudy').reset();
+                    toggleEditSections('');
+                }
+            }
+
+            if (editFormBtn) {
+                editFormBtn.addEventListener('click', function () {
+                    editTracerStudyModal.style.display = 'block';
+                    fillEditModalFormWithData();
+                });
+            }
+
+            if (closeEditTracerStudyModalBtn) {
+                closeEditTracerStudyModalBtn.addEventListener('click', function () {
+                    editTracerStudyModal.style.display = 'none';
+                });
+            }
+
+            window.addEventListener('click', function (event) {
+                if (event.target == editTracerStudyModal) {
+                    editTracerStudyModal.style.display = 'none';
+                }
+            });
+
+            if (editKegiatanLulusSelect) {
+                editKegiatanLulusSelect.addEventListener('change', function () {
+                    toggleEditSections(this.value);
+                });
+            }
+        });
+    </script>
+
+
     <script>
         const alertSuccess = document.querySelector('.alert-success');
         if (alertSuccess) {
