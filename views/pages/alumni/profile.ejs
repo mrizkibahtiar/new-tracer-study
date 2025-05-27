@@ -3,232 +3,294 @@
 
 <head>
     <meta charset="utf-8">
-    <title>alumni - Profile</title>
+    <title>Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description"
-        content="Platform yang memfasilitasi para alumni dalam memperbarui informasi terkait karir dan pendidikan. Data yang dihimpun akan digunakan untuk evaluasi program sekolah dan mendukung keterhubungan antara alumni, sekolah, dan industri." />
+    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description">
     <meta content="coderthemes" name="author">
 
-
     <!-- App favicon -->
-    <link href="../assets/images/smk-bp.png" rel="icon" type="image/png">
+    <link rel="shortcut icon" href="/../assets/admin/smk-bp.png">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=mail" />
 
-    <!-- App css -->
-    <link href="../assets/css/app.min.css" rel="stylesheet" type="text/css">
+    <!-- Main Css -->
+    <link href="/../assets/admin/libs/simplebar/simplebar.min.css" rel="stylesheet">
+    <link href="/../assets/admin/libs/%40mdi/font/css/materialdesignicons.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/../assets/admin/css/tailwind.min.css">
 
-    <!-- Icons css -->
-    <link href="../assets/css/icons.min.css" rel="stylesheet" type="text/css">
+    <style>
+        @media (min-width: 768px) {
+            .grid-container {
+                display: grid;
+                grid-template-columns: repeat(12, minmax(0, 1fr));
+                gap: 1.5rem;
+                /* Setara dengan gap-6 */
+            }
 
-    <!-- Theme Config Js -->
-    <script src="../assets/js/config.js"></script>
+            .col-span-6 {
+                grid-column: span 6 / span 6;
+            }
+
+            .col-span-3 {
+                grid-column: span 3 / span 3;
+            }
+
+            .button-form {
+                flex-direction: row !important;
+            }
+
+        }
+
+        .grid-container {
+            display: grid;
+            gap: 1.5rem;
+            /* Tetap berikan gap untuk layout mobile */
+        }
+
+        .top-header {
+            background-color: white;
+            padding: 10px 20px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-container img {
+            vertical-align: middle;
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            /* Adjusted margin for better vertical centering on larger screens */
+            padding: 25px;
+            border: 1px solid #888;
+            width: 90%;
+            /* Responsive width */
+            max-width: 700px;
+            /* Max width for larger screens */
+            font-size: 1.1rem;
+            border-radius: 0.7rem;
+            position: relative;
+            /* Needed for close button positioning */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .close-button {
+            color: #aaa;
+            float: right;
+            font-size: 34px;
+            font-weight: bold;
+            cursor: pointer;
+            position: absolute;
+            /* Position relative to modal-content */
+            right: 15px;
+            top: 10px;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-label {
+            font-size: 1.5rem;
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            /* text-gray-800 */
+            font-weight: 500;
+            /* font-medium */
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 0.7rem;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            font-size: 1.1rem;
+            border: 1px solid #888;
+            border-radius: 10px;
+            color: #000;
+            /* text-black */
+            background-color: #fff;
+            /* default bg-white */
+        }
+
+        /* Styles for dynamic sections */
+        .dynamic-section {
+            display: none;
+            /* Hidden by default */
+            margin-top: 1.5rem;
+            /* Equivalent to mt-6 */
+            padding: 1.5rem;
+            /* Equivalent to p-6 */
+            background-color: #fefefe;
+            /* card background */
+            border-radius: 0.5rem;
+            /* rounded-lg */
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            /* box-shadow */
+        }
+
+        /* Grid for dynamic sections */
+        .dynamic-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            /* grid-cols-1 */
+            gap: 1.5rem;
+            /* gap-6 */
+        }
+
+        /* Flex items for labels with icons */
+        .flex-items-center-gap-2 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            /* gap-2 */
+            margin-bottom: 0.5rem;
+            /* mb-2 */
+        }
+
+        /* Button styling */
+        .btn-submit {
+            background-color: #4CAF50;
+            /* bg-success */
+            color: white;
+            border: none;
+            padding: 0.7rem 1.2rem;
+            border-radius: 0.7rem;
+            cursor: pointer;
+            font-size: 1.5rem;
+            margin-top: 1rem;
+            /* mt-4 */
+            display: block;
+            /* mx-auto */
+            margin-left: auto;
+            margin-right: auto;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-submit:hover {
+            background-color: #45a049;
+            /* Slightly darker green on hover */
+        }
+    </style>
 </head>
 
 <body>
+    <div class="page-wrapper toggled">
+        <!-- Start Page Content -->
+        <main class="bg-gray-50 dark:bg-slate-800"
+            style="height: fit-content; padding-top: 6rem; padding-bottom: 2rem;">
+            <div class="top-header" style="position: fixed; z-index: 999; top: 0; right: 0; left: 0;">
+                <div class=" header-bar flex justify-between">
+                    <div class="flex items-center space-x-1">
+                        <a href="#" class="block me-2">
+                            <img src="/../assets/admin/images/smk-bp.png" class="md:hidden block" alt="" width="40px">
+                            <span class="hidden md:block">
+                                <img src="/../assets/admin/images/logo-dark.png" class="inline-block dark:hidden" alt=""
+                                    width="200px">
+                                <img src="/../assets/admin/images/logo-light.png" class="hidden dark:inline-block"
+                                    alt="" width="200px">
+                            </span>
+                        </a>
+                    </div>
 
-    <div class="flex wrapper">
-        <%- include('../../components/sidebar_alumni') %>
-
-            <div class="page-content">
-                <%- include ('../../components/topbar_alumni') %>
-
-                    <main class="flex-grow p-6">
-                        <div class="fixed top-0 right-0 left-0 z-50 flex items-center justify-center">
-                            <% if (success_msg && success_msg.length> 0) { %>
-                                <div class="alert-success fixed bg-green-500 text-sm text-white rounded-md p-4 z-50 2xl:w-1/4 lg:w-1/3 w-3/4 mb-9 top-7"
-                                    role="alert">
-                                    <p>
-                                        <%= success_msg %>
-                                    </p>
-                                </div>
-                                <% } %>
-                                    <% if (error_msg && error_msg.length> 0) { %>
-                                        <div class="alert-error fixed bg-red-500 text-sm text-white rounded-md z-50 p-4 2xl:w-1/4 lg:w-1/3 w-3/4 mb-9 top-7"
-                                            role="alert">
-                                            <p>
-                                                <%= error_msg %>
-                                            </p>
-                                        </div>
-                                        <% } %>
-                        </div>
-
-                        <!-- Page Title Start -->
-                        <div class="flex items-center">
-                            <!-- button back -->
-                            <a href="/alumni" class="btn btn-ghost">
-                                <i
-                                    class="mgc_arrow_left_circle_line text-3xl text-slate-700 rtl:rotate-180 dark:text-slate-200"></i>
-
-                            </a>
-
-                            <h4 class="text-slate-700 dark:text-slate-200 text-lg font-medium">
-                                Profile
-                            </h4>
-                        </div>
-                        <!-- Page Title End -->
-
-                        <!-- Page Content Start -->
-                        <div class="grid grid-cols-1 gap-6 mt-3">
-                            <div class="col-span-12">
-                                <div class="card">
-                                    <div class="card-body p-6">
-                                        <div class="grid grid-cols-1 md:grid-cols-3  gap-6 mb-3 mt-3">
-                                            <div>
-                                                <p
-                                                    class="text-gray-800 text-sm font-medium inline-block mb-2 dark:text-slate-400">
-                                                    NISN</p>
-                                                <h2 class="dark:text-white">
-                                                    <%= alumni.nisn %>
-                                                </h2>
-                                            </div>
-
-                                            <div>
-                                                <p
-                                                    class="text-gray-800 text-sm font-medium inline-block mb-2 dark:text-slate-400">
-                                                    Nama</p>
-                                                <h2 class="dark:text-white">
-                                                    <%= alumni.nama %>
-                                                </h2>
-                                            </div>
-                                            <div>
-                                                <p
-                                                    class="text-gray-800 text-sm font-medium inline-block mb-2 dark:text-slate-400">
-                                                    Jenis Kelamin</p>
-                                                <h2 class="dark:text-white">
-                                                    <%= alumni.jenisKelamin %>
-                                                </h2>
-                                            </div>
-                                        </div>
-                                        <div class="mt-6 flex gap-3 w-full">
-                                            <button
-                                                class="btn bg-primary/25 text-primary hover:bg-primary hover:text-white"
-                                                data-fc-target="modal-edit" data-fc-type="modal" type="button">
-                                                Edit
-                                            </button>
-                                            <!-- modal edit -->
-                                            <div id="modal-edit"
-                                                class="w-full h-full mt-5 fixed top-0 left-0 z-50 transition-all duration-500 fc-modal hidden">
-                                                <div
-                                                    class="fc-modal-open:opacity-100 duration-500 opacity-0 ease-out transition-all sm:max-w-lg sm:w-full m-3 sm:mx-auto flex flex-col bg-white border shadow-sm rounded-md dark:bg-slate-800 dark:border-gray-700">
-                                                    <div
-                                                        class="flex justify-between items-center py-2.5 px-4 border-b dark:border-gray-700">
-                                                        <h3 class="font-medium text-gray-800 dark:text-white text-lg">
-                                                            Edit
-                                                        </h3>
-                                                        <button
-                                                            class="inline-flex flex-shrink-0 justify-center items-center h-8 w-8 dark:text-gray-200"
-                                                            data-fc-dismiss type="button">
-                                                            <span class="material-symbols-rounded">close</span>
-                                                        </button>
-                                                    </div>
-                                                    <form method="POST"
-                                                        action="/alumni/profile-edit/<%= alumni.nisn %>/?_method=PUT">
-                                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-3 px-4">
-                                                            <div class="md:col-span-2">
-                                                                <label for="nama"
-                                                                    class="text-gray-800 text-sm font-medium inline-block mb-2">Nama
-                                                                    <span class="text-red-500">*</span></label>
-                                                                <input type="text"
-                                                                    class="form-input text-black dark:text-white"
-                                                                    id="nama" placeholder="Masukkan Nama" required
-                                                                    name="nama" value="<%= alumni.nama %>">
-                                                            </div>
-                                                            <div>
-                                                                <div class="flex items-center gap-2 mb-2">
-                                                                    <label for="inputState"
-                                                                        class="text-gray-800 text-sm font-medium inline-block">Jenis
-                                                                        Kelamin <span
-                                                                            class="text-red-500">*</span></label></label>
-                                                                </div>
-                                                                <select id="inputState"
-                                                                    class="form-select focus:border-primary text-black dark:text-white"
-                                                                    name="jenisKelamin" required>
-                                                                    <option value="" disabled selected
-                                                                        class="text-black">
-                                                                        Pilih
-                                                                        Jenis Kelamin
-                                                                    </option>
-                                                                    <option value="Laki-laki" class="text-black" <% if
-                                                                        (alumni.jenisKelamin=='Laki-laki' ) { %>
-                                                                        selected <% } %>>
-                                                                            Laki-laki
-                                                                    </option>
-                                                                    <option value="Perempuan" class="text-black" <% if
-                                                                        (alumni.jenisKelamin=='Perempuan' ) { %>
-                                                                        selected <% } %>>
-                                                                            Perempuan
-                                                                    </option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-
-
-                                                        <div class="flex gap-3 mt-2">
-                                                            <div
-                                                                class="flex justify-end items-center gap-4 p-4 dark:border-slate-700">
-                                                                <button
-                                                                    class="btn dark:text-gray-200 border border-slate-200 dark:border-slate-700 hover:bg-slate-100 hover:dark:bg-slate-700 transition-all"
-                                                                    data-fc-dismiss type="button">Close</button>
-                                                                <button type="submit"
-                                                                    class="btn bg-success text-white">Save</button>
-                                                            </div>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
+                    <ul class="list-none mb-0 space-x-1">
+                        <li class="dropdown inline-block relative">
+                            <button data-dropdown-toggle="dropdown" class="dropdown-toggle items-center" type="button">
+                                <span
+                                    class="size-10 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-[20px] text-center bg-gray-50 dark:bg-slate-800 hover:bg-gray-100 dark:hover:bg-slate-700 border border-black dark:border-gray-800 text-slate-900 dark:text-white rounded-md"><img
+                                        src="/../assets/admin/images/profile-icon-light.png" class="rounded-md w-full"
+                                        alt="" style="cursor: pointer;"></span>
+                            </button>
+                            <div class="dropdown-menu absolute end-0 m-0 mt-4 z-10 w-44 rounded-md overflow-hidden bg-white dark:bg-slate-900 shadow-sm dark:shadow-gray-700 hidden"
+                                onclick="event.stopPropagation();">
+                                <ul class="py-2 text-start">
+                                    <li>
+                                        <a href="/alumni/profile"
+                                            class="block py-1 px-4 dark:text-white/70 hover:text-green-600 dark:hover:text-white"><i
+                                                class="mdi mdi-account-outline me-2"></i>Profile</a>
+                                    </li>
+                                    <li class="border-t border-gray-100 dark:border-gray-800 my-2"></li>
+                                    <li>
+                                        <a href="/logout"
+                                            class="block py-1 px-4 dark:text-white/70 hover:text-green-600 dark:hover:text-white"><i
+                                                class="mdi mdi-logout me-2"></i>Logout</a>
+                                    </li>
+                                </ul>
                             </div>
-                        </div>
-
-                    </main>
-
-                    <%- include('../../components/footer') %>
+                        </li>
+                    </ul>
+                </div>
             </div>
+            <div class="container-fluid relative px-3">
+                <div class="layout-specing">
+                </div>
+            </div>
+        </main>
 
     </div>
 
-    <!-- Back to Top Button -->
-    <button data-toggle="back-to-top"
-        class="fixed hidden h-10 w-10 items-center justify-center rounded-full z-10 bottom-20 translate-x-52 end-14 p-2.5 bg-primary cursor-pointer shadow-lg text-white">
-        <i class="mgc_arrow_up_line text-lg"></i>
-    </button>
+    <!-- alert -->
+    <div
+        style="position: fixed; top: 5rem; right: 0; left: 0; z-index: 50; display: flex; align-items: center; justify-content: center;">
+        <% if (success_msg && success_msg.length> 0) { %>
+            <div class="alert-success"
+                style="background-color: #4CAF50; color: white; border-radius: 0.375rem; padding: 1rem; margin-bottom: 2.25rem; width: 75%; max-width: 640px; font-size: 1.3rem; line-height: 1.25rem;"
+                role="alert">
+                <p style="margin: 0;">
+                    <%= success_msg %>
+                </p>
+            </div>
+            <% } %>
+                <% if (error_msg && error_msg.length> 0) { %>
+                    <div class="alert-error"
+                        style="background-color: #F44336; color: white; border-radius: 0.375rem; padding: 1rem; margin-bottom: 2.25rem; width: 75%; max-width: 640px; font-size: 1.3rem; line-height: 1.25rem;"
+                        role="alert">
+                        <p style="margin: 0;">
+                            <%= error_msg %>
+                        </p>
+                    </div>
+                    <% } %>
+    </div>
+    <script src="/../assets/admin/libs/feather-icons/feather.min.js"></script>
+    <script src="/../assets/admin/libs/simplebar/simplebar.min.js"></script>
+    <script src="/../assets/admin/js/plugins.init.js"></script>
+    <script src="/../assets/admin/js/app.js"></script>
 
-    <script>
-        // hide password
-        const password = document.getElementById('passwordDisplay').dataset.password;
-        const passwordDisplay = document.getElementById('passwordDisplay');
-        // Fungsi untuk menyembunyikan password dengan bintang
-        function hidePassword() {
-            passwordDisplay.textContent = '*'.repeat(password.length);
-        }
-
-        passwordDisplay.addEventListener('mouseover', () => {
-            passwordDisplay.textContent = password;
-        })
-
-        passwordDisplay.addEventListener('mouseout', () => {
-            hidePassword();
-        })
-
-        hidePassword();
-    </script>
-
-    <!-- Plugin Js -->
-    <!-- Apex Chart Plugin Js -->
-    <script src="../assets/libs/apexcharts/apexcharts.min.js"></script>
-
-    <!-- Apex Chart Demo Js -->
-    <script src="../assets/js/pages/charts-apex.js" type="text/javascript"></script>
-
-    <!-- Plugin Js -->
-    <script src="../assets/libs/simplebar/simplebar.min.js"></script>
-    <script src="../assets/libs/feather-icons/feather.min.js"></script>
-    <script src="../assets/libs/%40frostui/tailwindcss/frostui.js"></script>
-
-    <!-- App Js -->
-    <script src="../assets/js/app.js"></script>
 
     <script>
         const alertSuccess = document.querySelector('.alert-success');
@@ -244,7 +306,6 @@
             }, 2000);
         }
     </script>
-
 </body>
 
 </html>
