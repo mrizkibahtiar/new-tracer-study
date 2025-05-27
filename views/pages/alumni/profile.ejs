@@ -20,25 +20,11 @@
 
     <style>
         @media (min-width: 768px) {
-            .grid-container {
-                display: grid;
-                grid-template-columns: repeat(12, minmax(0, 1fr));
-                gap: 1.5rem;
-                /* Setara dengan gap-6 */
+            .profile {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
             }
-
-            .col-span-6 {
-                grid-column: span 6 / span 6;
-            }
-
-            .col-span-3 {
-                grid-column: span 3 / span 3;
-            }
-
-            .button-form {
-                flex-direction: row !important;
-            }
-
         }
 
         .grid-container {
@@ -68,152 +54,13 @@
         .logo-container img {
             vertical-align: middle;
         }
-
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            z-index: 9999;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.4);
-        }
-
-        .modal-content {
-            background-color: #fefefe;
-            margin: 5% auto;
-            /* Adjusted margin for better vertical centering on larger screens */
-            padding: 25px;
-            border: 1px solid #888;
-            width: 90%;
-            /* Responsive width */
-            max-width: 700px;
-            /* Max width for larger screens */
-            font-size: 1.1rem;
-            border-radius: 0.7rem;
-            position: relative;
-            /* Needed for close button positioning */
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-        }
-
-        .close-button {
-            color: #aaa;
-            float: right;
-            font-size: 34px;
-            font-weight: bold;
-            cursor: pointer;
-            position: absolute;
-            /* Position relative to modal-content */
-            right: 15px;
-            top: 10px;
-        }
-
-        .close-button:hover,
-        .close-button:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-label {
-            font-size: 1.5rem;
-            display: block;
-            margin-bottom: 5px;
-            color: #333;
-            /* text-gray-800 */
-            font-weight: 500;
-            /* font-medium */
-        }
-
-        .form-input,
-        .form-select,
-        .form-textarea {
-            width: 100%;
-            padding: 0.7rem;
-            margin-top: 5px;
-            margin-bottom: 10px;
-            box-sizing: border-box;
-            font-size: 1.1rem;
-            border: 1px solid #888;
-            border-radius: 10px;
-            color: #000;
-            /* text-black */
-            background-color: #fff;
-            /* default bg-white */
-        }
-
-        /* Styles for dynamic sections */
-        .dynamic-section {
-            display: none;
-            /* Hidden by default */
-            margin-top: 1.5rem;
-            /* Equivalent to mt-6 */
-            padding: 1.5rem;
-            /* Equivalent to p-6 */
-            background-color: #fefefe;
-            /* card background */
-            border-radius: 0.5rem;
-            /* rounded-lg */
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            /* box-shadow */
-        }
-
-        /* Grid for dynamic sections */
-        .dynamic-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            /* grid-cols-1 */
-            gap: 1.5rem;
-            /* gap-6 */
-        }
-
-        /* Flex items for labels with icons */
-        .flex-items-center-gap-2 {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            /* gap-2 */
-            margin-bottom: 0.5rem;
-            /* mb-2 */
-        }
-
-        /* Button styling */
-        .btn-submit {
-            background-color: #4CAF50;
-            /* bg-success */
-            color: white;
-            border: none;
-            padding: 0.7rem 1.2rem;
-            border-radius: 0.7rem;
-            cursor: pointer;
-            font-size: 1.5rem;
-            margin-top: 1rem;
-            /* mt-4 */
-            display: block;
-            /* mx-auto */
-            margin-left: auto;
-            margin-right: auto;
-            transition: background-color 0.3s ease;
-        }
-
-        .btn-submit:hover {
-            background-color: #45a049;
-            /* Slightly darker green on hover */
-        }
     </style>
 </head>
 
 <body>
     <div class="page-wrapper toggled">
         <!-- Start Page Content -->
-        <main class="bg-gray-50 dark:bg-slate-800"
-            style="height: fit-content; padding-top: 6rem; padding-bottom: 2rem;">
+        <main class="bg-gray-50 dark:bg-slate-800" style="height: 1000px; padding-top: 6rem; padding-bottom: 2rem;">
             <div class="top-header" style="position: fixed; z-index: 999; top: 0; right: 0; left: 0;">
                 <div class=" header-bar flex justify-between">
                     <div class="flex items-center space-x-1">
@@ -258,6 +105,48 @@
             </div>
             <div class="container-fluid relative px-3">
                 <div class="layout-specing">
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <a href="/alumni">
+                            <span class="mdi mdi-arrow-left-circle"
+                                style="font-size: 40px; margin-bottom: 10px; display: block;"></span>
+                        </a>
+                        <p style="color: black; font-size: 2rem; font-weight: bold; margin-bottom: 0.7rem;">
+                            Profil Alumni</p>
+                    </div>
+
+                    <div class="grid gap-6">
+                        <div class="grid-container">
+                            <div class="profile col-span-12 relative rounded-md p-6 overflow-hidden flex flex-col gap-4"
+                                style="background-image: linear-gradient(to right, #d4edda, #34d399);">
+
+                                <div>
+                                    <p class="text-gray-800 text-xl font-semibold mb-2">
+                                        NISN : <span class="font-normal">
+                                            <%= alumni.nisn %>
+                                        </span>
+                                    </p>
+                                    <p class="text-gray-800 text-xl font-semibold mb-2">
+                                        Nama : <span class="font-normal">
+                                            <%= alumni.nama %>
+                                        </span>
+                                    </p>
+                                </div>
+
+                                <div class="profile md:flex" style="gap: 1rem;">
+                                    <button class="cursor-pointer editProfilBtn"
+                                        style="display: inline-block; background-color: #fff; color: #16a34a; font-weight: 600; padding: 0.5rem 1rem; border-radius: 0.5rem; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.05); transition: background-color 0.3s ease;"
+                                        data-id="<%= alumni._id %>" data-nama="<%= alumni.nama %>"
+                                        data-email="<%= alumni.email %>" data-nisn="<%= alumni.nisn %>">
+                                        Edit Profil
+                                    </button>
+                                    <button class="cursor-pointer gantiPasswordBtn"
+                                        style="display: inline-block; background-color: #fff; color: #16a34a; font-weight: 600; padding: 0.5rem 1rem; border-radius: 0.5rem; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.05); transition: background-color 0.3s ease;">
+                                        Ganti Password
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
