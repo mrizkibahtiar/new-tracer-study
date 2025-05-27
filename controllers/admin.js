@@ -12,8 +12,16 @@ const Berwirausaha = require('../models/berwirausaha');
 const Feedback = require('../models/feedback');
 const fs = require('fs');
 const path = require('path');
+const nodemailer = require('nodemailer');
 
 
+const transporter = nodemailer.createTransport({
+    service: 'gmail', // Atau 'SendGrid', 'Mailgun', dll.
+    auth: {
+        user: 'your_email@gmail.com', // Email pengirim
+        pass: 'your_app_password_or_email_password' // Password aplikasi atau password email Anda
+    }
+});
 
 
 module.exports = {
@@ -724,5 +732,102 @@ module.exports = {
             req.flash('error_msg', 'Gagal menghapus saran');
             res.redirect('/admin/saran');
         }
-    }
+    }, showForgotPasswordForm: async function (req, res) {
+        res.render('admin/forgot-password');
+    }, sendResetPasswordLink: async function (req, res) {
+        try {
+            const { email } = req.body;
+            const admin = await Admin.findOne({ email: email });
+
+            if (!admin) {
+                req.flash('error_msg', 'Email tidak terdaftar.');
+                return res.redirect('/admin/forgot-password');
+            }
+
+            // 1. Buat token reset password
+            const resetToken = crypto.randomBytes(20).toString('hex');
+            // 2. Simpan token dan waktu kedaluwarsa di database (misal: 1 jam dari sekarang)
+            admin.resetPasswordToken = resetToken;
+            admin.resetPasswordExpires = Date.now() + 3600000; // 1 jam
+            await admin.save();
+
+            // 3. Buat URL reset password
+            const resetUrl = `http://${req.headers.host}/admin/reset-password/${resetToken}`;
+
+            // 4. Kirim email
+            const mailOptions = {
+                to: admin.email,
+                from: 'your_email@gmail.com', // Harus sama dengan user di transporter.auth
+                subject: 'Reset Password Akun Admin Anda',
+                html: `Anda menerima email ini karena (Anda atau orang lain) telah meminta reset password untuk akun Anda.<br>
+                       Silakan klik tautan berikut, atau salin dan tempel di browser Anda untuk menyelesaikan proses:<br><br>
+                       <a href="${resetUrl}">${resetUrl}</a><br><br>
+                       Tautan ini akan kedaluwarsa dalam satu jam.<br>
+                       Jika Anda tidak meminta ini, abaikan email ini dan password Anda akan tetap tidak berubah.`
+            };
+
+            await transporter.sendMail(mailOptions);
+
+            req.flash('success_msg', 'Tautan reset password telah dikirim ke email Anda.');
+            res.redirect('/admin/forgot-password');
+
+        } catch (error) {
+            console.error("Error sending reset password link:", error);
+            req.flash('error_msg', 'Terjadi kesalahan saat mengirim tautan reset password.');
+            res.redirect('/admin/forgot-password');
+        }
+
+    }, showResetPasswordForm: async function (req, res) {
+        try {
+            const admin = await Admin.findOne({
+                resetPasswordToken: req.params.token,
+                resetPasswordExpires: { $gt: Date.now() } // $gt: greater than (lebih dari)
+            });
+
+            if (!admin) {
+                req.flash('error_msg', 'Tautan reset password tidak valid atau telah kedaluwarsa.');
+                return res.redirect('/admin/forgot-password');
+            }
+
+            res.render('admin/resetPassword', { token: req.params.token }); // Sesuaikan dengan path file EJS/HTML Anda
+        } catch (error) {
+            console.error("Error showing reset password form:", error);
+            req.flash('error_msg', 'Terjadi kesalahan.');
+            res.redirect('/admin/forgot-password');
+        }
+    }, resetPassword: async function (req, res) {
+        try {
+            const { newPassword, confirmNewPassword } = req.body;
+
+            // Validasi password baru (harus sama)
+            if (newPassword !== confirmNewPassword) {
+                req.flash('error_msg', 'Password baru dan konfirmasi password tidak cocok.');
+                return res.redirect(`/admin/reset-password/${req.params.token}`);
+            }
+
+            const admin = await Admin.findOne({
+                resetPasswordToken: req.params.token,
+                resetPasswordExpires: { $gt: Date.now() }
+            });
+
+            if (!admin) {
+                req.flash('error_msg', 'Tautan reset password tidak valid atau telah kedaluwarsa.');
+                return res.redirect('/admin/forgot-password');
+            }
+
+            // Hash password baru dan update
+            admin.password = await bcrypt.hash(newPassword.trim(), 10);
+            admin.resetPasswordToken = undefined; // Hapus token
+            admin.resetPasswordExpires = undefined; // Hapus waktu kedaluwarsa
+            await admin.save();
+
+            req.flash('success_msg', 'Password Anda berhasil direset. Silakan login dengan password baru.');
+            res.redirect('/loginAdmin'); // Atau halaman login admin Anda
+
+        } catch (error) {
+            console.error("Error resetting password:", error);
+            req.flash('error_msg', 'Terjadi kesalahan saat mereset password.');
+            res.redirect(`/admin/reset-password/${req.params.token}`); // Redirect kembali ke form reset dengan token yang sama
+        }
+    },
 }
