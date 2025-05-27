@@ -8,8 +8,8 @@ const { isAlumni } = require('../middleware/auth');
 router.get('/alumni', isAlumni, userController.index);
 router.get('/alumni/profile', isAlumni, userController.profile);
 
-router.put('/alumni/profile-edit/:nisn', isAlumni, userController.profileUpdate);
-router.put('/alumni/profile-edit/password/:nisn', isAlumni, userController.profileUpdatePassword);
+router.post('/alumni/update-profile', isAlumni, userController.profileUpdate);
+router.post('/alumni/update-password', isAlumni, userController.profileUpdatePassword);
 
 router.post('/alumni/submit-tracer-study', isAlumni, userController.saveForm)
 router.post('/alumni/update-tracer-study', isAlumni, userController.updateForm)

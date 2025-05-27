@@ -31,29 +31,71 @@ module.exports = {
         }
     },
     profileUpdate: async function (req, res) {
-        const { nisn } = req.params;
-        const { nama, jenisKelamin } = req.body;
-        const alumni = await Alumni.findOneAndUpdate({ nisn: nisn }, { nama: nama, jenisKelamin: jenisKelamin }, { new: true });
-        req.flash('success_msg', 'Profil berhasil diperbarui!');
-        return res.redirect('/alumni/profile');
+        try {
+            const { nisn } = req.session.user;
+            const { nama, jenisKelamin } = req.body;
+
+            const alumni = await Alumni.findOneAndUpdate(
+                { nisn: nisn },
+                { nama: nama, jenisKelamin: jenisKelamin },
+                { new: true }
+            );
+
+            if (!alumni) {
+                req.flash('error_msg', 'Alumni tidak ditemukan.');
+                return res.redirect('/alumni/profile');
+            }
+
+            req.flash('success_msg', 'Profil berhasil diperbarui!');
+            return res.redirect('/alumni/profile');
+        } catch (error) {
+            console.error("Error updating profile:", error);
+            req.flash('error_msg', 'Terjadi kesalahan saat memperbarui profil.');
+            return res.redirect('/alumni/profile');
+        }
     },
     profileUpdatePassword: async function (req, res) {
-        const { nisn } = req.params;
-        const { passwordLama, passwordBaru, confirmPassword } = req.body;
-        const alumni = await Alumni.findOne({ nisn: nisn });
-        const isPasswordValid = await bcrypt.compare(passwordLama.trim(), alumni.password);
-        if (!isPasswordValid) {
-            req.flash('error_msg', 'Password lama salah.');
+        try {
+            const { nisn } = req.session.user;
+            const { oldPassword, newPassword, confirmNewPassword } = req.body; // Pastikan ini sesuai dengan name di form HTML
+
+            const alumni = await Alumni.findOne({ nisn: nisn });
+
+            if (!alumni) {
+                req.flash('error_msg', 'Alumni tidak ditemukan.');
+                return res.redirect('/alumni/profile');
+            }
+
+            // Cek password lama
+            const isPasswordValid = await bcrypt.compare(oldPassword.trim(), alumni.password);
+            if (!isPasswordValid) {
+                req.flash('error_msg', 'Password lama salah.');
+                return res.redirect('/alumni/profile');
+            }
+
+            // Cek konfirmasi password baru
+            if (newPassword !== confirmNewPassword) {
+                req.flash('error_msg', 'Password baru dan konfirmasi password tidak cocok.');
+                return res.redirect('/alumni/profile');
+            }
+
+            if (newPassword.length < 8) {
+                req.flash('error_msg', 'Password baru minimal 8 karakter.');
+                return res.redirect('/alumni/profile');
+            }
+
+            const hashedPassword = await bcrypt.hash(newPassword.trim(), 10);
+
+            await Alumni.findOneAndUpdate({ nisn: nisn }, { password: hashedPassword }, { new: true });
+
+            req.flash('success_msg', 'Password berhasil diperbarui!');
+            return res.redirect('/alumni/profile');
+
+        } catch (error) {
+            console.error("Error updating password:", error);
+            req.flash('error_msg', 'Terjadi kesalahan saat memperbarui password.');
             return res.redirect('/alumni/profile');
         }
-        if (passwordBaru !== confirmPassword) {
-            req.flash('error_msg', 'Password dan konfirmasi password tidak cocok.');
-            return res.redirect('/alumni/profile');
-        }
-        const hashedPassword = await bcrypt.hash(passwordBaru.trim(), 10);
-        await Alumni.findOneAndUpdate({ nisn: nisn }, { password: hashedPassword }, { new: true });
-        req.flash('success_msg', 'Password berhasil diperbarui!');
-        return res.redirect('/alumni/profile');
     },
     saveForm: async function (req, res) {
         try {
