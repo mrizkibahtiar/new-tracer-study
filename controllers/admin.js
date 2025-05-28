@@ -801,6 +801,46 @@ module.exports = {
         try {
             const { newPassword, confirmNewPassword } = req.body;
 
+            if (newPassword !== confirmNewPassword) {
+                req.flash('error_msg', 'Password baru dan konfirmasi password tidak cocok.');
+                return res.redirect(`/reset-password/${req.params.token}`);
+            }
+
+            const admin = await Admin.findOne({
+                resetPasswordToken: req.params.token,
+                resetPasswordExpires: { $gt: Date.now() }
+            });
+
+            if (!admin) {
+                req.flash('error_msg', 'Tautan reset password tidak valid atau telah kedaluwarsa.');
+                return res.redirect('/forgot-password');
+            }
+
+            // --- Perubahan PENTING di SINI ---
+            // HASH PASSWORD SECARA MANUAL SEBELUM MENYIMPANYA
+            const hashedPassword = await bcrypt.hash(newPassword.trim(), 10);
+            admin.password = hashedPassword; // Set password yang sudah di-hash
+            // --- Akhir Perubahan PENTING ---
+
+            admin.resetPasswordToken = undefined; // Hapus token
+            admin.resetPasswordExpires = undefined; // Hapus waktu kedaluwarsa
+            await admin.save(); // Sekarang ini hanya akan menyimpan, tidak akan re-hash lagi karena sudah di-hash manual
+
+            // Tambahkan log untuk melihat password yang baru di-hash dan disimpan
+            console.log("Password baru setelah di-hash dan disimpan:", hashedPassword);
+
+            req.flash('success_msg', 'Password Anda berhasil direset. Silakan login dengan password baru.');
+            res.redirect('/loginAdmin');
+
+        } catch (error) {
+            console.error("Error resetting password:", error);
+            req.flash('error_msg', 'Terjadi kesalahan saat mereset password.');
+            res.redirect(`/reset-password/${req.params.token}`);
+        }
+    }, resetPassword: async function (req, res) {
+        try {
+            const { newPassword, confirmNewPassword } = req.body;
+
             // Validasi password baru (harus sama)
             if (newPassword !== confirmNewPassword) {
                 req.flash('error_msg', 'Password baru dan konfirmasi password tidak cocok.');

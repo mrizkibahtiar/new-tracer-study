@@ -40,42 +40,34 @@ module.exports = {
     },
     AdminLogin: async (req, res) => {
         const { email, password } = req.body;
-
         try {
-            // 1. Cari admin berdasarkan email (trim email yang dimasukkan)
             const admin = await Admin.findOne({ email: email.trim() });
 
-            // 2. Jika admin tidak ditemukan (email salah)
             if (!admin) {
-                req.flash('error_msg', 'Email atau password salah!'); // Pesan umum untuk keamanan
-                return res.redirect('/loginAdmin'); // Redirect ke halaman login
+                console.log("7. Error: Email tidak terdaftar.");
+                req.flash('error_msg', 'Email atau password salah!');
+                return res.redirect('/loginAdmin');
             }
 
-            // 3. Jika admin ditemukan, bandingkan password
-            // PENTING: Gunakan .trim() pada password yang dimasukkan pengguna
             const isPasswordValid = await bcrypt.compare(password.trim(), admin.password);
+            console.log("12. Hasil bcrypt.compare (isPasswordValid):", isPasswordValid);
 
             if (isPasswordValid) {
-                // 4. Jika password cocok, buat sesi login
-                // Pastikan admin.toObject() jika Anda ingin mengakses properti non-virtual
                 req.session.user = {
                     id: admin._id,
                     email: admin.email,
-                    nama: admin.nama, // Tambahkan properti nama jika relevan
-                    role: 'admin' // Contoh: tambahkan role
+                    nama: admin.nama,
+                    role: 'admin'
                 };
-                req.session.save() //seringkali tidak perlu jika Anda langsung melakukan redirect
-
                 req.flash('success_msg', 'Login berhasil!');
-                return res.redirect('/admin'); // Redirect ke dashboard admin
-
+                return res.redirect('/admin');
             } else {
-                req.flash('error_msg', 'Email atau password salah!'); // Pesan umum untuk keamanan
-                return res.redirect('/loginAdmin'); // Redirect ke halaman login
+                req.flash('error_msg', 'Email atau password salah!');
+                return res.redirect('/loginAdmin');
             }
 
         } catch (error) {
-            console.error("Error during admin login:", error);
+            console.error('Login Error:', error);
             req.flash('error_msg', 'Terjadi kesalahan saat login. Silakan coba lagi.');
             return res.redirect('/loginAdmin');
         }
