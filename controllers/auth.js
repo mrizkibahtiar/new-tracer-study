@@ -40,26 +40,44 @@ module.exports = {
     },
     AdminLogin: async (req, res) => {
         const { email, password } = req.body;
-        // Cari admin berdasarkan email
-        const admin = await Admin.findOne({ email: email.trim() });
 
-        // Jika user tidak ditemukan
-        if (!admin) {
-            return res.render('pages/login_admin', { error: 'Email atau Password salah!' });
-        }
+        try {
+            // 1. Cari admin berdasarkan email (trim email yang dimasukkan)
+            const admin = await Admin.findOne({ email: email.trim() });
 
-
-        if (admin) {
-            const isPasswordValid = await bcrypt.compare(password.trim(), admin.password);
-            if (isPasswordValid) {
-                req.session.user = { ...admin.toObject(), role: 'admin', adminId: admin._id };
-                req.session.save();
-                return res.redirect('/admin');
-            } else {
-                return res.render('pages/login_admin', { error: 'Password Salah!' });
+            // 2. Jika admin tidak ditemukan (email salah)
+            if (!admin) {
+                req.flash('error_msg', 'Email atau password salah!'); // Pesan umum untuk keamanan
+                return res.redirect('/loginAdmin'); // Redirect ke halaman login
             }
-        } else {
-            return res.render('pages/login_admin', { error: 'Admin tidak ditemukan' });
+
+            // 3. Jika admin ditemukan, bandingkan password
+            // PENTING: Gunakan .trim() pada password yang dimasukkan pengguna
+            const isPasswordValid = await bcrypt.compare(password.trim(), admin.password);
+
+            if (isPasswordValid) {
+                // 4. Jika password cocok, buat sesi login
+                // Pastikan admin.toObject() jika Anda ingin mengakses properti non-virtual
+                req.session.user = {
+                    id: admin._id,
+                    email: admin.email,
+                    nama: admin.nama, // Tambahkan properti nama jika relevan
+                    role: 'admin' // Contoh: tambahkan role
+                };
+                req.session.save() //seringkali tidak perlu jika Anda langsung melakukan redirect
+
+                req.flash('success_msg', 'Login berhasil!');
+                return res.redirect('/admin'); // Redirect ke dashboard admin
+
+            } else {
+                req.flash('error_msg', 'Email atau password salah!'); // Pesan umum untuk keamanan
+                return res.redirect('/loginAdmin'); // Redirect ke halaman login
+            }
+
+        } catch (error) {
+            console.error("Error during admin login:", error);
+            req.flash('error_msg', 'Terjadi kesalahan saat login. Silakan coba lagi.');
+            return res.redirect('/loginAdmin');
         }
     },
     logout: async (req, res) => {

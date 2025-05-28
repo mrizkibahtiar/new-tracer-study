@@ -44,9 +44,9 @@ router.post('/admin/update-password', isAdmin, adminController.profileUpdatePass
 module.exports = router;
 
 // Halaman lupa password (form input email)
-router.get('/forgot-password', isAdmin, adminController.showForgotPasswordForm);
-router.post('/forgot-password', isAdmin, adminController.sendResetPasswordLink);
+router.get('/forgot-password', adminController.showForgotPasswordForm);
+router.post('/forgot-password', adminController.sendResetPasswordLink);
 
 // Halaman reset password (form input password baru dengan token)
-router.get('/reset-password/:token', isAdmin, adminController.showResetPasswordForm);
-router.post('/reset-password/:token', isAdmin, adminController.resetPassword);
+router.get('/reset-password/:token', adminController.showResetPasswordForm);
+router.post('/reset-password/:token', adminController.resetPassword);
