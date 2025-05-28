@@ -349,8 +349,8 @@ module.exports = {
         }
     },
     profile: async function (req, res) {
-        const { adminId } = req.session.user;
-        const admin = await Admin.findOne({ _id: adminId });
+        const { id } = req.session.user;
+        const admin = await Admin.findOne({ _id: id });
         return res.render('pages/admin/profile', { admin: admin });
     },
     // Asumsikan Admin model sudah di-require
