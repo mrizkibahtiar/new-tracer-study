@@ -207,6 +207,14 @@
                         </div>
 
                         <div style="text-align: right;">
+                            <button type="button" id="batalModalBtn" style="background-color: #f44336;
+                            color: white;
+                            border: none;
+                            padding: 0.7rem 1.2rem;
+                            border-radius: 0.7rem;
+                            cursor: pointer;
+                            font-size: 1.2rem;
+                            margin-right: 10px;">Batal</button>
                             <button type="submit"
                                 style="background-color: #4CAF50; color: white; border: none; padding: 0.7rem 1.2rem; border-radius: 0.7rem; cursor: pointer; font-size: 1.2rem;">
                                 Simpan
@@ -536,6 +544,7 @@
         const tambahAlumniBtn = document.getElementById("tambahAlumniBtn");
         const tambahAlumniModal = document.getElementById("tambahAlumniModal");
         const closeModalBtn = document.getElementById("closeModalBtn");
+        const btnBatal = document.getElementById("batalModalBtn");
         const formTambahAlumni = document.getElementById("formTambahAlumni");
         const alumniTableElement = document.getElementById("table-gridjs");
 
@@ -548,6 +557,10 @@
         closeModalBtn.onclick = function () {
             tambahAlumniModal.style.display = "none";
         }
+
+        btnBatal.addEventListener("click", () => {
+            tambahAlumniModal.style.display = "none";
+        });
 
         // Fungsi untuk menutup modal saat area di luar modal diklik
         window.onclick = function (event) {
