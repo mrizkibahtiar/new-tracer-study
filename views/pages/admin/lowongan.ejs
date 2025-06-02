@@ -221,6 +221,14 @@
                             style="margin-top: 5px; margin-bottom: 10px">
                     </div>
                     <div style="text-align: right;">
+                        <button type="button" id="batalModalBtn" style="background-color: #f44336;
+                            color: white;
+                            border: none;
+                            padding: 0.7rem 1.2rem;
+                            border-radius: 0.7rem;
+                            cursor: pointer;
+                            font-size: 1.2rem;
+                            margin-right: 10px;">Batal</button>
                         <button type="submit"
                             style="background-color: #4CAF50; color: white; border: none; padding: 0.7rem 1.2rem; border-radius: 0.7rem; cursor: pointer; font-size: 1.2rem;">Simpan</button>
                     </div>
@@ -257,6 +265,14 @@
                             style="margin-top: 5px; margin-bottom: 10px">
                     </div>
                     <div style="text-align: right;">
+                        <button type="button" id="batalModalBtnEdit" style="background-color: #f44336;
+                            color: white;
+                            border: none;
+                            padding: 0.7rem 1.2rem;
+                            border-radius: 0.7rem;
+                            cursor: pointer;
+                            font-size: 1.2rem;
+                            margin-right: 10px;">Batal</button>
                         <button type="submit"
                             style="background-color: #4CAF50; color: white; border: none; padding: 0.7rem 1.2rem; border-radius: 0.7rem; cursor: pointer; font-size: 1.2rem;">Simpan</button>
                     </div>
@@ -359,10 +375,11 @@
     <!-- modal edit lowongan -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const editButtons = document.querySelectorAll('[id^="editLowonganBtn"]');
+            const editButtons = document.querySelectorAll('[id="editLowonganBtn"]');
             const modal = document.getElementById('modalEditLowongan');
-            const closeModalBtn = document.getElementById('closeModalBtn'); // Changed to closeModalBtn
-            const batalModalBtn = document.getElementById('batalModalBtn');
+            const modalContent = document.getElementById('modalEditBeritaContent');
+            const closeModalBtn = document.getElementById('closeModalBtn');
+            const batalModalBtn = document.getElementById('batalModalBtnEdit');
             const formEditLowongan = document.getElementById('formEditLowongan');
 
             editButtons.forEach(button => {
