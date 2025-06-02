@@ -359,9 +359,9 @@
     <!-- modal edit berita -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const editButtons = document.querySelectorAll('[id^="editBeritaBtn"]');
+            const editButtons = document.querySelectorAll('[id="editBeritaBtn"]');
             const modal = document.getElementById('modalEditBerita');
-            const closeModalBtn = document.getElementById('closeModalBtn'); // Changed to closeModalBtn
+            const closeModalBtn = document.getElementById('closeModalBtn')
             const batalModalBtn = document.getElementById('batalModalBtn');
             const formEditBerita = document.getElementById('formEditBerita');
 
@@ -392,7 +392,8 @@
                 modal.style.display = "none";
             });
 
-            window.addEventListener('click', (event) => {
+
+            modal.addEventListener('click', (event) => {
                 if (event.target === modal) {
                     modal.style.display = "none";
                 }

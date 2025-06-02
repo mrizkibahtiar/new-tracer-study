@@ -499,9 +499,7 @@
 
         // Event listener for clicks outside the modal content
         document.getElementById("editAlumniModal").addEventListener("click", function (e) {
-            const modalContent = document.getElementById('editAlumniModalContent'); // Get the modal content element
-            // Jika yang diklik adalah latar hitam (overlay), tutup modal
-            // Pastikan event.target adalah modal itu sendiri, bukan elemen anak di dalamnya
+            const modalContent = document.getElementById('editAlumniModalContent');
             if (e.target === this || (modalContent && !modalContent.contains(e.target))) {
                 this.style.display = "none";
             }
