@@ -25,6 +25,8 @@
             }
         }
     </style>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 
 <body>
@@ -198,10 +200,10 @@
                             placeholder="Masukkan email">
                     </div>
                     <div style="text-align: right;">
+                        <button type="button" id="batalEditProfilModalBtn"
+                            style="background-color: #f44336; color: white; border: none; padding: 0.7rem 1.2rem; border-radius: 0.7rem; cursor: pointer; font-size: 1.2rem; margin-right: 0.5rem;">Batal</button>
                         <button type="submit"
                             style="background-color: #4CAF50; color: white; border: none; padding: 0.7rem 1.2rem; border-radius: 0.7rem; cursor: pointer; font-size: 1.2rem;">Simpan</button>
-                        <button type="button" id="batalEditProfilModalBtn"
-                            style="background-color: #f44336; color: white; border: none; padding: 0.7rem 1.2rem; border-radius: 0.7rem; cursor: pointer; font-size: 1.2rem; margin-left: 0.5rem;">Batal</button>
                     </div>
                 </form>
             </div>
@@ -218,28 +220,52 @@
                 <form id="formGantiPassword" method="post" action="/admin/update-password" style="font-size: 1.1rem;">
                     <div style="margin-bottom: 15px;">
                         <label for="oldPassword" style="font-size: 1.2rem;">Password Lama:</label><br>
-                        <input type="password" id="oldPassword" name="oldPassword" required
-                            style="width: 100%; padding: 0.7rem; margin-top: 5px; margin-bottom: 10px; box-sizing: border-box; font-size: 1.1rem; border: 1px solid #888; border-radius: 0.7rem;"
-                            placeholder="Masukkan password lama">
+                        <div style="position: relative; width: 100%;"> <input type="password" id="oldPassword"
+                                name="oldPassword" required
+                                style="width: 100%; padding: 0.7rem; margin-top: 5px; margin-bottom: 10px; box-sizing: border-box; font-size: 1.1rem; border: 1px solid #888; border-radius: 0.7rem; padding-right: 2.5rem;"
+                                placeholder="Masukkan password lama">
+                            <span class="material-symbols-rounded eye-icon"
+                                style="position: absolute; right: 10px; top: 45%; transform: translateY(-50%); cursor: pointer; color: #888;"
+                                id="toggleOldPasswordBtn">
+                                visibility
+                            </span>
+                        </div>
                     </div>
+
                     <div style="margin-bottom: 15px;">
                         <label for="newPassword" style="font-size: 1.2rem;">Password Baru:</label><br>
-                        <input type="password" id="newPassword" name="newPassword" required
-                            style="width: 100%; padding: 0.7rem; margin-top: 5px; margin-bottom: 10px; box-sizing: border-box; font-size: 1.1rem; border: 1px solid #888; border-radius: 0.7rem;"
-                            placeholder="Masukkan password baru">
+                        <div style="position: relative; width: 100%;"> <input type="password" id="newPassword"
+                                name="newPassword" required
+                                style="width: 100%; padding: 0.7rem; margin-top: 5px; margin-bottom: 10px; box-sizing: border-box; font-size: 1.1rem; border: 1px solid #888; border-radius: 0.7rem; padding-right: 2.5rem;"
+                                placeholder="Masukkan password baru">
+                            <span class="material-symbols-rounded eye-icon"
+                                style="position: absolute; right: 10px; top: 45%; transform: translateY(-50%); cursor: pointer; color: #888;"
+                                id="toggleNewPasswordBtn">
+                                visibility
+                            </span>
+                        </div>
                     </div>
+
                     <div style="margin-bottom: 15px;">
                         <label for="confirmNewPassword" style="font-size: 1.2rem;">Konfirmasi Password Baru:</label><br>
-                        <input type="password" id="confirmNewPassword" name="confirmNewPassword" required
-                            style="width: 100%; padding: 0.7rem; margin-top: 5px; margin-bottom: 10px; box-sizing: border-box; font-size: 1.1rem; border: 1px solid #888; border-radius: 0.7rem;"
-                            placeholder="Konfirmasi password baru">
+                        <div style="position: relative; width: 100%;"> <input type="password" id="confirmNewPassword"
+                                name="confirmNewPassword" required
+                                style="width: 100%; padding: 0.7rem; margin-top: 5px; margin-bottom: 10px; box-sizing: border-box; font-size: 1.1rem; border: 1px solid #888; border-radius: 0.7rem; padding-right: 2.5rem;"
+                                placeholder="Konfirmasi password baru">
+                            <span class="material-symbols-rounded eye-icon"
+                                style="position: absolute; right: 10px; top: 45%; transform: translateY(-50%); cursor: pointer; color: #888;"
+                                id="toggleConfirmNewPasswordBtn">
+                                visibility
+                            </span>
+                        </div>
                     </div>
+
                     <div style="text-align: right;">
+                        <button type="button" id="batalGantiPasswordModalBtn"
+                            style="background-color: #f44336; color: white; border: none; padding: 0.7rem 1.2rem; border-radius: 0.7rem; cursor: pointer; font-size: 1.2rem; margin-right: 0.5rem;">Batal</button>
                         <button type="submit"
                             style="background-color: #4CAF50; color: white; border: none; padding: 0.7rem 1.2rem; border-radius: 0.7rem; cursor: pointer; font-size: 1.2rem;">Ganti
                             Password</button>
-                        <button type="button" id="batalGantiPasswordModalBtn"
-                            style="background-color: #f44336; color: white; border: none; padding: 0.7rem 1.2rem; border-radius: 0.7rem; cursor: pointer; font-size: 1.2rem; margin-left: 0.5rem;">Batal</button>
                     </div>
                 </form>
             </div>
@@ -305,7 +331,6 @@
             const editProfilIdInput = document.getElementById('editProfilId'); // Hidden ID input
 
             // --- Elemen untuk Modal Ganti Password ---
-            // Mengubah querySelector menjadi querySelectorAll karena ada potensi banyak elemen dengan kelas ini
             const gantiPasswordBtns = document.querySelectorAll('.gantiPasswordBtn');
             const modalGantiPassword = document.getElementById('modalGantiPassword');
             const closeGantiPasswordModalBtn = document.getElementById('closeGantiPasswordModalBtn');
@@ -369,7 +394,47 @@
                 }
             });
         });
+    </script>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Ambil referensi ke semua input password dan tombol togglenya
+            const oldPasswordInput = document.getElementById('oldPassword');
+            const toggleOldPasswordBtn = document.getElementById('toggleOldPasswordBtn');
+
+            const newPasswordInput = document.getElementById('newPassword');
+            const toggleNewPasswordBtn = document.getElementById('toggleNewPasswordBtn');
+
+            const confirmNewPasswordInput = document.getElementById('confirmNewPassword');
+            const toggleConfirmNewPasswordBtn = document.getElementById('toggleConfirmNewPasswordBtn');
+
+            // Fungsi reusable untuk toggle password
+            function setupPasswordToggle(inputElement, toggleButton) {
+                if (inputElement && toggleButton) { // Pastikan elemen ditemukan
+                    toggleButton.addEventListener('click', () => {
+                        // Cek tipe input saat ini
+                        const type = inputElement.getAttribute('type') === 'password' ? 'text' : 'password';
+                        inputElement.setAttribute('type', type);
+
+                        // Ganti ikon sesuai dengan status (visibility / visibility_off)
+                        if (type === 'password') {
+                            toggleButton.textContent = 'visibility';
+                        } else {
+                            toggleButton.textContent = 'visibility_off';
+                        }
+                    });
+                } else {
+                    console.error("Elemen input atau toggle button tidak ditemukan untuk setup password toggle.");
+                }
+            }
+
+            // Setup toggle untuk setiap input password
+            setupPasswordToggle(oldPasswordInput, toggleOldPasswordBtn);
+            setupPasswordToggle(newPasswordInput, toggleNewPasswordBtn);
+            setupPasswordToggle(confirmNewPasswordInput, toggleConfirmNewPasswordBtn);
+
+            // ... (Kode JavaScript lainnya yang sudah ada) ...
+        });
     </script>
 </body>
 
