@@ -1,16 +1,23 @@
 {
   "name": "tracer-study",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "Aplikasi web untuk tracer study, dibangun dengan Node.js, Express, dan MongoDB.",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build:css": "npx tailwindcss -i ./public/styles/tailwind.css -o ./public/styles/style.css --watch",
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "node server.js",
+    "build:css": "npx tailwindcss -i ./public/styles/tailwind.css -o ./public/styles/style.css --minify",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "tracer-study",
+    "node.js",
+    "express",
+    "mongodb",
+    "tailwindcss"
+  ],
+  "author": "Nama Anda atau Organisasi",
   "license": "ISC",
-  "description": "",
   "dependencies": {
     "autoprefixer": "^10.4.20",
     "bcrypt": "^5.1.1",
@@ -18,7 +25,6 @@
     "connect-mongodb-session": "^5.0.0",
     "dotenv": "^16.4.7",
     "ejs": "^3.1.10",
-    "ejs-lint": "^2.0.0",
     "express": "^4.21.0",
     "express-session": "^1.18.1",
     "express-validator": "^7.2.1",
@@ -27,7 +33,8 @@
     "mongoose": "^8.9.0",
     "multer": "^1.4.5-lts.2",
     "nodemailer": "^7.0.3",
-    "request": "^2.88.2"
+    "request": "^2.88.2",
+    "postcss": "^8.4.38"
   },
   "devDependencies": {
     "tailwindcss": "^3.4.13"
