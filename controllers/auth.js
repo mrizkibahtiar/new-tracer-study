@@ -86,7 +86,7 @@ module.exports = {
             } else if (req.session.user.role === 'admin') {
                 // Jika pengguna adalah admin (dan mencoba mengakses halaman login alumni),
                 // redirect ke dashboard admin
-                return res.redirect('/admin/dashboard'); // Sesuaikan dengan route dashboard admin Anda
+                return res.redirect('/admin'); // Sesuaikan dengan route dashboard admin Anda
             }
         }
         res.render('pages/login'); // Asumsi Anda memiliki file login.ejs untuk alumni
