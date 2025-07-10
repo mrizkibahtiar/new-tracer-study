@@ -28,7 +28,7 @@ const transporter = nodemailer.createTransport({
 module.exports = {
     index: async function (req, res) {
         if (!req.session.user) {
-            return res.redirect('/loginPage'); // Redirect ke halaman login jika user belum login
+            return res.redirect('/loginAdmin'); // Redirect ke halaman login jika user belum login
         }
 
         try {

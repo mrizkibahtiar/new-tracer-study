@@ -96,7 +96,7 @@ module.exports = {
             // Jika ada sesi, periksa peran pengguna
             if (req.session.user.role === 'admin') {
                 // Jika pengguna adalah admin, redirect ke dashboard admin
-                return res.redirect('/admin/dashboard'); // Sesuaikan dengan route dashboard admin Anda
+                return res.redirect('/admin'); // Sesuaikan dengan route dashboard admin Anda
             } else if (req.session.user.role === 'alumni') {
                 // Jika pengguna adalah alumni (dan mencoba mengakses halaman login admin),
                 // redirect ke dashboard alumni
