@@ -13,9 +13,10 @@ const Feedback = require('../models/feedback');
 const fs = require('fs');
 const path = require('path');
 const nodemailer = require('nodemailer');
+const multer = require('multer')
 const crypto = require('crypto');
 
-
+const upload = multer({ dest: 'temp_uploads/' });
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -213,8 +214,120 @@ module.exports = {
             });
         }
     },
+    uploadExcelMiddleware: upload.single('excelFile'),
     storeAlumniExcel: async function (req, res) {
+        // Pastikan file diunggah
+        if (!req.file) {
+            req.flash('error_msg', 'Tidak ada file Excel yang diunggah.');
+            return res.redirect('/admin/alumni-list');
+        }
 
+        const filePath = req.file.path; // Path file sementara yang diunggah oleh Multer
+        let successCount = 0;
+        let errorCount = 0;
+        const errorDetails = [];
+
+        try {
+            // Membaca file Excel
+            const workbook = XLSX.readFile(filePath);
+            const sheetName = workbook.SheetNames[0]; // Ambil sheet pertama
+            const sheet = workbook.Sheets[sheetName];
+            // Mengubah sheet menjadi JSON array of objects
+            const data = XLSX.utils.sheet_to_json(sheet);
+
+            // Proses setiap baris data dari Excel
+            for (const row of data) {
+                const nisn = row.NISN ? String(row.NISN).trim() : ''; // Pastikan NISN adalah string dan di-trim
+                const nama = row.Nama ? String(row.Nama).trim() : '';
+                const jenisKelamin = row['Jenis Kelamin'] ? String(row['Jenis Kelamin']).trim() : ''; // Perhatikan spasi di nama kolom
+                const password = row.Password ? String(row.Password).trim() : '';
+
+                // Validasi dasar data per baris
+                if (!nisn || !nama || !jenisKelamin || !password) {
+                    errorCount++;
+                    errorDetails.push(`Baris NISN '${nisn || 'Kosong'}': Data tidak lengkap (NISN, Nama, Jenis Kelamin, atau Password kosong).`);
+                    continue; // Lanjut ke baris berikutnya
+                }
+
+                // Validasi panjang NISN (minimal 10 angka)
+                if (nisn.length < 10) {
+                    errorCount++;
+                    errorDetails.push(`Baris NISN '${nisn}': NISN harus terdiri dari minimal 10 angka.`);
+                    continue;
+                }
+
+                // Validasi panjang Password (minimal 6 karakter)
+                if (password.length < 6) {
+                    errorCount++;
+                    errorDetails.push(`Baris NISN '${nisn}': Password harus terdiri dari minimal 6 karakter.`);
+                    continue;
+                }
+
+                // Validasi Jenis Kelamin (harus "Laki-laki" atau "Perempuan")
+                if (!['Laki-laki', 'Perempuan'].includes(jenisKelamin)) {
+                    errorCount++;
+                    errorDetails.push(`Baris NISN '${nisn}': Jenis Kelamin tidak valid. Harus 'Laki-laki' atau 'Perempuan'.`);
+                    continue;
+                }
+
+                try {
+                    // Cek apakah NISN sudah terdaftar di database
+                    const existingAlumni = await Alumni.findOne({ nisn: nisn });
+                    if (existingAlumni) {
+                        errorCount++;
+                        errorDetails.push(`Baris NISN '${nisn}': NISN sudah terdaftar.`);
+                        continue;
+                    }
+
+                    // Enkripsi password
+                    const hashedPassword = await bcrypt.hash(password, 10);
+
+                    // Buat objek alumni baru
+                    const newAlumni = new Alumni({
+                        nisn: nisn,
+                        nama: nama,
+                        jenisKelamin: jenisKelamin,
+                        password: hashedPassword,
+                    });
+
+                    await newAlumni.save(); // Simpan alumni
+                    successCount++;
+
+                } catch (dbError) {
+                    errorCount++;
+                    if (dbError.code === 11000 && dbError.keyPattern && dbError.keyPattern.nisn) {
+                        errorDetails.push(`Baris NISN '${nisn}': NISN duplikat (sudah ada di database).`);
+                    } else {
+                        errorDetails.push(`Baris NISN '${nisn}': Gagal menyimpan ke database - ${dbError.message}`);
+                    }
+                }
+            }
+
+            // Hapus file sementara setelah diproses
+            fs.unlink(filePath, (err) => {
+                if (err) console.error("Error menghapus file sementara:", err);
+            });
+
+            // Kirim flash message hasil impor
+            let message = `Impor selesai: ${successCount} alumni berhasil ditambahkan.`;
+            if (errorCount > 0) {
+                message += ` ${errorCount} alumni gagal diimpor.`;
+                req.flash('error_msg', message + ' Detail: ' + errorDetails.join('; '));
+            } else {
+                req.flash('success_msg', message);
+            }
+
+            return res.redirect('/admin/alumni-list'); // Redirect ke daftar alumni
+
+        } catch (error) {
+            console.error("Error processing Excel file:", error);
+            // Hapus file sementara jika terjadi error saat pemrosesan
+            fs.unlink(filePath, (err) => {
+                if (err) console.error("Error menghapus file sementara setelah crash:", err);
+            });
+            req.flash('error_msg', 'Terjadi kesalahan saat memproses file Excel.');
+            return res.redirect('/admin/alumni-list');
+        }
     },
     viewAlumniList: async function (req, res) {
         const alumni = await Alumni.find({});
