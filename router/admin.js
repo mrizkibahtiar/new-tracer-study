@@ -12,6 +12,8 @@ router.route('/admin/alumni-list')
     .get(isAdmin, adminController.viewAlumniList)
     .post(isAdmin, adminController.storeAlumni);
 
+router.post('/admin/alumni-list/excel', isAdmin, adminController.storeAlumniExcel)
+
 router.get('/admin/alumni-list/:nisn', isAdmin, adminController.viewAlumniDetail);
 router.post('/admin/alumni-list/delete', isAdmin, adminController.deleteAlumni);
 router.post('/admin/alumni-list/edit/:nisnLama', isAdmin, adminController.alumniUpdate);

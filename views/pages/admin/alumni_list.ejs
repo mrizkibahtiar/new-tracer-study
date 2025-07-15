@@ -148,8 +148,8 @@
                         class="relative overflow-hidden rounded-md shadow-sm dark:shadow-gray-700 bg-white dark:bg-slate-900 py-3">
                         <div class="px-6" style="position: relative;">
                             <div
-                                style="position: absolute; top: 0.6rem; right: 1.7rem; z-index: 10; display:flex; gap:10px">
-                                <div id="excelBtn"
+                                style="position: absolute; top: 0.3rem; right: 1.7rem; z-index: 10; display:flex; gap:10px">
+                                <div id="tambahAlumniExcel"
                                     style="background-color: #f44336; color: white; border: none; padding: 0.5rem 1rem; border-radius: 10px; cursor: pointer; font-size: 1.3rem;">
                                     <img src="../../assets/admin/images/excel.png" alt="" width="30">
                                 </div>
@@ -213,6 +213,45 @@
 
                         <div style="text-align: right;">
                             <button type="button" id="batalModalBtn" style="background-color: #f44336;
+                            color: white;
+                            border: none;
+                            padding: 0.7rem 1.2rem;
+                            border-radius: 0.7rem;
+                            cursor: pointer;
+                            font-size: 1.2rem;
+                            margin-right: 10px;">Batal</button>
+                            <button type="submit"
+                                style="background-color: #4CAF50; color: white; border: none; padding: 0.7rem 1.2rem; border-radius: 0.7rem; cursor: pointer; font-size: 1.2rem;">
+                                Simpan
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- modal tambah Excel -->
+            <div id="tambahAlumniModalExcel"
+                style="display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);">
+                <div id="tambahAlumniModalExcelContent"
+                    style="background-color: #fefefe; margin: 10% auto; padding: 25px; border: 1px solid #888; width: 80%; max-width: 600px; font-size: 1.1rem; border-radius: 0.7rem;">
+                    <span id="closeModalExcel"
+                        style="color: #aaa; float: right; font-size: 34px; font-weight: bold; cursor: pointer;">&times;</span>
+                    <h2 id="modalTitle" style="font-size: 1.8rem; margin-bottom: 15px;">Tambah Data Alumni by Excel</h2>
+                    <form id="formTambahAlumniExcel" style="font-size: 1.1rem;" method="post"
+                        action="/admin/alumni-list/excel" enctype="multipart/form-data">
+                        <div style="margin-bottom: 15px;">
+                            <p for="nama" style="font-size: 1.2rem;">Pastikan format sudah sesuai dengan gambar <span
+                                    style="font-weight: bolder;">(NISN, nama, jenis kelamin,dan password)</span></p>
+                            <img src="../../assets/admin/images/format.png" alt="" style="border: .5px solid black;">
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <input type="file" id="excelFileInput" name="excelFile"
+                                accept=".xlsx, .xls, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                        </div>
+
+
+                        <div style="text-align: right;">
+                            <button type="button" id="batalModalExcel" style="background-color: #f44336;
                             color: white;
                             border: none;
                             padding: 0.7rem 1.2rem;
@@ -562,8 +601,7 @@
         const tambahAlumniModal = document.getElementById("tambahAlumniModal");
         const closeModalBtn = document.getElementById("closeModalBtn");
         const btnBatal = document.getElementById("batalModalBtn");
-        const formTambahAlumni = document.getElementById("formTambahAlumni");
-        const alumniTableElement = document.getElementById("table-gridjs");
+        // const formTambahAlumni = document.getElementById("formTambahAlumni");
 
         // Fungsi untuk membuka modal
         tambahAlumniBtn.onclick = function () {
@@ -608,6 +646,36 @@
                 console.warn("Input password atau tombol toggle tidak ditemukan di modal tambah alumni.");
             }
         });
+    </script>
+
+    <!-- logic tambah alumni by excel -->
+    <script>
+        const tambahAlumniExcelBtn = document.getElementById("tambahAlumniExcel");
+        const tambahAlumniModalExcel = document.getElementById("tambahAlumniModalExcel");
+        const closeModalExcel = document.getElementById("closeModalExcel");
+        const btnBatalExcel = document.getElementById("batalModalExcel");
+        // const formTambahAlumni = document.getElementById("formTambahAlumni");
+
+        // Fungsi untuk membuka modal
+        tambahAlumniExcelBtn.onclick = function () {
+            tambahAlumniModalExcel.style.display = "block";
+        }
+
+        // Fungsi untuk menutup modal saat tombol close diklik
+        closeModalExcel.onclick = function () {
+            tambahAlumniModalExcel.style.display = "none";
+        }
+
+        btnBatalExcel.addEventListener("click", () => {
+            tambahAlumniModalExcel.style.display = "none";
+        });
+
+        // Fungsi untuk menutup modal saat area di luar modal diklik
+        window.onclick = function (event) {
+            if (event.target == tambahAlumniModalExcel) {
+                tambahAlumniModalExcel.style.display = "none";
+            }
+        }
     </script>
     <script>
         const alertSuccess = document.querySelector('.alert-success');

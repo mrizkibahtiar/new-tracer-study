@@ -213,7 +213,9 @@ module.exports = {
             });
         }
     },
+    storeAlumniExcel: async function (req, res) {
 
+    },
     viewAlumniList: async function (req, res) {
         const alumni = await Alumni.find({});
         let dataTracerStudy = [];
