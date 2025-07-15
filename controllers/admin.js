@@ -15,8 +15,9 @@ const path = require('path');
 const nodemailer = require('nodemailer');
 const multer = require('multer')
 const crypto = require('crypto');
+const XLSX = require('xlsx');
 
-const upload = multer({ dest: 'temp_uploads/' });
+
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -214,7 +215,6 @@ module.exports = {
             });
         }
     },
-    uploadExcelMiddleware: upload.single('excelFile'),
     storeAlumniExcel: async function (req, res) {
         // Pastikan file diunggah
         if (!req.file) {
@@ -229,7 +229,7 @@ module.exports = {
 
         try {
             // Membaca file Excel
-            const workbook = XLSX.readFile(filePath);
+            const workbook = XLSX.readFile(filePath); // XLSX sekarang terdefinisi
             const sheetName = workbook.SheetNames[0]; // Ambil sheet pertama
             const sheet = workbook.Sheets[sheetName];
             // Mengubah sheet menjadi JSON array of objects
@@ -237,10 +237,19 @@ module.exports = {
 
             // Proses setiap baris data dari Excel
             for (const row of data) {
-                const nisn = row.NISN ? String(row.NISN).trim() : ''; // Pastikan NISN adalah string dan di-trim
+                const nisn = row.NISN ? String(row.NISN).trim() : '';
                 const nama = row.Nama ? String(row.Nama).trim() : '';
-                const jenisKelamin = row['Jenis Kelamin'] ? String(row['Jenis Kelamin']).trim() : ''; // Perhatikan spasi di nama kolom
+                let jenisKelamin = row['Jenis Kelamin'] ? String(row['Jenis Kelamin']).trim() : ''; // Menggunakan 'let' karena nilainya akan diubah
                 const password = row.Password ? String(row.Password).trim() : '';
+
+                // --- PERBAIKAN: Normalisasi Jenis Kelamin ---
+                const lowerCaseJenisKelamin = jenisKelamin.toLowerCase();
+                if (lowerCaseJenisKelamin.includes('laki')) {
+                    jenisKelamin = 'Laki-laki';
+                } else if (lowerCaseJenisKelamin.includes('perempuan')) {
+                    jenisKelamin = 'Perempuan';
+                }
+                // --- AKHIR PERBAIKAN ---
 
                 // Validasi dasar data per baris
                 if (!nisn || !nama || !jenisKelamin || !password) {
@@ -263,10 +272,10 @@ module.exports = {
                     continue;
                 }
 
-                // Validasi Jenis Kelamin (harus "Laki-laki" atau "Perempuan")
+                // Validasi Jenis Kelamin (harus "Laki-laki" atau "Perempuan" setelah normalisasi)
                 if (!['Laki-laki', 'Perempuan'].includes(jenisKelamin)) {
                     errorCount++;
-                    errorDetails.push(`Baris NISN '${nisn}': Jenis Kelamin tidak valid. Harus 'Laki-laki' atau 'Perempuan'.`);
+                    errorDetails.push(`Baris NISN '${nisn}': Jenis Kelamin tidak valid setelah normalisasi. Harus 'Laki-laki' atau 'Perempuan'.`);
                     continue;
                 }
 
@@ -311,13 +320,13 @@ module.exports = {
             // Kirim flash message hasil impor
             let message = `Impor selesai: ${successCount} alumni berhasil ditambahkan.`;
             if (errorCount > 0) {
-                message += ` ${errorCount} alumni gagal diimpor.`;
-                req.flash('error_msg', message + ' Detail: ' + errorDetails.join('; '));
+                message += `<br> ${errorCount} alumni gagal diimpor. Detail:<br>- ` + errorDetails.join('<br>- ');
+                req.flash('error_msg', message);
             } else {
                 req.flash('success_msg', message);
             }
 
-            return res.redirect('/admin/alumni-list'); // Redirect ke daftar alumni
+            return res.redirect('/admin/alumni-list');
 
         } catch (error) {
             console.error("Error processing Excel file:", error);

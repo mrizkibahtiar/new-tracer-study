@@ -3,6 +3,7 @@ const router = express.Router();
 const adminController = require('../controllers/admin');
 const { isAdmin } = require('../middleware/auth');
 const upload = require('../middleware/upload');
+const uploadExcel = require('../middleware/upload');
 
 
 router.get('/admin', isAdmin, adminController.index);
@@ -12,7 +13,7 @@ router.route('/admin/alumni-list')
     .get(isAdmin, adminController.viewAlumniList)
     .post(isAdmin, adminController.storeAlumni);
 
-router.post('/admin/alumni-list/excel', isAdmin, adminController.storeAlumniExcel)
+router.post('/admin/alumni-list/excel', isAdmin, uploadExcel.single('excelFile'), adminController.storeAlumniExcel)
 
 router.get('/admin/alumni-list/:nisn', isAdmin, adminController.viewAlumniDetail);
 router.post('/admin/alumni-list/delete', isAdmin, adminController.deleteAlumni);
